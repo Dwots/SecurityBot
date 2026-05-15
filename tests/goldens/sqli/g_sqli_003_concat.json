@@ -1,0 +1,15 @@
+{
+  "id": "sqli_003_string_concat_node",
+  "language": "javascript",
+  "file_path": "server/api/orders.js",
+  "added_lines": [
+    {"new_line_no": 8, "content": "async function getOrder(pool, orderId) {"},
+    {"new_line_no": 9, "content": "  const q = \"SELECT * FROM orders WHERE id = \" + orderId;"},
+    {"new_line_no": 10, "content": "  return pool.query(q);"},
+    {"new_line_no": 11, "content": "}"}
+  ],
+  "expected_findings": [
+    {"class": "sql_injection", "severity_min": "high", "line": 9, "confidence_min": 0.7}
+  ],
+  "notes": "SQLi через конкатенацию строк (Node.js pg-pool). vuln_taxonomy §3.2 пример SQLI-2."
+}

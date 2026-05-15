@@ -1,0 +1,10 @@
+[
+  {
+    "filename": "scripts/aws_deploy.py",
+    "status": "added",
+    "additions": 5,
+    "deletions": 0,
+    "changes": 5,
+    "patch": "@@ -0,0 +1,5 @@\n+import boto3\n+\n+AWS_ACCESS_KEY_ID = \"AKIA7VK2NMQVZ3LTJYQH\"\n+AWS_SECRET_ACCESS_KEY = \"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\"\n+client = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)\n"
+  }
+]

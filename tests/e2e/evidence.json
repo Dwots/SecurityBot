@@ -1,0 +1,234 @@
+{
+  "pr_sqli": {
+    "http_status": 202,
+    "response_body": {
+      "status": "accepted",
+      "repo": "qa-fixtures/sunsec-e2e",
+      "pr_number": 101,
+      "head_sha": "aaaa1111bbbb2222cccc3333dddd4444eeee5555"
+    },
+    "review_payload": [
+      {
+        "event": "COMMENT",
+        "body": "**SunSecurityBot** posted 1 inline finding.\n\nSee the summary comment in this PR for the full severity breakdown.\n\n<!-- sunsec:bot:v1:summary -->",
+        "comments": [
+          {
+            "path": "src/users/repository.py",
+            "line": 3,
+            "side": "RIGHT",
+            "body": "**[SUNSEC][HIGH] Sql Injection** (confidence 95%)\n\nUser input `user_id` is interpolated into SQL via f-string and passed directly to `conn.execute(query)`. This allows SQL injection.\n\n### Suggested fix\n```python\nquery = \"SELECT id, email FROM users WHERE id = ?\"\nrow = conn.execute(query, (user_id,)).fetchone()\n```\n\n<!-- sunsec:bot:v1:finding:d7c7352b14684485 -->"
+          }
+        ],
+        "commit_id": "aaaa1111bbbb2222cccc3333dddd4444eeee5555"
+      }
+    ],
+    "issue_comments": [
+      {
+        "id": 1001,
+        "body": "## SunSecurityBot review\n\nFound **1** finding in the changed code.\n\n> Found 1 SQL injection: user_id interpolated into raw SQL string.\n\n### Severity breakdown\n\n| Severity  | Count |\n|-----------|-------|\n| [CRIT] Critical | 0     |\n| [HIGH] High     | 1     |\n| [MED]  Medium   | 0     |\n| [LOW]  Low      | 0     |\n| [INFO] Info     | 0     |\n\n### Top findings (showing 1 of 1)\n\n- [HIGH] **Sql Injection** at `src/users/repository.py:3` — User input `user_id` is interpolated into SQL via f-string and passed directly to `conn.execute(query)`. This allows ...\n\n**Summary:** 1 total, 1 anchored inline, 0 general. Analyzed commit `aaaa111`.\n\n<!-- sunsec:bot:v1:summary -->",
+        "html_url": "https://github.com/qa-fixtures/sunsec-e2e/pull/101#issuecomment-1001",
+        "created_at": "2026-05-15T12:00:00Z"
+      }
+    ],
+    "requests_count": 7,
+    "requests": [
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/101"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/101/files"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/101/comments"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/issues/101/comments"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/issues/101/comments"
+      ],
+      [
+        "POST",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/101/reviews"
+      ],
+      [
+        "POST",
+        "/repos/qa-fixtures/sunsec-e2e/issues/101/comments"
+      ]
+    ]
+  },
+  "pr_secret": {
+    "http_status": 202,
+    "response_body": {
+      "status": "accepted",
+      "repo": "qa-fixtures/sunsec-e2e",
+      "pr_number": 102,
+      "head_sha": "1234secret5678secret9abcsecretdef0123456"
+    },
+    "review_payload": [
+      {
+        "event": "COMMENT",
+        "body": "**SunSecurityBot** posted 2 inline findings.\n\nSee the summary comment in this PR for the full severity breakdown.\n\n<!-- sunsec:bot:v1:summary -->",
+        "comments": [
+          {
+            "path": "scripts/aws_deploy.py",
+            "line": 3,
+            "side": "RIGHT",
+            "body": "**[SUNSEC][CRITICAL] Hardcoded Secret** (confidence 99%)\n\nAWS Access Key ID hardcoded in repository (AKIA-prefix). Anyone with read access to the repo can use it.\n\n### Suggested fix\n```python\nAWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']\n```\n\n<!-- sunsec:bot:v1:finding:102697dfc3b295a8 -->"
+          },
+          {
+            "path": "scripts/aws_deploy.py",
+            "line": 4,
+            "side": "RIGHT",
+            "body": "**[SUNSEC][CRITICAL] Hardcoded Secret** (confidence 99%)\n\nAWS Secret Access Key hardcoded next to the access key. Both must be moved to environment variables / IAM role.\n\n### Suggested fix\n```python\nAWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']\n```\n\n<!-- sunsec:bot:v1:finding:e87d3b6443d29891 -->"
+          }
+        ],
+        "commit_id": "1234secret5678secret9abcsecretdef0123456"
+      }
+    ],
+    "issue_comments": [
+      {
+        "id": 1001,
+        "body": "## SunSecurityBot review\n\nFound **2** findings in the changed code.\n\n> Found 2 hardcoded AWS credentials in source code.\n\n### Severity breakdown\n\n| Severity  | Count |\n|-----------|-------|\n| [CRIT] Critical | 2     |\n| [HIGH] High     | 0     |\n| [MED]  Medium   | 0     |\n| [LOW]  Low      | 0     |\n| [INFO] Info     | 0     |\n\n### Top findings (showing 2 of 2)\n\n- [CRIT] **Hardcoded Secret** at `scripts/aws_deploy.py:3` — AWS Access Key ID hardcoded in repository (AKIA-prefix). Anyone with read access to the repo can use it.\n- [CRIT] **Hardcoded Secret** at `scripts/aws_deploy.py:4` — AWS Secret Access Key hardcoded next to the access key. Both must be moved to environment variables / IAM role.\n\n**Summary:** 2 total, 2 anchored inline, 0 general. Analyzed commit `1234sec`.\n\n<!-- sunsec:bot:v1:summary -->",
+        "html_url": "https://github.com/qa-fixtures/sunsec-e2e/pull/102#issuecomment-1001",
+        "created_at": "2026-05-15T12:00:00Z"
+      }
+    ],
+    "requests_count": 7,
+    "requests": [
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/102"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/102/files"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/102/comments"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/issues/102/comments"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/issues/102/comments"
+      ],
+      [
+        "POST",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/102/reviews"
+      ],
+      [
+        "POST",
+        "/repos/qa-fixtures/sunsec-e2e/issues/102/comments"
+      ]
+    ]
+  },
+  "pr_xss": {
+    "http_status": 202,
+    "response_body": {
+      "status": "accepted",
+      "repo": "qa-fixtures/sunsec-e2e",
+      "pr_number": 103,
+      "head_sha": "bbbb2222cccc3333dddd4444eeee5555ffff6666"
+    },
+    "review_payload": [
+      {
+        "event": "COMMENT",
+        "body": "**SunSecurityBot** posted 1 inline finding.\n\nSee the summary comment in this PR for the full severity breakdown.\n\n<!-- sunsec:bot:v1:summary -->",
+        "comments": [
+          {
+            "path": "web/header.js",
+            "line": 4,
+            "side": "RIGHT",
+            "body": "**[SUNSEC][HIGH] Xss** (confidence 90%)\n\n`userName` is interpolated into `innerHTML` without HTML-escaping. If userName comes from user input, this is a stored/reflected XSS vector.\n\n### Suggested fix\n```javascript\nel.textContent = `Hello, ${userName}!`;\n```\n\n<!-- sunsec:bot:v1:finding:f587f85aa48ff703 -->"
+          }
+        ],
+        "commit_id": "bbbb2222cccc3333dddd4444eeee5555ffff6666"
+      }
+    ],
+    "issue_comments": [
+      {
+        "id": 1001,
+        "body": "## SunSecurityBot review\n\nFound **1** finding in the changed code.\n\n> Found 1 XSS via innerHTML with unescaped user input.\n\n### Severity breakdown\n\n| Severity  | Count |\n|-----------|-------|\n| [CRIT] Critical | 0     |\n| [HIGH] High     | 1     |\n| [MED]  Medium   | 0     |\n| [LOW]  Low      | 0     |\n| [INFO] Info     | 0     |\n\n### Top findings (showing 1 of 1)\n\n- [HIGH] **Xss** at `web/header.js:4` — `userName` is interpolated into `innerHTML` without HTML-escaping. If userName comes from user input, this is a store...\n\n**Summary:** 1 total, 1 anchored inline, 0 general. Analyzed commit `bbbb222`.\n\n<!-- sunsec:bot:v1:summary -->",
+        "html_url": "https://github.com/qa-fixtures/sunsec-e2e/pull/103#issuecomment-1001",
+        "created_at": "2026-05-15T12:00:00Z"
+      }
+    ],
+    "requests_count": 7,
+    "requests": [
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/103"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/103/files"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/103/comments"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/issues/103/comments"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/issues/103/comments"
+      ],
+      [
+        "POST",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/103/reviews"
+      ],
+      [
+        "POST",
+        "/repos/qa-fixtures/sunsec-e2e/issues/103/comments"
+      ]
+    ]
+  },
+  "pr_clean": {
+    "http_status": 202,
+    "response_body": {
+      "status": "accepted",
+      "repo": "qa-fixtures/sunsec-e2e",
+      "pr_number": 104,
+      "head_sha": "cccc3333dddd4444eeee5555ffff6666aaaa7777"
+    },
+    "review_payload": [],
+    "issue_comments": [
+      {
+        "id": 1000,
+        "body": "**SunSecurityBot:** не найдено уязвимостей по сканируемой таксономии (SQLi / hardcoded secrets / XSS) в изменённых файлах.\n\n<!-- sunsec:bot:v1:empty -->",
+        "html_url": "https://github.com/qa-fixtures/sunsec-e2e/pull/104#issuecomment-1000",
+        "created_at": "2026-05-15T12:00:00Z"
+      }
+    ],
+    "requests_count": 4,
+    "requests": [
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/104"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/104/files"
+      ],
+      [
+        "GET",
+        "/repos/qa-fixtures/sunsec-e2e/issues/104/comments"
+      ],
+      [
+        "POST",
+        "/repos/qa-fixtures/sunsec-e2e/issues/104/comments"
+      ]
+    ]
+  }
+}

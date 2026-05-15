@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Profile — {{ user.name }}</title>
+</head>
+<body>
+    <h1>{{ user.name }}</h1>
+    <p>Email: {{ user.email }}</p>
+
+    <section class="bio">
+        <h2>About</h2>
+        {# VULN: Jinja2 |safe отключает auto-escape для user.bio,
+           который заполняется пользователем в /profile-edit. Любой
+           <script>...</script> в bio будет исполнен в браузере
+           зрителя (stored XSS, vuln_taxonomy §5.4 XSS-3). #}
+        <div class="bio-content">{{ user.bio | safe }}</div>
+    </section>
+
+    <footer>
+        <a href="/users/{{ user.id }}">JSON API</a>
+    </footer>
+</body>
+</html>

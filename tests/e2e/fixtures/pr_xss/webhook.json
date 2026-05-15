@@ -1,0 +1,33 @@
+{
+  "action": "opened",
+  "number": 103,
+  "pull_request": {
+    "id": 100003,
+    "number": 103,
+    "state": "open",
+    "title": "feat(ui): show user name in header",
+    "head": {
+      "sha": "bbbb2222cccc3333dddd4444eeee5555ffff6666",
+      "ref": "feat/ui-username",
+      "repo": {
+        "full_name": "qa-fixtures/sunsec-e2e",
+        "owner": {"login": "qa-fixtures", "id": 9001}
+      }
+    },
+    "base": {
+      "sha": "0000baseaaaa0000baseaaaa0000baseaaaa1111",
+      "ref": "main",
+      "repo": {
+        "full_name": "qa-fixtures/sunsec-e2e",
+        "owner": {"login": "qa-fixtures", "id": 9001}
+      }
+    },
+    "draft": false,
+    "user": {"login": "qa-author", "id": 9002}
+  },
+  "repository": {
+    "full_name": "qa-fixtures/sunsec-e2e",
+    "owner": {"login": "qa-fixtures", "id": 9001}
+  },
+  "sender": {"login": "qa-author", "id": 9002}
+}

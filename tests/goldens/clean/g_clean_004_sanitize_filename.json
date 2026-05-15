@@ -1,0 +1,12 @@
+{
+  "id": "clean_004_sanitize_filename",
+  "language": "python",
+  "file_path": "src/uploads/utils.py",
+  "added_lines": [
+    {"new_line_no": 12, "content": "def save_upload(name: str, data: bytes) -> str:"},
+    {"new_line_no": 13, "content": "    safe = sanitize_filename(name)"},
+    {"new_line_no": 14, "content": "    return write_blob(safe, data)"}
+  ],
+  "expected_findings": [],
+  "notes": "sanitize_filename — про path, не про HTML. Не должно квалифицироваться ни как XSS, ни как SQLi."
+}

@@ -1,0 +1,10 @@
+[
+  {
+    "filename": "src/users/repository.py",
+    "status": "added",
+    "additions": 6,
+    "deletions": 0,
+    "changes": 6,
+    "patch": "@@ -0,0 +1,6 @@\n+def get_user_by_id(conn, user_id):\n+    # NOTE: легитимный bug — user_id уходит в f-string без параметризации.\n+    query = f\"SELECT id, email FROM users WHERE id = {user_id}\"\n+    row = conn.execute(query).fetchone()\n+    return row\n+\n"
+  }
+]

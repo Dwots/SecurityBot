@@ -1,0 +1,12 @@
+{
+  "id": "clean_003_jsx_mustache",
+  "language": "typescript",
+  "file_path": "web/components/Greeting.tsx",
+  "added_lines": [
+    {"new_line_no": 4, "content": "export const Greeting = ({ user }: { user: string }) => ("},
+    {"new_line_no": 5, "content": "  <div className='hi'>{user}</div>"},
+    {"new_line_no": 6, "content": ");"}
+  ],
+  "expected_findings": [],
+  "notes": "JSX {user} auto-escape. vuln_taxonomy §6 #6."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "xss_005_re_escape_counter_example_rt006",
+  "language": "python",
+  "file_path": "src/web/search_view.py",
+  "added_lines": [
+    {"new_line_no": 18, "content": "import re"},
+    {"new_line_no": 19, "content": "def render_search(request, el):"},
+    {"new_line_no": 20, "content": "    pattern = re.escape(request.GET.get('q', ''))"},
+    {"new_line_no": 21, "content": "    userQuery = request.GET.get('q', '')"},
+    {"new_line_no": 22, "content": "    el.innerHTML = '<b>' + userQuery + '</b>'"}
+  ],
+  "expected_findings": [
+    {"class": "xss", "severity_min": "high", "line": 22, "confidence_min": 0.6}
+  ],
+  "notes": "RT-006 counter-example: re.escape() рядом с реальным innerHTML=userInput. После сужения _XSS_SANITIZER_PATTERNS XSS должен сохраняться. Регресс не допускается."
+}

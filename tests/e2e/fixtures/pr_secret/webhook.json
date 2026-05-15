@@ -1,0 +1,33 @@
+{
+  "action": "opened",
+  "number": 102,
+  "pull_request": {
+    "id": 100002,
+    "number": 102,
+    "state": "open",
+    "title": "chore(deploy): add aws helper",
+    "head": {
+      "sha": "1234secret5678secret9abcsecretdef0123456",
+      "ref": "feat/aws-helper",
+      "repo": {
+        "full_name": "qa-fixtures/sunsec-e2e",
+        "owner": {"login": "qa-fixtures", "id": 9001}
+      }
+    },
+    "base": {
+      "sha": "0000baseaaaa0000baseaaaa0000baseaaaa1111",
+      "ref": "main",
+      "repo": {
+        "full_name": "qa-fixtures/sunsec-e2e",
+        "owner": {"login": "qa-fixtures", "id": 9001}
+      }
+    },
+    "draft": false,
+    "user": {"login": "qa-author", "id": 9002}
+  },
+  "repository": {
+    "full_name": "qa-fixtures/sunsec-e2e",
+    "owner": {"login": "qa-fixtures", "id": 9001}
+  },
+  "sender": {"login": "qa-author", "id": 9002}
+}

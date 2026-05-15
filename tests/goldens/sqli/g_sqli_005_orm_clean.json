@@ -1,0 +1,11 @@
+{
+  "id": "sqli_005_orm_filter_safe",
+  "language": "python",
+  "file_path": "src/users/views.py",
+  "added_lines": [
+    {"new_line_no": 14, "content": "def find_user(user_id: int):"},
+    {"new_line_no": 15, "content": "    return User.objects.filter(id=user_id).first()"}
+  ],
+  "expected_findings": [],
+  "notes": "Django ORM .filter(id=...) — параметризовано автоматически. vuln_taxonomy §6 #5."
+}

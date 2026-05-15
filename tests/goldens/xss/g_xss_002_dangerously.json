@@ -1,0 +1,14 @@
+{
+  "id": "xss_002_dangerously_set_inner_html",
+  "language": "typescript",
+  "file_path": "web/components/Comment.tsx",
+  "added_lines": [
+    {"new_line_no": 5, "content": "export const Comment = ({ html }: { html: string }) => ("},
+    {"new_line_no": 6, "content": "  <div dangerouslySetInnerHTML={{ __html: html }} />"},
+    {"new_line_no": 7, "content": ");"}
+  ],
+  "expected_findings": [
+    {"class": "xss", "severity_min": "high", "line": 6, "confidence_min": 0.7}
+  ],
+  "notes": "React dangerouslySetInnerHTML без санитайзера. vuln_taxonomy §5.2 пример XSS-2."
+}

@@ -1,0 +1,33 @@
+{
+  "action": "opened",
+  "number": 104,
+  "pull_request": {
+    "id": 100004,
+    "number": 104,
+    "state": "open",
+    "title": "refactor(users): switch to parametrized query",
+    "head": {
+      "sha": "cccc3333dddd4444eeee5555ffff6666aaaa7777",
+      "ref": "refactor/parametrized-query",
+      "repo": {
+        "full_name": "qa-fixtures/sunsec-e2e",
+        "owner": {"login": "qa-fixtures", "id": 9001}
+      }
+    },
+    "base": {
+      "sha": "0000baseaaaa0000baseaaaa0000baseaaaa1111",
+      "ref": "main",
+      "repo": {
+        "full_name": "qa-fixtures/sunsec-e2e",
+        "owner": {"login": "qa-fixtures", "id": 9001}
+      }
+    },
+    "draft": false,
+    "user": {"login": "qa-author", "id": 9002}
+  },
+  "repository": {
+    "full_name": "qa-fixtures/sunsec-e2e",
+    "owner": {"login": "qa-fixtures", "id": 9001}
+  },
+  "sender": {"login": "qa-author", "id": 9002}
+}

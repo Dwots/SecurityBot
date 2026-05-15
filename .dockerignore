@@ -1,0 +1,78 @@
+# T-020 — что НЕ кладём в Docker context (и образ).
+#
+# Цели:
+#   1) Безопасность: .env и любые ключи НЕ должны попасть в image.
+#   2) Размер: agents/, tests/, кэши, артефакты сборки — лишний balast.
+#   3) Чистота слоёв: меньше context → быстрее build / меньше cache invalidation.
+
+# --- Секреты (КРИТИЧНО) ---
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+credentials.json
+secrets/
+
+# --- VCS / IDE ---
+.git
+.gitignore
+.gitattributes
+.github/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Python артефакты ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+wheels/
+.eggs/
+
+# --- Виртуальные окружения ---
+.venv/
+venv/
+env/
+.python-version
+
+# --- Кэши тестов и линтеров ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# --- Проектные внутренности (не нужны в production-образе) ---
+agents/
+requirements/
+tmp/
+tests/
+scripts/
+docs/
+*.md
+!README.md
+Makefile
+.editorconfig
+
+# --- Docker-метаданные сами по себе не нужны внутри image ---
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.*.yml
+
+# --- Файлы оркестрации (если появятся) ---
+.github/
+.gitlab-ci.yml
+.circleci/

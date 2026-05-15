@@ -1,0 +1,466 @@
+{
+  "mode": "offline",
+  "provider": "fixture (realistic)",
+  "goldens_count": 20,
+  "budget_rub_limit": null,
+  "cost_rub_spent": 0.0,
+  "metrics": {
+    "per_class": {
+      "sql_injection": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "hardcoded_secret": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "xss": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "overall": {
+      "tp": 11,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "clean": {
+      "total_cases": 5,
+      "no_fp_cases": 5,
+      "fp_free_rate": 1.0
+    }
+  },
+  "cases": [
+    {
+      "id": "clean_001_env_getter",
+      "category": "clean",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "clean_002_html_escape",
+      "category": "clean",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "clean_003_jsx_mustache",
+      "category": "clean",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "clean_004_sanitize_filename",
+      "category": "clean",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "clean_005_bool_named_secret",
+      "category": "clean",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "sec_001_aws_access_key",
+      "category": "secrets",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "hardcoded_secret",
+          "severity_min": "high",
+          "line": 3,
+          "confidence_min": 0.8
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/config/aws.py",
+          "line": 3,
+          "class": "hardcoded_secret",
+          "severity": "critical",
+          "message": "Hardcoded secret matches pattern 'aws_access_key_id'. Detected by deterministic pre-LLM scan.",
+          "suggestion": null,
+          "confidence": 0.98
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sec_002_github_pat",
+      "category": "secrets",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "hardcoded_secret",
+          "severity_min": "high",
+          "line": 11,
+          "confidence_min": 0.8
+        }
+      ],
+      "predicted": [
+        {
+          "file": "scripts/deploy.py",
+          "line": 11,
+          "class": "hardcoded_secret",
+          "severity": "critical",
+          "message": "Hardcoded secret matches pattern 'github_pat'. Detected by deterministic pre-LLM scan.",
+          "suggestion": null,
+          "confidence": 0.98
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sec_003_stripe_live",
+      "category": "secrets",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "hardcoded_secret",
+          "severity_min": "high",
+          "line": 5,
+          "confidence_min": 0.8
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/payments/stripe_client.py",
+          "line": 5,
+          "class": "hardcoded_secret",
+          "severity": "critical",
+          "message": "Hardcoded secret matches pattern 'stripe_secret'. Detected by deterministic pre-LLM scan.",
+          "suggestion": null,
+          "confidence": 0.97
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sec_004_jwt_literal",
+      "category": "secrets",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "hardcoded_secret",
+          "severity_min": "medium",
+          "line": 9,
+          "confidence_min": 0.6
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/auth/tokens.py",
+          "line": 9,
+          "class": "hardcoded_secret",
+          "severity": "medium",
+          "message": "Mock finding for hardcoded_secret on src/auth/tokens.py:9 — fixture for eval pipeline; quoting code from added_lines.",
+          "suggestion": null,
+          "confidence": 0.85
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sec_005_fake_token_in_tests",
+      "category": "secrets",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "sqli_001_fstring_in_execute",
+      "category": "sqli",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "sql_injection",
+          "severity_min": "high",
+          "line": 11,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/users/repo.py",
+          "line": 11,
+          "class": "sql_injection",
+          "severity": "high",
+          "message": "Mock finding for sql_injection on src/users/repo.py:11 — fixture for eval pipeline; quoting code from added_lines.",
+          "suggestion": null,
+          "confidence": 0.85
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sqli_002_format_string",
+      "category": "sqli",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "sql_injection",
+          "severity_min": "high",
+          "line": 23,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/auth/login.py",
+          "line": 23,
+          "class": "sql_injection",
+          "severity": "high",
+          "message": "Mock finding for sql_injection on src/auth/login.py:23 — fixture for eval pipeline; quoting code from added_lines.",
+          "suggestion": null,
+          "confidence": 0.85
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sqli_003_string_concat_node",
+      "category": "sqli",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "sql_injection",
+          "severity_min": "high",
+          "line": 9,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "server/api/orders.js",
+          "line": 9,
+          "class": "sql_injection",
+          "severity": "high",
+          "message": "Mock finding for sql_injection on server/api/orders.js:9 — fixture for eval pipeline; quoting code from added_lines.",
+          "suggestion": null,
+          "confidence": 0.85
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sqli_004_parametrized_safe",
+      "category": "sqli",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "sqli_005_orm_filter_safe",
+      "category": "sqli",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "xss_001_innerHTML_userinput",
+      "category": "xss",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "xss",
+          "severity_min": "high",
+          "line": 13,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "web/static/search.js",
+          "line": 13,
+          "class": "xss",
+          "severity": "high",
+          "message": "Mock finding for xss on web/static/search.js:13 — fixture for eval pipeline; quoting code from added_lines.",
+          "suggestion": null,
+          "confidence": 0.85
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "xss_002_dangerously_set_inner_html",
+      "category": "xss",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "xss",
+          "severity_min": "high",
+          "line": 6,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "web/components/Comment.tsx",
+          "line": 6,
+          "class": "xss",
+          "severity": "high",
+          "message": "Mock finding for xss on web/components/Comment.tsx:6 — fixture for eval pipeline; quoting code from added_lines.",
+          "suggestion": null,
+          "confidence": 0.85
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "xss_003_document_write",
+      "category": "xss",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "xss",
+          "severity_min": "high",
+          "line": 5,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "web/static/banner.js",
+          "line": 5,
+          "class": "xss",
+          "severity": "high",
+          "message": "Mock finding for xss on web/static/banner.js:5 — fixture for eval pipeline; quoting code from added_lines.",
+          "suggestion": null,
+          "confidence": 0.85
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "xss_004_dompurify_safe",
+      "category": "xss",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "xss_005_re_escape_counter_example_rt006",
+      "category": "xss",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "xss",
+          "severity_min": "high",
+          "line": 22,
+          "confidence_min": 0.6
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/web/search_view.py",
+          "line": 22,
+          "class": "xss",
+          "severity": "high",
+          "message": "Mock finding for xss on src/web/search_view.py:22 — fixture for eval pipeline; quoting code from added_lines.",
+          "suggestion": null,
+          "confidence": 0.85
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "errors": [],
+  "acceptance": {
+    "thresholds": {
+      "recall_per_class_min": 0.7,
+      "precision_overall_min": 0.6,
+      "clean_fp_free_rate_min": 0.8
+    },
+    "verdict": "PASS"
+  }
+}

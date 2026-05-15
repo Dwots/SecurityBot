@@ -1,0 +1,13 @@
+{
+  "id": "xss_004_dompurify_safe",
+  "language": "typescript",
+  "file_path": "web/components/SafeComment.tsx",
+  "added_lines": [
+    {"new_line_no": 3, "content": "import DOMPurify from 'dompurify';"},
+    {"new_line_no": 4, "content": "export const SafeComment = ({ html }: { html: string }) => ("},
+    {"new_line_no": 5, "content": "  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} />"},
+    {"new_line_no": 6, "content": ");"}
+  ],
+  "expected_findings": [],
+  "notes": "DOMPurify.sanitize обёртка — НЕ FP. vuln_taxonomy §5.3 anti-signal."
+}

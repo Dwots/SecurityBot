@@ -1,0 +1,11 @@
+{
+  "id": "clean_001_env_getter",
+  "language": "python",
+  "file_path": "src/auth/config.py",
+  "added_lines": [
+    {"new_line_no": 4, "content": "import os"},
+    {"new_line_no": 5, "content": "JWT_SECRET = os.environ['JWT_SECRET']"}
+  ],
+  "expected_findings": [],
+  "notes": "Чтение секрета из env — правильный паттерн. vuln_taxonomy §6 #3."
+}

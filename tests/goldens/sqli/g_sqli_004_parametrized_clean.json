@@ -1,0 +1,11 @@
+{
+  "id": "sqli_004_parametrized_safe",
+  "language": "python",
+  "file_path": "src/users/repo.py",
+  "added_lines": [
+    {"new_line_no": 30, "content": "def get_user_safe(conn, user_id):"},
+    {"new_line_no": 31, "content": "    return conn.execute(\"SELECT * FROM users WHERE id = ?\", (user_id,)).fetchone()"}
+  ],
+  "expected_findings": [],
+  "notes": "Параметризованный SQL — не FP. vuln_taxonomy §6 #4."
+}

@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SunSecurityBot — Test UI</title>
+<style>
+  :root {
+    --bg:#0f172a; --panel:#1e293b; --panel2:#0b1220; --text:#e2e8f0; --muted:#94a3b8;
+    --border:#334155; --accent:#38bdf8; --accent-hover:#0ea5e9;
+    --ok:#22c55e; --warn:#eab308; --err:#ef4444;
+    --sev-critical:#b91c1c; --sev-high:#ea580c; --sev-medium:#ca8a04;
+    --sev-low:#65a30d; --sev-info:#0284c7;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.45}
+  code,pre,textarea,.mono{font-family:'SF Mono',Monaco,Consolas,monospace}
+  main{max-width:980px;margin:0 auto;padding:16px}
+  header{display:flex;flex-wrap:wrap;align-items:center;gap:12px;
+    padding:12px 16px;background:var(--panel);border:1px solid var(--border);
+    border-radius:8px;margin-bottom:14px}
+  header h1{margin:0;font-size:16px;flex:1 1 auto}
+  .budget-bar{display:inline-flex;align-items:center;gap:8px}
+  .budget-cells{display:inline-flex;gap:2px}
+  .budget-cells span{width:10px;height:14px;background:#334155;border-radius:2px}
+  .budget-cells span.on-ok{background:var(--ok)}
+  .budget-cells span.on-warn{background:var(--warn)}
+  .budget-cells span.on-err{background:var(--err)}
+  .health{display:inline-flex;align-items:center;gap:4px;font-weight:600}
+  .health.ok{color:var(--ok)} .health.err{color:var(--err)}
+  button{cursor:pointer;font:inherit;background:var(--panel2);color:var(--text);
+    border:1px solid var(--border);border-radius:6px;padding:6px 10px}
+  button:hover:not(:disabled){border-color:var(--accent)}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  button:disabled{opacity:.55;cursor:not-allowed}
+  button.primary{background:var(--accent);color:#0b1220;border-color:var(--accent);font-weight:600}
+  button.primary:hover:not(:disabled){background:var(--accent-hover);border-color:var(--accent-hover)}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+  .examples-row button{padding:6px 12px}
+  .file-block{background:var(--panel);border:1px solid var(--border);
+    border-radius:8px;padding:12px;margin-bottom:12px}
+  .file-block .row label{font-size:12px;color:var(--muted);margin-right:4px}
+  .file-block input[type=text],.file-block select{
+    background:var(--panel2);color:var(--text);border:1px solid var(--border);
+    border-radius:5px;padding:6px 8px;font:inherit}
+  .file-block input[type=text]{flex:1 1 200px;min-width:140px}
+  .file-block textarea{width:100%;min-height:340px;resize:vertical;
+    background:var(--panel2);color:var(--text);border:1px solid var(--border);
+    border-radius:5px;padding:8px;font-size:13px;line-height:1.4}
+  .file-block .remove-btn{margin-left:auto}
+  .analyze-row{display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px}
+  .spinner{display:inline-block;width:14px;height:14px;border:2px solid #475569;
+    border-top-color:var(--accent);border-radius:50%;
+    animation:spin .8s linear infinite;vertical-align:middle;margin-right:6px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .banner{padding:10px 14px;border-radius:8px;margin-bottom:12px;border:1px solid;font-weight:500}
+  .banner.warn{background:#422006;border-color:#a16207;color:#fde68a}
+  .banner.err{background:#450a0a;border-color:#7f1d1d;color:#fecaca}
+  .banner.info{background:#0c2d4f;border-color:#0369a1;color:#bae6fd}
+  .result{background:var(--panel);border:1px solid var(--border);
+    border-radius:8px;padding:14px;margin-top:10px}
+  .result-meta{color:var(--muted);font-size:12px;margin-bottom:10px}
+  .result-summary{margin:6px 0 14px;white-space:pre-wrap;word-wrap:break-word}
+  .finding{position:relative;background:var(--panel2);border:1px solid var(--border);
+    border-left-width:4px;border-radius:6px;padding:10px 12px;margin-bottom:10px}
+  .finding.sev-critical{border-left-color:var(--sev-critical)}
+  .finding.sev-high{border-left-color:var(--sev-high)}
+  .finding.sev-medium{border-left-color:var(--sev-medium)}
+  .finding.sev-low{border-left-color:var(--sev-low)}
+  .finding.sev-info{border-left-color:var(--sev-info)}
+  .finding.pre-scan{background:#172033}
+  .finding-head{font-weight:600;font-size:13px;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+  .sev-badge{display:inline-block;padding:1px 6px;border-radius:3px;color:#fff;font-size:11px;letter-spacing:.5px}
+  .sev-badge.sev-critical{background:var(--sev-critical)}
+  .sev-badge.sev-high{background:var(--sev-high)}
+  .sev-badge.sev-medium{background:var(--sev-medium)}
+  .sev-badge.sev-low{background:var(--sev-low)}
+  .sev-badge.sev-info{background:var(--sev-info)}
+  .prescan-tag{position:absolute;top:8px;right:10px;font-size:10px;
+    background:#475569;color:#e2e8f0;padding:1px 6px;border-radius:3px;letter-spacing:.5px}
+  .finding-loc{color:var(--muted);font-weight:400}
+  .finding-msg{margin:6px 0 4px;white-space:pre-wrap;word-wrap:break-word}
+  .finding-sugg{margin-top:6px;padding:6px 8px;background:#0b1220;
+    border-radius:4px;font-size:13px;white-space:pre-wrap;word-wrap:break-word}
+  details{margin-top:10px;background:var(--panel2);border:1px solid var(--border);
+    border-radius:6px;padding:6px 10px}
+  details summary{cursor:pointer;font-weight:500;outline:none}
+  details summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  details ul{margin:6px 0;padding-left:20px}
+  details li{margin:2px 0}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>SunSecurityBot — Test UI</h1>
+    <div class="budget-bar" aria-label="LLM budget">
+      <span class="mono" id="budget-text">— / — ₽</span>
+      <span class="budget-cells" id="budget-cells" aria-hidden="true"></span>
+    </div>
+    <span class="health" id="health" aria-live="polite">…</span>
+    <button id="btn-reset" type="button">Reset</button>
+  </header>
+
+  <div class="row examples-row" id="examples-row" aria-label="Examples">
+    <span style="color:var(--muted)">Examples:</span>
+    <span id="examples-buttons"></span>
+    <button id="btn-add-file" type="button">+ Add file</button>
+  </div>
+
+  <form id="files-form" autocomplete="off"></form>
+
+  <div class="analyze-row">
+    <button id="btn-analyze" class="primary" type="button" disabled>Analyze ▶</button>
+  </div>
+
+  <div id="status-area" aria-live="polite"></div>
+  <div id="result-area"></div>
+</main>
+
+<script>
+"use strict";
+(function(){
+  const STORAGE_KEY = "sunsec.ui.state";
+  const UI_TIMEOUT_MS = 60000;
+  const LANGS = ["Python","JavaScript","TypeScript","JSX","TSX","Go","Java","Ruby","Other"];
+  const $ = (sel) => document.querySelector(sel);
+  const ce = (tag, opts) => {
+    const el = document.createElement(tag);
+    if (opts) {
+      if (opts.text != null) el.textContent = opts.text;
+      if (opts.cls) el.className = opts.cls;
+      if (opts.attrs) for (const k in opts.attrs) el.setAttribute(k, opts.attrs[k]);
+    }
+    return el;
+  };
+
+  let examplesCache = null;
+  let budgetSpent = 0, budgetLimit = 0;
+  let lastSpentBefore = 0;
+
+  function loadState(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch(_) { return null; }
+  }
+  function saveState(){
+    try {
+      const state = { files: collectFiles(), lastResult: window.__lastResult || null };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch(_) {}
+  }
+
+  function renderBudget(spent, limit){
+    budgetSpent = spent; budgetLimit = limit;
+    const remaining = Math.max(0, limit - spent);
+    const pct = limit > 0 ? (remaining / limit * 100) : 100;
+    $("#budget-text").textContent = `${spent.toFixed(2)} / ${limit.toFixed(2)} ₽`;
+    const cells = $("#budget-cells");
+    cells.replaceChildren();
+    let cls = "on-ok";
+    if (pct < 20) cls = "on-err";
+    else if (pct <= 50) cls = "on-warn";
+    const filled = Math.round(pct / 10);
+    for (let i = 0; i < 10; i++) {
+      const c = ce("span");
+      if (i < filled) c.className = cls;
+      cells.appendChild(c);
+    }
+  }
+
+  async function fetchJSON(url, opts, timeoutMs){
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), timeoutMs || 10000);
+    try {
+      const r = await fetch(url, Object.assign({signal: ctrl.signal}, opts || {}));
+      const ct = r.headers.get("content-type") || "";
+      const body = ct.indexOf("application/json") >= 0 ? await r.json() : await r.text();
+      return { ok: r.ok, status: r.status, body };
+    } finally { clearTimeout(tid); }
+  }
+
+  async function checkHealth(){
+    const h = $("#health");
+    try {
+      const res = await fetchJSON("/health", {}, 5000);
+      if (res.ok) { h.textContent = "✓ /health"; h.className = "health ok"; }
+      else { h.textContent = "✗ /health " + res.status; h.className = "health err"; }
+    } catch(_) { h.textContent = "✗ /health"; h.className = "health err"; }
+  }
+
+  async function refreshBudget(){
+    try {
+      const res = await fetchJSON("/api/ui/budget", {}, 5000);
+      if (res.ok && res.body && typeof res.body.spent_rub === "number") {
+        renderBudget(res.body.spent_rub, res.body.limit_rub);
+        return res.body.spent_rub;
+      }
+    } catch(_) {}
+    return null;
+  }
+
+  function makeFileBlock(file){
+    const block = ce("div", {cls: "file-block"});
+    block.dataset.role = "file-block";
+    const row1 = ce("div", {cls: "row"});
+    const pathLabel = ce("label", {text: "File path:"});
+    const pathInput = ce("input", {attrs: {type: "text", placeholder: "app/views.py"}});
+    pathInput.value = (file && file.path) || "";
+    pathInput.dataset.field = "path";
+    const langLabel = ce("label", {text: "Language:"});
+    const langSel = document.createElement("select");
+    langSel.dataset.field = "language";
+    for (const l of LANGS) {
+      const opt = ce("option", {text: l, attrs: {value: l.toLowerCase()}});
+      langSel.appendChild(opt);
+    }
+    langSel.value = (file && file.language) || "python";
+    const removeBtn = ce("button", {text: "✕ Remove", cls: "remove-btn", attrs: {type: "button"}});
+    removeBtn.addEventListener("click", () => {
+      const blocks = document.querySelectorAll("[data-role='file-block']");
+      if (blocks.length <= 1) return;
+      block.remove();
+      updateAnalyzeBtn();
+      saveState();
+    });
+    row1.appendChild(pathLabel); row1.appendChild(pathInput);
+    row1.appendChild(langLabel); row1.appendChild(langSel);
+    row1.appendChild(removeBtn);
+    const ta = document.createElement("textarea");
+    ta.dataset.field = "code";
+    ta.spellcheck = false;
+    ta.placeholder = "// paste code here";
+    ta.value = (file && file.code) || "";
+    block.appendChild(row1);
+    block.appendChild(ta);
+    [pathInput, langSel, ta].forEach(el => {
+      el.addEventListener("input", () => { updateAnalyzeBtn(); saveState(); });
+      el.addEventListener("change", () => { updateAnalyzeBtn(); saveState(); });
+    });
+    return block;
+  }
+
+  function collectFiles(){
+    const blocks = document.querySelectorAll("[data-role='file-block']");
+    const out = [];
+    blocks.forEach(b => {
+      out.push({
+        path: b.querySelector("[data-field='path']").value.trim(),
+        language: b.querySelector("[data-field='language']").value,
+        code: b.querySelector("[data-field='code']").value,
+      });
+    });
+    return out;
+  }
+
+  function updateAnalyzeBtn(){
+    const files = collectFiles();
+    const anyCode = files.some(f => f.code && f.code.trim().length > 0);
+    $("#btn-analyze").disabled = !anyCode;
+  }
+
+  function clearChildren(node){ while (node.firstChild) node.removeChild(node.firstChild); }
+
+  function renderBanner(kind, title, hint){
+    const sa = $("#status-area"); clearChildren(sa);
+    const b = ce("div", {cls: "banner " + kind});
+    b.appendChild(ce("strong", {text: title}));
+    if (hint) { b.appendChild(document.createElement("br")); b.appendChild(ce("span", {text: hint})); }
+    sa.appendChild(b);
+  }
+
+  function renderFinding(f, isPreScan){
+    const sev = (f.severity || "info").toLowerCase();
+    const card = ce("div", {cls: "finding sev-" + sev + (isPreScan ? " pre-scan" : "")});
+    if (isPreScan) card.appendChild(ce("span", {cls: "prescan-tag", text: "pre-scan"}));
+    const head = ce("div", {cls: "finding-head"});
+    head.appendChild(ce("span", {cls: "sev-badge sev-" + sev, text: sev.toUpperCase()}));
+    const conf = (typeof f.confidence === "number") ? f.confidence.toFixed(2) : "—";
+    const loc = ` · ${f.class || "?"} · ${f.file || "?"}:${f.line || 0} · conf ${conf}`;
+    head.appendChild(ce("span", {cls: "finding-loc", text: loc}));
+    card.appendChild(head);
+    if (f.message) card.appendChild(ce("div", {cls: "finding-msg", text: f.message}));
+    if (f.suggestion) {
+      const sug = ce("div", {cls: "finding-sugg"});
+      sug.appendChild(document.createTextNode("💡 "));
+      sug.appendChild(document.createTextNode(f.suggestion));
+      card.appendChild(sug);
+    }
+    return card;
+  }
+
+  function renderResult(data){
+    window.__lastResult = data; saveState();
+    const ra = $("#result-area"); clearChildren(ra);
+    const llm = data.llm || {};
+    const status = llm.status || "unknown";
+    if (status === "budget_exceeded") {
+      renderBanner("warn", `Budget exhausted: ${budgetSpent.toFixed(2)} / ${budgetLimit.toFixed(2)} ₽`,
+                   data.summary || "");
+      return;
+    }
+    if (status === "timeout" || status === "provider_unavailable") {
+      const title = status === "timeout" ? "Таймаут polza.ai" : "polza.ai недоступен";
+      renderBanner("err", title, "Проверь POLZA_API_KEY в .env. " + (data.summary || ""));
+      // продолжаем — pre_scan_findings всё равно рендерим ниже.
+    } else if (status === "skipped_empty") {
+      renderBanner("info", "Введи код хотя бы в один файл", "");
+      return;
+    } else {
+      clearChildren($("#status-area"));
+    }
+
+    const wrap = ce("div", {cls: "result"});
+    const costDelta = Math.max(0, budgetSpent - lastSpentBefore);
+    const meta = `latency ${llm.latency_ms || 0} ms · cost ${costDelta.toFixed(4)} ₽ · model ${llm.model || "unknown"} · status ${status}`;
+    wrap.appendChild(ce("div", {cls: "result-meta", text: meta}));
+    if (data.summary) {
+      const sum = ce("div", {cls: "result-summary"});
+      sum.appendChild(ce("strong", {text: "Summary: "}));
+      sum.appendChild(document.createTextNode(data.summary));
+      wrap.appendChild(sum);
+    }
+
+    const findings = Array.isArray(data.findings) ? data.findings : [];
+    const preScan = Array.isArray(data.pre_scan_findings) ? data.pre_scan_findings : [];
+    const preScanKeys = new Set(preScan.map(f => `${f.file}|${f.line}|${f.class}`));
+    if (findings.length === 0 && preScan.length === 0 && status === "ok") {
+      wrap.appendChild(ce("div", {text: "No findings — looks clean."}));
+    } else {
+      findings.forEach(f => {
+        const key = `${f.file}|${f.line}|${f.class}`;
+        wrap.appendChild(renderFinding(f, preScanKeys.has(key)));
+      });
+    }
+
+    const makeDetails = (title, items, renderItem) => {
+      if (!items || items.length === 0) return null;
+      const d = document.createElement("details");
+      d.appendChild(ce("summary", {text: `${title} (${items.length})`}));
+      const ul = document.createElement("ul");
+      items.forEach(it => { const li = document.createElement("li"); renderItem(li, it); ul.appendChild(li); });
+      d.appendChild(ul);
+      return d;
+    };
+    const exDet = makeDetails("Excluded files", data.excluded_files || [], (li, it) => {
+      li.textContent = `${it.path} — ${it.reason}${it.detail ? " (" + it.detail + ")" : ""}`;
+    });
+    if (exDet) wrap.appendChild(exDet);
+    const dropDet = makeDetails("Dropped by FP filter", data.dropped_by_fp || [], (li, it) => {
+      li.textContent = `[${(it.severity||"").toUpperCase()}] ${it.class || "?"} · ${it.file}:${it.line} — ${it.message || ""}`;
+    });
+    if (dropDet) wrap.appendChild(dropDet);
+    const preDet = makeDetails("Pre-scan findings (before LLM)", preScan, (li, it) => {
+      li.textContent = `[${(it.severity||"").toUpperCase()}] ${it.class || "?"} · ${it.file}:${it.line} — ${it.message || ""}`;
+    });
+    if (preDet) wrap.appendChild(preDet);
+
+    ra.appendChild(wrap);
+  }
+
+  async function onAnalyzeClick(){
+    const files = collectFiles().filter(f => (f.path && f.path.length > 0) || (f.code && f.code.length > 0));
+    if (files.length === 0) return;
+    const btn = $("#btn-analyze");
+    btn.disabled = true;
+    const prev = btn.textContent;
+    btn.textContent = "";
+    btn.appendChild(ce("span", {cls: "spinner"}));
+    btn.appendChild(document.createTextNode("Analyzing…"));
+    clearChildren($("#status-area"));
+    clearChildren($("#result-area"));
+
+    lastSpentBefore = (await refreshBudget()) || budgetSpent;
+
+    try {
+      const res = await fetchJSON("/api/ui/analyze",
+        { method: "POST", headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({files: files}) },
+        UI_TIMEOUT_MS);
+      await refreshBudget();
+      if (res.status === 413) {
+        const kb = files.reduce((s,f) => s + (f.code ? f.code.length : 0), 0) / 1024;
+        renderBanner("err", `Превышен soft-limit: загружено ${kb.toFixed(1)} KB, лимит 50 KB`,
+                     typeof res.body === "string" ? res.body : (res.body.detail || ""));
+        return;
+      }
+      if (res.status === 422) {
+        const det = (res.body && res.body.detail) ? JSON.stringify(res.body.detail) : "Validation error";
+        renderBanner("err", "Ошибка валидации запроса (422)", det);
+        return;
+      }
+      if (!res.ok) {
+        const et = (res.body && res.body.error_type) || "HTTP " + res.status;
+        renderBanner("err", "Ошибка сервера: " + et, "");
+        return;
+      }
+      renderResult(res.body);
+    } catch (e) {
+      if (e && e.name === "AbortError") {
+        renderBanner("err", "Превышен таймаут UI", "Проверь логи сервера.");
+      } else {
+        renderBanner("err", "Network error", String(e && e.message || e));
+      }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = prev;
+      updateAnalyzeBtn();
+    }
+  }
+
+  async function loadExamples(){
+    if (examplesCache) return examplesCache;
+    try {
+      const res = await fetchJSON("/api/ui/examples", {}, 5000);
+      if (res.ok && Array.isArray(res.body)) { examplesCache = res.body; return examplesCache; }
+    } catch(_) {}
+    return [];
+  }
+
+  async function renderExampleButtons(){
+    const ex = await loadExamples();
+    const wrap = $("#examples-buttons"); clearChildren(wrap);
+    ex.forEach(e => {
+      const b = ce("button", {text: e.name || "example", attrs: {type: "button"}});
+      b.title = e.description || "";
+      b.addEventListener("click", () => applyExample(e));
+      wrap.appendChild(b);
+    });
+  }
+
+  function applyExample(ex){
+    const form = $("#files-form"); clearChildren(form);
+    const files = (ex && Array.isArray(ex.files)) ? ex.files : [];
+    if (files.length === 0) form.appendChild(makeFileBlock({}));
+    files.forEach(f => form.appendChild(makeFileBlock({
+      path: f.path || "", language: (f.language || "python").toLowerCase(), code: f.code || ""
+    })));
+    updateAnalyzeBtn(); saveState();
+  }
+
+  function resetAll(){
+    try { localStorage.removeItem(STORAGE_KEY); } catch(_) {}
+    window.__lastResult = null;
+    const form = $("#files-form"); clearChildren(form);
+    form.appendChild(makeFileBlock({language: "python"}));
+    clearChildren($("#status-area"));
+    clearChildren($("#result-area"));
+    updateAnalyzeBtn();
+  }
+
+  function init(){
+    const form = $("#files-form");
+    const state = loadState();
+    if (state && Array.isArray(state.files) && state.files.length > 0) {
+      state.files.forEach(f => form.appendChild(makeFileBlock(f)));
+    } else {
+      form.appendChild(makeFileBlock({language: "python"}));
+    }
+    $("#btn-add-file").addEventListener("click", () => {
+      form.appendChild(makeFileBlock({language: "python"}));
+      updateAnalyzeBtn(); saveState();
+    });
+    $("#btn-reset").addEventListener("click", resetAll);
+    $("#btn-analyze").addEventListener("click", onAnalyzeClick);
+    updateAnalyzeBtn();
+    checkHealth();
+    refreshBudget();
+    renderExampleButtons();
+    if (state && state.lastResult) {
+      window.__lastResult = state.lastResult;
+      try { renderResult(state.lastResult); } catch(_) {}
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else { init(); }
+})();
+</script>
+</body>
+</html>

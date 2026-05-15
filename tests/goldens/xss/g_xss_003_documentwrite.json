@@ -1,0 +1,14 @@
+{
+  "id": "xss_003_document_write",
+  "language": "javascript",
+  "file_path": "web/static/banner.js",
+  "added_lines": [
+    {"new_line_no": 4, "content": "function showWelcome(name) {"},
+    {"new_line_no": 5, "content": "  document.write('<h1>Hello, ' + name + '!</h1>');"},
+    {"new_line_no": 6, "content": "}"}
+  ],
+  "expected_findings": [
+    {"class": "xss", "severity_min": "high", "line": 5, "confidence_min": 0.7}
+  ],
+  "notes": "document.write с конкатенацией user input."
+}

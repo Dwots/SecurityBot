@@ -1,0 +1,14 @@
+{
+  "id": "sqli_002_format_string",
+  "language": "python",
+  "file_path": "src/auth/login.py",
+  "added_lines": [
+    {"new_line_no": 22, "content": "def authenticate(cursor, email):"},
+    {"new_line_no": 23, "content": "    sql = \"SELECT id FROM users WHERE email = '{}'\".format(email)"},
+    {"new_line_no": 24, "content": "    cursor.execute(sql)"}
+  ],
+  "expected_findings": [
+    {"class": "sql_injection", "severity_min": "high", "line": 23, "confidence_min": 0.7}
+  ],
+  "notes": "SQLi через .format() на auth-роуте — должна быть severity high+ (path floor)."
+}

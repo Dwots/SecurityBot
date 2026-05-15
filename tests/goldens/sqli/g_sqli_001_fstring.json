@@ -1,0 +1,14 @@
+{
+  "id": "sqli_001_fstring_in_execute",
+  "language": "python",
+  "file_path": "src/users/repo.py",
+  "added_lines": [
+    {"new_line_no": 10, "content": "def get_user(conn, user_id):"},
+    {"new_line_no": 11, "content": "    query = f\"SELECT * FROM users WHERE id = {user_id}\""},
+    {"new_line_no": 12, "content": "    return conn.execute(query).fetchone()"}
+  ],
+  "expected_findings": [
+    {"class": "sql_injection", "severity_min": "high", "line": 11, "confidence_min": 0.7}
+  ],
+  "notes": "Явная SQLi через f-string, передаётся в .execute(). vuln_taxonomy §3.2 пример SQLI-1."
+}

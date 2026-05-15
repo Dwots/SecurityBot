@@ -1,0 +1,14 @@
+{
+  "id": "xss_001_innerHTML_userinput",
+  "language": "javascript",
+  "file_path": "web/static/search.js",
+  "added_lines": [
+    {"new_line_no": 12, "content": "function renderResults(userQuery) {"},
+    {"new_line_no": 13, "content": "  document.getElementById('out').innerHTML = '<b>' + userQuery + '</b>';"},
+    {"new_line_no": 14, "content": "}"}
+  ],
+  "expected_findings": [
+    {"class": "xss", "severity_min": "high", "line": 13, "confidence_min": 0.7}
+  ],
+  "notes": "Прямой innerHTML с userQuery — DOM-XSS. vuln_taxonomy §5.2 пример XSS-1."
+}

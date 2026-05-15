@@ -1,0 +1,10 @@
+[
+  {
+    "filename": "web/header.js",
+    "status": "added",
+    "additions": 5,
+    "deletions": 0,
+    "changes": 5,
+    "patch": "@@ -0,0 +1,5 @@\n+function renderHeader(userName) {\n+  const el = document.getElementById('user-greeting');\n+  // NOTE: непосредственная инъекция HTML без экранирования\n+  el.innerHTML = '<span>Hello, ' + userName + '!</span>';\n+}\n"
+  }
+]

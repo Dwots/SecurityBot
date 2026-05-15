@@ -1,0 +1,33 @@
+{
+  "action": "opened",
+  "number": 101,
+  "pull_request": {
+    "id": 100001,
+    "number": 101,
+    "state": "open",
+    "title": "feat(users): add user lookup helper",
+    "head": {
+      "sha": "aaaa1111bbbb2222cccc3333dddd4444eeee5555",
+      "ref": "feat/user-lookup",
+      "repo": {
+        "full_name": "qa-fixtures/sunsec-e2e",
+        "owner": {"login": "qa-fixtures", "id": 9001}
+      }
+    },
+    "base": {
+      "sha": "0000baseaaaa0000baseaaaa0000baseaaaa1111",
+      "ref": "main",
+      "repo": {
+        "full_name": "qa-fixtures/sunsec-e2e",
+        "owner": {"login": "qa-fixtures", "id": 9001}
+      }
+    },
+    "draft": false,
+    "user": {"login": "qa-author", "id": 9002}
+  },
+  "repository": {
+    "full_name": "qa-fixtures/sunsec-e2e",
+    "owner": {"login": "qa-fixtures", "id": 9001}
+  },
+  "sender": {"login": "qa-author", "id": 9002}
+}

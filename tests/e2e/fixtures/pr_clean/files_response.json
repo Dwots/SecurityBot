@@ -1,0 +1,10 @@
+[
+  {
+    "filename": "src/users/repository.py",
+    "status": "added",
+    "additions": 6,
+    "deletions": 0,
+    "changes": 6,
+    "patch": "@@ -0,0 +1,6 @@\n+def get_user_by_id(conn, user_id):\n+    # Параметризованный запрос — драйвер сам экранирует значение.\n+    query = \"SELECT id, email FROM users WHERE id = ?\"\n+    row = conn.execute(query, (user_id,)).fetchone()\n+    return row\n+\n"
+  }
+]

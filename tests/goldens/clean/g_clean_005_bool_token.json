@@ -1,0 +1,11 @@
+{
+  "id": "clean_005_bool_named_secret",
+  "language": "python",
+  "file_path": "src/config/features.py",
+  "added_lines": [
+    {"new_line_no": 2, "content": "IS_SECRET_ROTATION_ENABLED = True"},
+    {"new_line_no": 3, "content": "API_TOKEN_VALIDATION_ENABLED = False"}
+  ],
+  "expected_findings": [],
+  "notes": "Имя содержит secret/token, но значение — bool. vuln_taxonomy §6 #11."
+}

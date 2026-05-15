@@ -1,0 +1,12 @@
+{
+  "id": "clean_002_html_escape",
+  "language": "python",
+  "file_path": "src/views/render.py",
+  "added_lines": [
+    {"new_line_no": 6, "content": "import html"},
+    {"new_line_no": 7, "content": "def render_user(name: str) -> str:"},
+    {"new_line_no": 8, "content": "    return '<h1>' + html.escape(name) + '</h1>'"}
+  ],
+  "expected_findings": [],
+  "notes": "html.escape — известный санитайзер."
+}

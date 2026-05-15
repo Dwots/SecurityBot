@@ -1,0 +1,90 @@
+{
+  "provider": "polza.ai gpt-4o-mini",
+  "budget_cap_rub": 10.0,
+  "cost_rub_spent": 0.2245,
+  "results": [
+    {
+      "pr_name": "pr_sqli",
+      "file_path": "src/users/repository.py",
+      "http_status": 202,
+      "elapsed_seconds": 3.23,
+      "review_posted": true,
+      "inline_count": 1,
+      "inline_bodies": [
+        "**[SUNSEC][HIGH] Sql Injection** (confidence 95%)\n\nSQL-запрос собран через f-string с пользовательским user_id (\"SELECT id, email FROM users WHERE id = {user_id}\") — нет параметризации, возможна SQL-инъекция.\n\n### Suggested fix\n```python\nquery = \"SELECT id, email FROM users WHERE id = ?\"; row = conn.execute(query, (user_id,)).fetchone()\n```\n\n<!-- sunsec:bot:v1:finding:fdc7653343b51224 -->"
+      ],
+      "summary_posted": true,
+      "summary_body": "## SunSecurityBot review\n\nFound **1** finding in the changed code.\n\n> Найдена 1 уязвимость уровня high (SQLi через f-string в src/users/repository.py:3).\n\n### Severity breakdown\n\n| Severity  | Count |\n|-----------|-------|\n| [CRIT] Critical | 0     |\n| [HIGH] High     | 1     |\n| [MED]  Medium   | 0     |\n| [LOW]  Low      | 0     |\n| [INFO] Info     | 0     |\n\n### Top findings (showing 1 of 1)\n\n- [HIGH] **Sql Injection** at `src/users/repository.py:3` — SQL-запрос собран через f-string с пользовательским user_id (\"SELECT id, email FROM users WHERE id = {user_id}\") — не...\n\n**Summary:** 1 total, 1 anchored inline, 0 general. Analyzed commit `aaaa111`.\n\n<!-- sunsec:bot:v1:summary -->",
+      "github_requests_count": 7,
+      "github_paths": [
+        "/repos/qa-fixtures/sunsec-e2e/pulls/101/comments",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/101/reviews",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/101",
+        "/repos/qa-fixtures/sunsec-e2e/issues/101/comments",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/101/files"
+      ]
+    },
+    {
+      "pr_name": "pr_secret",
+      "file_path": "scripts/aws_deploy.py",
+      "http_status": 202,
+      "elapsed_seconds": 5.82,
+      "review_posted": true,
+      "inline_count": 2,
+      "inline_bodies": [
+        "**[SUNSEC][CRITICAL] Hardcoded Secret** (confidence 98%)\n\nHardcoded secret matches pattern 'aws_access_key_id'. Detected by deterministic pre-LLM scan.\n\n<!-- sunsec:bot:v1:finding:1a718397cf4ea7fa -->",
+        "**[SUNSEC][CRITICAL] Hardcoded Secret** (confidence 95%)\n\nВ коде содержится жестко закодированный AWS секретный ключ: \"AWS_SECRET_ACCESS_KEY = 'xKp2N6tQ9LzVm4HnGrJsBwYf5RdEcA8XuPzWk7Tv'\" — это представляет собой серьезную уязвимость безопасности.\n\n### Suggested fix\n```python\nИспользуйте переменные окружения для хранения ключей доступа.\n```\n\n<!-- sunsec:bot:v1:finding:e1e8317da60c91dc -->"
+      ],
+      "summary_posted": true,
+      "summary_body": "## SunSecurityBot review\n\nFound **2** findings in the changed code.\n\n> Найдены 2 уязвимости уровня critical (жестко закодированные AWS ключи в scripts/aws_deploy.py:3 и scripts/aws_deploy.py:4).\n\n### Severity breakdown\n\n| Severity  | Count |\n|-----------|-------|\n| [CRIT] Critical | 2     |\n| [HIGH] High     | 0     |\n| [MED]  Medium   | 0     |\n| [LOW]  Low      | 0     |\n| [INFO] Info     | 0     |\n\n### Top findings (showing 2 of 2)\n\n- [CRIT] **Hardcoded Secret** at `scripts/aws_deploy.py:3` — Hardcoded secret matches pattern 'aws_access_key_id'. Detected by deterministic pre-LLM scan.\n- [CRIT] **Hardcoded Secret** at `scripts/aws_deploy.py:4` — В коде содержится жестко закодированный AWS секретный ключ: \"AWS_SECRET_ACCESS_KEY = 'xKp2N6tQ9LzVm4HnGrJsBwYf5RdEcA8...\n\n**Summary:** 2 total, 2 anchored inline, 0 general. Analyzed commit `1234sec`.\n\n<!-- sunsec:bot:v1:summary -->",
+      "github_requests_count": 7,
+      "github_paths": [
+        "/repos/qa-fixtures/sunsec-e2e/issues/102/comments",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/102/comments",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/102",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/102/files",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/102/reviews"
+      ]
+    },
+    {
+      "pr_name": "pr_xss",
+      "file_path": "web/header.js",
+      "http_status": 202,
+      "elapsed_seconds": 3.7,
+      "review_posted": true,
+      "inline_count": 1,
+      "inline_bodies": [
+        "**[SUNSEC][HIGH] Xss** (confidence 95%)\n\nНеэкранированный ввод пользователя вставляется в HTML через 'el.innerHTML = '<span>Hello, ' + userName + '!</span>';'. Это создает уязвимость для XSS.\n\n### Suggested fix\n```javascript\nel.textContent = 'Hello, ' + userName;\n```\n\n<!-- sunsec:bot:v1:finding:c3b0ca6fc41b5e59 -->"
+      ],
+      "summary_posted": true,
+      "summary_body": "## SunSecurityBot review\n\nFound **1** finding in the changed code.\n\n> Найдена 1 уязвимость уровня high (XSS через неэкранированный ввод в web/header.js:4).\n\n### Severity breakdown\n\n| Severity  | Count |\n|-----------|-------|\n| [CRIT] Critical | 0     |\n| [HIGH] High     | 1     |\n| [MED]  Medium   | 0     |\n| [LOW]  Low      | 0     |\n| [INFO] Info     | 0     |\n\n### Top findings (showing 1 of 1)\n\n- [HIGH] **Xss** at `web/header.js:4` — Неэкранированный ввод пользователя вставляется в HTML через 'el.innerHTML = '<span>Hello, ' + userName + '!</span>';'...\n\n**Summary:** 1 total, 1 anchored inline, 0 general. Analyzed commit `bbbb222`.\n\n<!-- sunsec:bot:v1:summary -->",
+      "github_requests_count": 7,
+      "github_paths": [
+        "/repos/qa-fixtures/sunsec-e2e/pulls/103/comments",
+        "/repos/qa-fixtures/sunsec-e2e/issues/103/comments",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/103/reviews",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/103",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/103/files"
+      ]
+    },
+    {
+      "pr_name": "pr_clean",
+      "file_path": "src/users/repository.py",
+      "http_status": 202,
+      "elapsed_seconds": 2.79,
+      "review_posted": false,
+      "inline_count": 0,
+      "inline_bodies": [],
+      "summary_posted": true,
+      "summary_body": "**SunSecurityBot:** не найдено уязвимостей по сканируемой таксономии (SQLi / hardcoded secrets / XSS) в изменённых файлах.\n\n<!-- sunsec:bot:v1:empty -->",
+      "github_requests_count": 4,
+      "github_paths": [
+        "/repos/qa-fixtures/sunsec-e2e/pulls/104/files",
+        "/repos/qa-fixtures/sunsec-e2e/pulls/104",
+        "/repos/qa-fixtures/sunsec-e2e/issues/104/comments"
+      ]
+    }
+  ],
+  "errors": [],
+  "real_polza_used": true
+}

@@ -1,0 +1,9 @@
+# Рабочие данные
+agents/
+requirements/
+tmp/
+
+# Секреты
+.env
+.env.local
+*.key

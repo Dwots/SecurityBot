@@ -1,0 +1,76 @@
+# SunSecurityBot — docker-compose (T-020).
+#
+# ВАЖНО (ADR-3, system_design.md §7):
+#   in-memory state store. Multi-replica запрещены — счётчик бюджета,
+#   idempotency-cache и dedup'ы живут в RAM конкретного процесса.
+#   Поднимать `--scale sunsec=N` НЕЛЬЗЯ без миграции state (Redis/SQLite).
+#
+# Запуск:
+#   1) cp .env.example .env   и заполнить VCS_TOKEN / WEBHOOK_SECRET / POLZA_API_KEY
+#   2) docker compose up -d
+#   3) curl http://localhost:8000/health
+#
+# Подробнее — agents/artifacts/devops/deployment.md.
+
+services:
+  sunsec:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sunsec:local
+    container_name: sunsec
+    restart: unless-stopped
+
+    # env_file — секреты НЕ попадают в `docker inspect` так явно, как inline `environment:`,
+    # и не утекают в `docker compose config`.
+    env_file:
+      - .env
+
+    # PORT — наружу. Внутри контейнер всегда слушает 8000 (HOST=0.0.0.0 фиксирован
+    # в Dockerfile ENV, но при необходимости переопределяется через .env).
+    ports:
+      - "${PORT:-8000}:8000"
+
+    # Healthcheck дублирует то, что зашито в Dockerfile, но с укороченным
+    # start_period — для compose UX (status `healthy` появится быстрее).
+    healthcheck:
+      test:
+        - "CMD"
+        - "python"
+        - "-c"
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).status==200 else 1)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+    # --- Безопасность ---
+    security_opt:
+      - "no-new-privileges:true"
+
+    # Файловая система read-only: приложение не пишет на диск (логи → stdout).
+    # Если в будущем понадобится /tmp — раскомментировать tmpfs ниже.
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+
+    # Ограничения ресурсов (best-effort на single-host docker compose v2).
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "512M"
+        reservations:
+          memory: "128M"
+
+    # Логи в stdout/stderr → docker logs. JSON-log driver с ротацией,
+    # чтобы demo-инстанс не съел диск за ночь.
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# --- Сети ---
+# Для single-service compose сеть по умолчанию `default` (bridge) подходит.
+# Не объявляем явно, чтобы не плодить именованные ресурсы.
