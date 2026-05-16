@@ -1,9 +1,14 @@
-"""PipelineOrchestrator — связующий слой (system_design §3.7).
+"""PipelineOrchestrator — связующий слой (system_design §3.7 + v1.2.1 §12).
 
 T-008: добавлен реальный вызов `vcs.fetch_pr_diff(repo, pr_number)` и
 структурированное логирование результата (количество файлов, head/base SHA).
 Дальше по цепочке (diff_filter → llm.analyze → publisher.publish) — T-009 /
 T-012 / T-016.
+
+T-038 (M-9): добавлены best-effort writes в `StateStore` durable-layer
+(`save_check` / `update_check_status` / `save_findings` / `save_comments`).
+Ошибка SQLite **не валит pipeline** — логируем через `log.exception(
+"storage_write_failed", stage=...)` и продолжаем (§12.4).
 
 Контракт ошибок (см. system_design §4.2):
 - `NotFoundError` — тихо логируем и завершаем (PR удалён / нет доступа).
@@ -17,10 +22,17 @@ BackgroundTasks, исключение там просто потеряется �
 from __future__ import annotations
 
 import logging
+import secrets
 import time
+from datetime import datetime
 from typing import Any, Optional
 
 from sunsec.contracts import GitHubPullRequestEvent
+from sunsec.contracts.storage import (
+    CheckRecord,
+    CommentRecord,
+    FindingRecord,
+)
 from sunsec.llm.base import (
     BudgetExceeded,
     LLMProviderUnavailable,
@@ -35,6 +47,28 @@ from sunsec.vcs.base import (
 )
 
 log = logging.getLogger(__name__)
+
+
+def _generate_check_id() -> str:
+    """`chk_` + 5-байтный hex (system_design §11.3.1)."""
+    return f"chk_{secrets.token_hex(5)}"
+
+
+def _generate_finding_id() -> str:
+    return f"fnd_{secrets.token_hex(6)}"
+
+
+def _generate_comment_id() -> str:
+    return f"cmt_{secrets.token_hex(6)}"
+
+
+def _severity_counts_from_findings(findings: list) -> dict[str, int]:
+    counts = {"critical": 0, "high": 0, "medium": 0, "low": 0, "info": 0}
+    for f in findings:
+        sev = getattr(f, "severity", None)
+        if sev in counts:
+            counts[sev] += 1
+    return counts
 
 
 def _build_short_summary(findings: list, llm_summary: str) -> str:
@@ -85,6 +119,29 @@ class PipelineOrchestrator:
         # для совместимости с T-007 wiring.
         self._fp = fp_filter if fp_filter is not None else fp_heuristics
 
+    async def _safe_storage_call(
+        self, op_name: str, coro_factory, *, stage: str, repo: str, pr_number: int
+    ) -> Any:
+        """Wrapper для best-effort writes (system_design §12.4).
+
+        Ошибки StateStore не валят pipeline — логируются как `storage_write_failed`
+        и проглатываются. Возвращает результат корутины или `None` при ошибке.
+        """
+        try:
+            return await coro_factory()
+        except Exception as exc:  # noqa: BLE001 — best-effort
+            log.exception(
+                "storage_write_failed",
+                extra={
+                    "operation": op_name,
+                    "stage": stage,
+                    "repo": repo,
+                    "pr_number": pr_number,
+                    "error_type": type(exc).__name__,
+                },
+            )
+            return None
+
     async def process_pr(self, event: GitHubPullRequestEvent) -> None:
         """Безопасная обёртка над основной цепочкой обработки PR.
 
@@ -93,6 +150,9 @@ class PipelineOrchestrator:
         worker FastAPI.
         """
         key = idempotency_key(event)
+        started_at = datetime.utcnow()
+        t_start = time.monotonic()
+        check_id = _generate_check_id()
         log.info(
             "pipeline_invoked",
             extra={
@@ -101,9 +161,54 @@ class PipelineOrchestrator:
                 "head_sha": event.head_sha,
                 "action": event.action,
                 "idempotency_key": key,
+                "check_id": check_id,
                 "stage": "start",
             },
         )
+
+        # --- M-9: durable INSERT `checks` row (best-effort, §12.2 step 1) ---
+        if self._state is not None:
+            pr_url = (
+                f"https://github.com/{event.repo}/pull/{event.pr_number}"
+            )
+            initial_record = CheckRecord(
+                id=check_id,
+                repo=event.repo,
+                pr_number=event.pr_number,
+                pr_title=getattr(event.pull_request, "title", None),
+                author=(
+                    getattr(event.pull_request.user, "login", None)
+                    if getattr(event.pull_request, "user", None)
+                    else None
+                ),
+                source_branch=(
+                    getattr(event.pull_request.head, "ref", None)
+                    if getattr(event.pull_request, "head", None)
+                    else None
+                ),
+                target_branch=(
+                    getattr(event.pull_request.base, "ref", None)
+                    if getattr(event.pull_request, "base", None)
+                    else None
+                ),
+                head_sha=event.head_sha,
+                base_sha=(
+                    getattr(event.pull_request.base, "sha", None)
+                    if getattr(event.pull_request, "base", None)
+                    else None
+                ),
+                action=event.action,
+                status="received",
+                started_at=started_at,
+                pr_url=pr_url,
+            )
+            await self._safe_storage_call(
+                "save_check",
+                lambda: self._state.save_check(initial_record),
+                stage="webhook_received",
+                repo=event.repo,
+                pr_number=event.pr_number,
+            )
 
         pr_diff = None
         try:
@@ -121,6 +226,20 @@ class PipelineOrchestrator:
                             "stage": "vcs_fetch_pr_diff",
                         },
                     )
+                    if self._state is not None:
+                        duration_ms = int((time.monotonic() - t_start) * 1000)
+                        await self._safe_storage_call(
+                            "update_check_status",
+                            lambda dm=duration_ms: self._state.update_check_status(
+                                check_id,
+                                status="skipped",
+                                finished_at=datetime.utcnow(),
+                                duration_ms=dm,
+                            ),
+                            stage="pr_not_found",
+                            repo=event.repo,
+                            pr_number=event.pr_number,
+                        )
                     await self._finalize(key, success=True)
                     return
                 except AuthError:
@@ -191,6 +310,24 @@ class PipelineOrchestrator:
                         "stage": "diff_filter",
                     },
                 )
+                # --- M-9: durable UPDATE post-diff-filter (§12.2 step 3) ---
+                if self._state is not None:
+                    is_empty = filtered.is_empty()
+                    await self._safe_storage_call(
+                        "update_check_status",
+                        lambda fc=len(filtered.files),
+                        fs=len(filtered.excluded_files),
+                        ie=is_empty: self._state.update_check_status(
+                            check_id,
+                            status=("skipped" if ie else "filtering"),
+                            llm_status=("skipped_empty" if ie else None),
+                            files_checked=fc,
+                            files_skipped=fs,
+                        ),
+                        stage="diff_filtered",
+                        repo=event.repo,
+                        pr_number=event.pr_number,
+                    )
 
             # --- Step 2.5: FP pre-LLM scan (T-013) ------------------------
             pre_scan_findings: list = []
@@ -284,6 +421,39 @@ class PipelineOrchestrator:
                     },
                 )
 
+            # --- M-9: durable UPDATE post-LLM-analyze (§12.2 step 4) ---
+            if self._state is not None and filtered is not None and not filtered.is_empty():
+                llm_provider_name = (
+                    getattr(self._llm._provider, "name", None)
+                    if self._llm is not None and hasattr(self._llm, "_provider")
+                    else None
+                )
+                llm_model_name = (
+                    getattr(self._llm._provider, "_model_id", None)
+                    if self._llm is not None and hasattr(self._llm, "_provider")
+                    else None
+                )
+                llm_summary = (
+                    llm_response.summary if llm_response is not None else None
+                )
+                await self._safe_storage_call(
+                    "update_check_status",
+                    lambda lps=llm_status,
+                    lpn=llm_provider_name,
+                    lpm=llm_model_name,
+                    sm=llm_summary: self._state.update_check_status(
+                        check_id,
+                        status="analyzing",
+                        llm_status=lps,
+                        llm_provider=lpn,
+                        llm_model=lpm,
+                        summary=sm,
+                    ),
+                    stage="llm_analyzed",
+                    repo=event.repo,
+                    pr_number=event.pr_number,
+                )
+
             # --- Step 3.5: FP postprocess (T-013) -------------------------
             # Слияние pre_scan + LLM findings, дедуп, контекстные правила,
             # confidence-фильтр. Если LLM не вызвался (timeout/budget) —
@@ -314,10 +484,55 @@ class PipelineOrchestrator:
             else:
                 final_findings = list(pre_scan_findings)
 
+            # --- M-9: durable save findings + severity_counts (§12.2 step 5) ---
+            finding_id_by_obj: dict[int, str] = {}
+            if self._state is not None and final_findings:
+                finding_records: list[FindingRecord] = []
+                for f in final_findings:
+                    fid = _generate_finding_id()
+                    finding_id_by_obj[id(f)] = fid
+                    finding_records.append(
+                        FindingRecord(
+                            id=fid,
+                            check_id=check_id,
+                            file=getattr(f, "file", ""),
+                            line=int(getattr(f, "line", 0) or 0),
+                            **{"class": getattr(f, "class_", getattr(f, "class", ""))},
+                            severity=getattr(f, "severity", "info"),
+                            confidence=getattr(f, "confidence", None),
+                            message=getattr(f, "message", ""),
+                            suggestion=getattr(f, "suggestion", None),
+                            status="pending",
+                        )
+                    )
+                severity_counts = _severity_counts_from_findings(final_findings)
+                await self._safe_storage_call(
+                    "save_findings",
+                    lambda recs=finding_records: self._state.save_findings(
+                        check_id, recs
+                    ),
+                    stage="findings_saved",
+                    repo=event.repo,
+                    pr_number=event.pr_number,
+                )
+                await self._safe_storage_call(
+                    "update_check_status",
+                    lambda fc=len(finding_records),
+                    sc=severity_counts: self._state.update_check_status(
+                        check_id,
+                        findings_count=fc,
+                        severity_counts=sc,
+                    ),
+                    stage="findings_counted",
+                    repo=event.repo,
+                    pr_number=event.pr_number,
+                )
+
             # --- Step 4: CommentPublisher (T-016) ---------------------------
             # Publisher НИКОГДА не валит пайплайн: ошибки логируются внутри
             # CommentPublisher / GitHubAdapter. Любое неожиданное исключение
             # ловим здесь (двойная защита).
+            review = None
             if self._publisher is not None:
                 t4 = time.monotonic()
                 try:
@@ -385,6 +600,63 @@ class PipelineOrchestrator:
                         },
                     )
 
+            # --- M-9: durable save comments + final status (§12.2 step 6) ---
+            if self._state is not None:
+                # CommentPublisher v1 не возвращает per-comment details; пишем
+                # агрегированный CommentRecord(kind=...) для аудит-трейла. Когда
+                # CommentPublisher эволюционирует и начнёт возвращать список
+                # PostedComment[] — этот блок расширится per-finding записями.
+                summary_kind: Optional[str] = None
+                if llm_status == "budget_exceeded":
+                    summary_kind = "budget_exhausted"
+                elif not final_findings:
+                    summary_kind = "empty"
+                elif review is not None and not getattr(review, "skipped", False):
+                    summary_kind = "summary"
+
+                if summary_kind is not None:
+                    comment_record = CommentRecord(
+                        id=_generate_comment_id(),
+                        check_id=check_id,
+                        kind=summary_kind,
+                        posted_at=datetime.utcnow(),
+                        vcs_comment_id=(
+                            str(getattr(review, "review_id", "")) if review else None
+                        ),
+                    )
+                    await self._safe_storage_call(
+                        "save_comments",
+                        lambda rec=comment_record: self._state.save_comments(
+                            check_id, [rec]
+                        ),
+                        stage="comments_published",
+                        repo=event.repo,
+                        pr_number=event.pr_number,
+                    )
+
+                duration_ms = int((time.monotonic() - t_start) * 1000)
+                final_status = "completed"
+                if llm_status in {"budget_exceeded", "timeout", "provider_unavailable"}:
+                    final_status = "failed"
+                if (
+                    filtered is not None
+                    and filtered.is_empty()
+                ):
+                    final_status = "skipped"
+                await self._safe_storage_call(
+                    "update_check_status",
+                    lambda st=final_status,
+                    dm=duration_ms: self._state.update_check_status(
+                        check_id,
+                        status=st,
+                        finished_at=datetime.utcnow(),
+                        duration_ms=dm,
+                    ),
+                    stage="check_finalized",
+                    repo=event.repo,
+                    pr_number=event.pr_number,
+                )
+
             await self._finalize(key, success=True)
             log.info(
                 "pipeline_completed",
@@ -411,6 +683,20 @@ class PipelineOrchestrator:
                     "error_type": type(exc).__name__,
                 },
             )
+            if self._state is not None:
+                duration_ms = int((time.monotonic() - t_start) * 1000)
+                await self._safe_storage_call(
+                    "update_check_status",
+                    lambda dm=duration_ms: self._state.update_check_status(
+                        check_id,
+                        status="failed",
+                        finished_at=datetime.utcnow(),
+                        duration_ms=dm,
+                    ),
+                    stage="pipeline_failed",
+                    repo=event.repo,
+                    pr_number=event.pr_number,
+                )
             await self._finalize(key, success=False)
 
     async def _finalize(self, key: str, *, success: bool) -> None:

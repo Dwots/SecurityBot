@@ -20,6 +20,7 @@ dependencies = [
     "openai>=1.30,<2.0",
     "cachetools>=5.3,<6.0",
     "pathspec>=0.12,<1.0",
+    "aiosqlite>=0.20,<1.0",
 ]
 
 [project.optional-dependencies]

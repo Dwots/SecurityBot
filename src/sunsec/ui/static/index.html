@@ -1,484 +1,1248 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en" class="dark">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SunSecurityBot — Test UI</title>
-<style>
-  :root {
-    --bg:#0f172a; --panel:#1e293b; --panel2:#0b1220; --text:#e2e8f0; --muted:#94a3b8;
-    --border:#334155; --accent:#38bdf8; --accent-hover:#0ea5e9;
-    --ok:#22c55e; --warn:#eab308; --err:#ef4444;
-    --sev-critical:#b91c1c; --sev-high:#ea580c; --sev-medium:#ca8a04;
-    --sev-low:#65a30d; --sev-info:#0284c7;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
-    font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.45}
-  code,pre,textarea,.mono{font-family:'SF Mono',Monaco,Consolas,monospace}
-  main{max-width:980px;margin:0 auto;padding:16px}
-  header{display:flex;flex-wrap:wrap;align-items:center;gap:12px;
-    padding:12px 16px;background:var(--panel);border:1px solid var(--border);
-    border-radius:8px;margin-bottom:14px}
-  header h1{margin:0;font-size:16px;flex:1 1 auto}
-  .budget-bar{display:inline-flex;align-items:center;gap:8px}
-  .budget-cells{display:inline-flex;gap:2px}
-  .budget-cells span{width:10px;height:14px;background:#334155;border-radius:2px}
-  .budget-cells span.on-ok{background:var(--ok)}
-  .budget-cells span.on-warn{background:var(--warn)}
-  .budget-cells span.on-err{background:var(--err)}
-  .health{display:inline-flex;align-items:center;gap:4px;font-weight:600}
-  .health.ok{color:var(--ok)} .health.err{color:var(--err)}
-  button{cursor:pointer;font:inherit;background:var(--panel2);color:var(--text);
-    border:1px solid var(--border);border-radius:6px;padding:6px 10px}
-  button:hover:not(:disabled){border-color:var(--accent)}
-  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  button:disabled{opacity:.55;cursor:not-allowed}
-  button.primary{background:var(--accent);color:#0b1220;border-color:var(--accent);font-weight:600}
-  button.primary:hover:not(:disabled){background:var(--accent-hover);border-color:var(--accent-hover)}
-  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
-  .examples-row button{padding:6px 12px}
-  .file-block{background:var(--panel);border:1px solid var(--border);
-    border-radius:8px;padding:12px;margin-bottom:12px}
-  .file-block .row label{font-size:12px;color:var(--muted);margin-right:4px}
-  .file-block input[type=text],.file-block select{
-    background:var(--panel2);color:var(--text);border:1px solid var(--border);
-    border-radius:5px;padding:6px 8px;font:inherit}
-  .file-block input[type=text]{flex:1 1 200px;min-width:140px}
-  .file-block textarea{width:100%;min-height:340px;resize:vertical;
-    background:var(--panel2);color:var(--text);border:1px solid var(--border);
-    border-radius:5px;padding:8px;font-size:13px;line-height:1.4}
-  .file-block .remove-btn{margin-left:auto}
-  .analyze-row{display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px}
-  .spinner{display:inline-block;width:14px;height:14px;border:2px solid #475569;
-    border-top-color:var(--accent);border-radius:50%;
-    animation:spin .8s linear infinite;vertical-align:middle;margin-right:6px}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .banner{padding:10px 14px;border-radius:8px;margin-bottom:12px;border:1px solid;font-weight:500}
-  .banner.warn{background:#422006;border-color:#a16207;color:#fde68a}
-  .banner.err{background:#450a0a;border-color:#7f1d1d;color:#fecaca}
-  .banner.info{background:#0c2d4f;border-color:#0369a1;color:#bae6fd}
-  .result{background:var(--panel);border:1px solid var(--border);
-    border-radius:8px;padding:14px;margin-top:10px}
-  .result-meta{color:var(--muted);font-size:12px;margin-bottom:10px}
-  .result-summary{margin:6px 0 14px;white-space:pre-wrap;word-wrap:break-word}
-  .finding{position:relative;background:var(--panel2);border:1px solid var(--border);
-    border-left-width:4px;border-radius:6px;padding:10px 12px;margin-bottom:10px}
-  .finding.sev-critical{border-left-color:var(--sev-critical)}
-  .finding.sev-high{border-left-color:var(--sev-high)}
-  .finding.sev-medium{border-left-color:var(--sev-medium)}
-  .finding.sev-low{border-left-color:var(--sev-low)}
-  .finding.sev-info{border-left-color:var(--sev-info)}
-  .finding.pre-scan{background:#172033}
-  .finding-head{font-weight:600;font-size:13px;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
-  .sev-badge{display:inline-block;padding:1px 6px;border-radius:3px;color:#fff;font-size:11px;letter-spacing:.5px}
-  .sev-badge.sev-critical{background:var(--sev-critical)}
-  .sev-badge.sev-high{background:var(--sev-high)}
-  .sev-badge.sev-medium{background:var(--sev-medium)}
-  .sev-badge.sev-low{background:var(--sev-low)}
-  .sev-badge.sev-info{background:var(--sev-info)}
-  .prescan-tag{position:absolute;top:8px;right:10px;font-size:10px;
-    background:#475569;color:#e2e8f0;padding:1px 6px;border-radius:3px;letter-spacing:.5px}
-  .finding-loc{color:var(--muted);font-weight:400}
-  .finding-msg{margin:6px 0 4px;white-space:pre-wrap;word-wrap:break-word}
-  .finding-sugg{margin-top:6px;padding:6px 8px;background:#0b1220;
-    border-radius:4px;font-size:13px;white-space:pre-wrap;word-wrap:break-word}
-  details{margin-top:10px;background:var(--panel2);border:1px solid var(--border);
-    border-radius:6px;padding:6px 10px}
-  details summary{cursor:pointer;font-weight:500;outline:none}
-  details summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  details ul{margin:6px 0;padding-left:20px}
-  details li{margin:2px 0}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunSecurityBot Console</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stellar-blue: #1736dd;
+            --stellar-blue-hover: #142fc0;
+            --stellar-text-on-primary: #e6e6e6;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #09090b;
+            color: #d4d4d8;
+            background-image: radial-gradient(circle at 50% 0%, #1736dd15 0%, transparent 50%),
+                              linear-gradient(to right, #ffffff05 1px, transparent 1px),
+                              linear-gradient(to bottom, #ffffff05 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            background-attachment: fixed;
+        }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+        .nav-item.active {
+            background-color: #1736dd15;
+            color: var(--stellar-text-on-primary);
+            border-right: 2px solid var(--stellar-blue);
+        }
+        .nav-item.active iconify-icon { color: var(--stellar-blue); }
+        .loader {
+            border: 2px solid #27272a;
+            border-bottom-color: var(--stellar-blue);
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .toast {
+            position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 50;
+            display: flex; flex-direction: column; gap: 0.5rem;
+            pointer-events: none;
+        }
+        .toast-item {
+            background: #18181b; border: 1px solid #3f3f46;
+            padding: 0.625rem 0.875rem; border-radius: 0.375rem;
+            font-size: 0.75rem; max-width: 360px; pointer-events: auto;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
+        .toast-item.error { border-color: #ef444450; background: #18181b; color: #fca5a5; }
+        .toast-item.success { border-color: #22c55e50; color: #86efac; }
+        .toast-item.info { border-color: #1736dd50; color: #93c5fd; }
+        :focus-visible { outline: 2px solid var(--stellar-blue); outline-offset: 1px; }
+    </style>
 </head>
-<body>
-<main>
-  <header>
-    <h1>SunSecurityBot — Test UI</h1>
-    <div class="budget-bar" aria-label="LLM budget">
-      <span class="mono" id="budget-text">— / — ₽</span>
-      <span class="budget-cells" id="budget-cells" aria-hidden="true"></span>
-    </div>
-    <span class="health" id="health" aria-live="polite">…</span>
-    <button id="btn-reset" type="button">Reset</button>
-  </header>
+<body class="flex h-screen overflow-hidden text-sm antialiased selection:bg-[#1736dd]/30 selection:text-white">
 
-  <div class="row examples-row" id="examples-row" aria-label="Examples">
-    <span style="color:var(--muted)">Examples:</span>
-    <span id="examples-buttons"></span>
-    <button id="btn-add-file" type="button">+ Add file</button>
-  </div>
+    <aside class="w-64 flex-shrink-0 flex flex-col border-r border-zinc-800/60 bg-zinc-950/80 backdrop-blur-md z-20">
+        <div class="h-14 flex items-center px-4 border-b border-zinc-800/60">
+            <div class="flex items-center gap-2 text-zinc-100 font-medium tracking-tight">
+                <iconify-icon icon="solar:shield-check-linear" width="1.2em" height="1.2em" class="text-[#1736dd]"></iconify-icon>
+                SunSecurityBot
+            </div>
+            <div class="ml-auto text-xs text-zinc-500 font-mono tracking-tight">v1.2</div>
+        </div>
 
-  <form id="files-form" autocomplete="off"></form>
+        <nav class="flex-1 overflow-y-auto py-4 flex flex-col gap-1" aria-label="Primary">
+            <div class="px-4 text-xs font-mono text-zinc-600 mb-2 mt-2 uppercase tracking-tight">Console</div>
+            <button type="button" data-view="dashboard" id="nav-dashboard" class="nav-item flex items-center gap-3 px-4 py-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50 transition-colors text-left w-full">
+                <span class="text-xs font-mono text-zinc-600 w-4">01</span>
+                <iconify-icon icon="solar:widget-2-linear" width="1.2em" height="1.2em"></iconify-icon>
+                <span>Dashboard</span>
+            </button>
+            <button type="button" data-view="checks" id="nav-checks" class="nav-item flex items-center gap-3 px-4 py-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50 transition-colors text-left w-full">
+                <span class="text-xs font-mono text-zinc-600 w-4">02</span>
+                <iconify-icon icon="solar:history-linear" width="1.2em" height="1.2em"></iconify-icon>
+                <span>Checks History</span>
+            </button>
+            <button type="button" data-view="manual" id="nav-manual" class="nav-item flex items-center gap-3 px-4 py-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50 transition-colors text-left w-full">
+                <span class="text-xs font-mono text-zinc-600 w-4">03</span>
+                <iconify-icon icon="solar:code-scan-linear" width="1.2em" height="1.2em"></iconify-icon>
+                <span>Manual Analyze</span>
+            </button>
+            <button type="button" data-view="repos" id="nav-repos" class="nav-item flex items-center gap-3 px-4 py-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50 transition-colors text-left w-full">
+                <span class="text-xs font-mono text-zinc-600 w-4">04</span>
+                <iconify-icon icon="solar:folder-with-files-linear" width="1.2em" height="1.2em"></iconify-icon>
+                <span>Repos</span>
+            </button>
+            <button type="button" data-view="settings" id="nav-settings" class="nav-item flex items-center gap-3 px-4 py-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50 transition-colors text-left w-full">
+                <span class="text-xs font-mono text-zinc-600 w-4">05</span>
+                <iconify-icon icon="solar:settings-linear" width="1.2em" height="1.2em"></iconify-icon>
+                <span>Settings</span>
+            </button>
+            <button type="button" data-view="budget" id="nav-budget" class="nav-item flex items-center gap-3 px-4 py-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50 transition-colors text-left w-full">
+                <span class="text-xs font-mono text-zinc-600 w-4">06</span>
+                <iconify-icon icon="solar:wallet-linear" width="1.2em" height="1.2em"></iconify-icon>
+                <span>Budget</span>
+            </button>
+        </nav>
 
-  <div class="analyze-row">
-    <button id="btn-analyze" class="primary" type="button" disabled>Analyze ▶</button>
-  </div>
+        <div class="p-4 border-t border-zinc-800/60 text-xs flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+                <span class="text-zinc-500">LLM Engine</span>
+                <span id="footer-llm" class="flex items-center gap-1.5 text-zinc-300">
+                    <span class="w-1.5 h-1.5 rounded-full bg-zinc-500"></span> ...
+                </span>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-zinc-500">VCS</span>
+                <span id="footer-vcs" class="flex items-center gap-1.5 text-zinc-300">
+                    <span class="w-1.5 h-1.5 rounded-full bg-zinc-500"></span> ...
+                </span>
+            </div>
+        </div>
+    </aside>
 
-  <div id="status-area" aria-live="polite"></div>
-  <div id="result-area"></div>
-</main>
+    <main class="flex-1 flex flex-col min-w-0 bg-zinc-950">
+        <header class="h-14 flex items-center justify-between px-6 border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-md z-10 sticky top-0">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="text-xs text-zinc-500" id="topbar-context" aria-live="polite">Loading...</div>
+            </div>
+            <div class="flex items-center gap-6 text-xs">
+                <div class="flex items-center gap-2">
+                    <span class="text-zinc-500">Budget Today:</span>
+                    <span class="font-mono text-zinc-300" id="global-budget" aria-live="polite">— / — ₽</span>
+                </div>
+            </div>
+        </header>
 
-<script>
-"use strict";
-(function(){
-  const STORAGE_KEY = "sunsec.ui.state";
-  const UI_TIMEOUT_MS = 60000;
-  const LANGS = ["Python","JavaScript","TypeScript","JSX","TSX","Go","Java","Ruby","Other"];
-  const $ = (sel) => document.querySelector(sel);
-  const ce = (tag, opts) => {
-    const el = document.createElement(tag);
-    if (opts) {
-      if (opts.text != null) el.textContent = opts.text;
-      if (opts.cls) el.className = opts.cls;
-      if (opts.attrs) for (const k in opts.attrs) el.setAttribute(k, opts.attrs[k]);
-    }
-    return el;
-  };
+        <div class="flex-1 overflow-y-auto p-6 scroll-smooth" id="app-container" aria-live="polite" aria-busy="false">
+            <div class="flex items-center justify-center h-full"><span class="loader w-6 h-6" role="status" aria-label="Loading"></span></div>
+        </div>
+    </main>
 
-  let examplesCache = null;
-  let budgetSpent = 0, budgetLimit = 0;
-  let lastSpentBefore = 0;
+    <div class="toast" id="toast-host" role="region" aria-label="Notifications" aria-live="polite"></div>
 
-  function loadState(){
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return null;
-      return JSON.parse(raw);
-    } catch(_) { return null; }
-  }
-  function saveState(){
-    try {
-      const state = { files: collectFiles(), lastResult: window.__lastResult || null };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch(_) {}
-  }
+    <script>
+    'use strict';
 
-  function renderBudget(spent, limit){
-    budgetSpent = spent; budgetLimit = limit;
-    const remaining = Math.max(0, limit - spent);
-    const pct = limit > 0 ? (remaining / limit * 100) : 100;
-    $("#budget-text").textContent = `${spent.toFixed(2)} / ${limit.toFixed(2)} ₽`;
-    const cells = $("#budget-cells");
-    cells.replaceChildren();
-    let cls = "on-ok";
-    if (pct < 20) cls = "on-err";
-    else if (pct <= 50) cls = "on-warn";
-    const filled = Math.round(pct / 10);
-    for (let i = 0; i < 10; i++) {
-      const c = ce("span");
-      if (i < filled) c.className = cls;
-      cells.appendChild(c);
-    }
-  }
+    const API_BASE = '/api/console';
 
-  async function fetchJSON(url, opts, timeoutMs){
-    const ctrl = new AbortController();
-    const tid = setTimeout(() => ctrl.abort(), timeoutMs || 10000);
-    try {
-      const r = await fetch(url, Object.assign({signal: ctrl.signal}, opts || {}));
-      const ct = r.headers.get("content-type") || "";
-      const body = ct.indexOf("application/json") >= 0 ? await r.json() : await r.text();
-      return { ok: r.ok, status: r.status, body };
-    } finally { clearTimeout(tid); }
-  }
-
-  async function checkHealth(){
-    const h = $("#health");
-    try {
-      const res = await fetchJSON("/health", {}, 5000);
-      if (res.ok) { h.textContent = "✓ /health"; h.className = "health ok"; }
-      else { h.textContent = "✗ /health " + res.status; h.className = "health err"; }
-    } catch(_) { h.textContent = "✗ /health"; h.className = "health err"; }
-  }
-
-  async function refreshBudget(){
-    try {
-      const res = await fetchJSON("/api/ui/budget", {}, 5000);
-      if (res.ok && res.body && typeof res.body.spent_rub === "number") {
-        renderBudget(res.body.spent_rub, res.body.limit_rub);
-        return res.body.spent_rub;
-      }
-    } catch(_) {}
-    return null;
-  }
-
-  function makeFileBlock(file){
-    const block = ce("div", {cls: "file-block"});
-    block.dataset.role = "file-block";
-    const row1 = ce("div", {cls: "row"});
-    const pathLabel = ce("label", {text: "File path:"});
-    const pathInput = ce("input", {attrs: {type: "text", placeholder: "app/views.py"}});
-    pathInput.value = (file && file.path) || "";
-    pathInput.dataset.field = "path";
-    const langLabel = ce("label", {text: "Language:"});
-    const langSel = document.createElement("select");
-    langSel.dataset.field = "language";
-    for (const l of LANGS) {
-      const opt = ce("option", {text: l, attrs: {value: l.toLowerCase()}});
-      langSel.appendChild(opt);
-    }
-    langSel.value = (file && file.language) || "python";
-    const removeBtn = ce("button", {text: "✕ Remove", cls: "remove-btn", attrs: {type: "button"}});
-    removeBtn.addEventListener("click", () => {
-      const blocks = document.querySelectorAll("[data-role='file-block']");
-      if (blocks.length <= 1) return;
-      block.remove();
-      updateAnalyzeBtn();
-      saveState();
-    });
-    row1.appendChild(pathLabel); row1.appendChild(pathInput);
-    row1.appendChild(langLabel); row1.appendChild(langSel);
-    row1.appendChild(removeBtn);
-    const ta = document.createElement("textarea");
-    ta.dataset.field = "code";
-    ta.spellcheck = false;
-    ta.placeholder = "// paste code here";
-    ta.value = (file && file.code) || "";
-    block.appendChild(row1);
-    block.appendChild(ta);
-    [pathInput, langSel, ta].forEach(el => {
-      el.addEventListener("input", () => { updateAnalyzeBtn(); saveState(); });
-      el.addEventListener("change", () => { updateAnalyzeBtn(); saveState(); });
-    });
-    return block;
-  }
-
-  function collectFiles(){
-    const blocks = document.querySelectorAll("[data-role='file-block']");
-    const out = [];
-    blocks.forEach(b => {
-      out.push({
-        path: b.querySelector("[data-field='path']").value.trim(),
-        language: b.querySelector("[data-field='language']").value,
-        code: b.querySelector("[data-field='code']").value,
-      });
-    });
-    return out;
-  }
-
-  function updateAnalyzeBtn(){
-    const files = collectFiles();
-    const anyCode = files.some(f => f.code && f.code.trim().length > 0);
-    $("#btn-analyze").disabled = !anyCode;
-  }
-
-  function clearChildren(node){ while (node.firstChild) node.removeChild(node.firstChild); }
-
-  function renderBanner(kind, title, hint){
-    const sa = $("#status-area"); clearChildren(sa);
-    const b = ce("div", {cls: "banner " + kind});
-    b.appendChild(ce("strong", {text: title}));
-    if (hint) { b.appendChild(document.createElement("br")); b.appendChild(ce("span", {text: hint})); }
-    sa.appendChild(b);
-  }
-
-  function renderFinding(f, isPreScan){
-    const sev = (f.severity || "info").toLowerCase();
-    const card = ce("div", {cls: "finding sev-" + sev + (isPreScan ? " pre-scan" : "")});
-    if (isPreScan) card.appendChild(ce("span", {cls: "prescan-tag", text: "pre-scan"}));
-    const head = ce("div", {cls: "finding-head"});
-    head.appendChild(ce("span", {cls: "sev-badge sev-" + sev, text: sev.toUpperCase()}));
-    const conf = (typeof f.confidence === "number") ? f.confidence.toFixed(2) : "—";
-    const loc = ` · ${f.class || "?"} · ${f.file || "?"}:${f.line || 0} · conf ${conf}`;
-    head.appendChild(ce("span", {cls: "finding-loc", text: loc}));
-    card.appendChild(head);
-    if (f.message) card.appendChild(ce("div", {cls: "finding-msg", text: f.message}));
-    if (f.suggestion) {
-      const sug = ce("div", {cls: "finding-sugg"});
-      sug.appendChild(document.createTextNode("💡 "));
-      sug.appendChild(document.createTextNode(f.suggestion));
-      card.appendChild(sug);
-    }
-    return card;
-  }
-
-  function renderResult(data){
-    window.__lastResult = data; saveState();
-    const ra = $("#result-area"); clearChildren(ra);
-    const llm = data.llm || {};
-    const status = llm.status || "unknown";
-    if (status === "budget_exceeded") {
-      renderBanner("warn", `Budget exhausted: ${budgetSpent.toFixed(2)} / ${budgetLimit.toFixed(2)} ₽`,
-                   data.summary || "");
-      return;
-    }
-    if (status === "timeout" || status === "provider_unavailable") {
-      const title = status === "timeout" ? "Таймаут polza.ai" : "polza.ai недоступен";
-      renderBanner("err", title, "Проверь POLZA_API_KEY в .env. " + (data.summary || ""));
-      // продолжаем — pre_scan_findings всё равно рендерим ниже.
-    } else if (status === "skipped_empty") {
-      renderBanner("info", "Введи код хотя бы в один файл", "");
-      return;
-    } else {
-      clearChildren($("#status-area"));
+    async function apiFetch(path, opts) {
+        opts = opts || {};
+        const method = opts.method || 'GET';
+        const body = opts.body;
+        const timeoutMs = opts.timeoutMs || 30000;
+        const allow404 = !!opts.allow404;
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+        const fetchOpts = { method: method, signal: ctrl.signal, headers: {} };
+        if (body !== undefined) {
+            fetchOpts.headers['Content-Type'] = 'application/json';
+            fetchOpts.body = JSON.stringify(body);
+        }
+        let resp;
+        try {
+            resp = await fetch(API_BASE + path, fetchOpts);
+        } catch (err) {
+            clearTimeout(timer);
+            if (err && err.name === 'AbortError') {
+                const e = new Error('Request timed out');
+                e.code = 'TIMEOUT'; e.path = path;
+                throw e;
+            }
+            const e = new Error('Network error: ' + (err && err.message ? err.message : 'unknown'));
+            e.code = 'NETWORK'; e.path = path;
+            throw e;
+        }
+        clearTimeout(timer);
+        if (resp.status === 204) return null;
+        if (allow404 && resp.status === 404) return null;
+        const ct = resp.headers.get('content-type') || '';
+        let payload = null;
+        if (ct.indexOf('application/json') !== -1) {
+            try { payload = await resp.json(); } catch (_) { payload = null; }
+        } else {
+            try { payload = await resp.text(); } catch (_) { payload = null; }
+        }
+        if (!resp.ok) {
+            let detail;
+            if (payload && typeof payload === 'object' && payload.detail) {
+                detail = typeof payload.detail === 'string' ? payload.detail : JSON.stringify(payload.detail);
+            } else if (typeof payload === 'string' && payload) {
+                detail = payload;
+            } else {
+                detail = 'HTTP ' + resp.status;
+            }
+            const e = new Error(detail);
+            e.code = 'HTTP_' + resp.status;
+            e.status = resp.status;
+            e.payload = payload;
+            throw e;
+        }
+        return payload;
     }
 
-    const wrap = ce("div", {cls: "result"});
-    const costDelta = Math.max(0, budgetSpent - lastSpentBefore);
-    const meta = `latency ${llm.latency_ms || 0} ms · cost ${costDelta.toFixed(4)} ₽ · model ${llm.model || "unknown"} · status ${status}`;
-    wrap.appendChild(ce("div", {cls: "result-meta", text: meta}));
-    if (data.summary) {
-      const sum = ce("div", {cls: "result-summary"});
-      sum.appendChild(ce("strong", {text: "Summary: "}));
-      sum.appendChild(document.createTextNode(data.summary));
-      wrap.appendChild(sum);
-    }
-
-    const findings = Array.isArray(data.findings) ? data.findings : [];
-    const preScan = Array.isArray(data.pre_scan_findings) ? data.pre_scan_findings : [];
-    const preScanKeys = new Set(preScan.map(f => `${f.file}|${f.line}|${f.class}`));
-    if (findings.length === 0 && preScan.length === 0 && status === "ok") {
-      wrap.appendChild(ce("div", {text: "No findings — looks clean."}));
-    } else {
-      findings.forEach(f => {
-        const key = `${f.file}|${f.line}|${f.class}`;
-        wrap.appendChild(renderFinding(f, preScanKeys.has(key)));
-      });
-    }
-
-    const makeDetails = (title, items, renderItem) => {
-      if (!items || items.length === 0) return null;
-      const d = document.createElement("details");
-      d.appendChild(ce("summary", {text: `${title} (${items.length})`}));
-      const ul = document.createElement("ul");
-      items.forEach(it => { const li = document.createElement("li"); renderItem(li, it); ul.appendChild(li); });
-      d.appendChild(ul);
-      return d;
+    const API = {
+        getBudget()    { return apiFetch('/budget'); },
+        getSettings()  { return apiFetch('/settings'); },
+        getDashboard() { return apiFetch('/dashboard').catch(() => null); },
+        getChecks(filters) {
+            const qs = new URLSearchParams();
+            if (filters) {
+                if (filters.status) qs.set('status', filters.status);
+                if (filters.repo) qs.set('repo', filters.repo);
+                if (filters.limit !== undefined) qs.set('limit', String(filters.limit));
+                if (filters.offset !== undefined) qs.set('offset', String(filters.offset));
+            }
+            const tail = qs.toString();
+            return apiFetch('/checks' + (tail ? '?' + tail : ''));
+        },
+        getCheckById(id) { return apiFetch('/checks/' + encodeURIComponent(id), { allow404: true }); },
+        getRepos()       { return apiFetch('/repos'); },
+        createRepo(data) { return apiFetch('/repos', { method: 'POST', body: data, timeoutMs: 15000 }); },
+        updateRepo(id, d){ return apiFetch('/repos/' + encodeURIComponent(id), { method: 'PATCH', body: d, timeoutMs: 15000 }); },
+        deleteRepo(id)   { return apiFetch('/repos/' + encodeURIComponent(id), { method: 'DELETE' }); },
+        analyzeManual(p) { return apiFetch('/manual/analyze', { method: 'POST', body: p, timeoutMs: 90000 }); }
     };
-    const exDet = makeDetails("Excluded files", data.excluded_files || [], (li, it) => {
-      li.textContent = `${it.path} — ${it.reason}${it.detail ? " (" + it.detail + ")" : ""}`;
-    });
-    if (exDet) wrap.appendChild(exDet);
-    const dropDet = makeDetails("Dropped by FP filter", data.dropped_by_fp || [], (li, it) => {
-      li.textContent = `[${(it.severity||"").toUpperCase()}] ${it.class || "?"} · ${it.file}:${it.line} — ${it.message || ""}`;
-    });
-    if (dropDet) wrap.appendChild(dropDet);
-    const preDet = makeDetails("Pre-scan findings (before LLM)", preScan, (li, it) => {
-      li.textContent = `[${(it.severity||"").toUpperCase()}] ${it.class || "?"} · ${it.file}:${it.line} — ${it.message || ""}`;
-    });
-    if (preDet) wrap.appendChild(preDet);
 
-    ra.appendChild(wrap);
-  }
-
-  async function onAnalyzeClick(){
-    const files = collectFiles().filter(f => (f.path && f.path.length > 0) || (f.code && f.code.length > 0));
-    if (files.length === 0) return;
-    const btn = $("#btn-analyze");
-    btn.disabled = true;
-    const prev = btn.textContent;
-    btn.textContent = "";
-    btn.appendChild(ce("span", {cls: "spinner"}));
-    btn.appendChild(document.createTextNode("Analyzing…"));
-    clearChildren($("#status-area"));
-    clearChildren($("#result-area"));
-
-    lastSpentBefore = (await refreshBudget()) || budgetSpent;
-
-    try {
-      const res = await fetchJSON("/api/ui/analyze",
-        { method: "POST", headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({files: files}) },
-        UI_TIMEOUT_MS);
-      await refreshBudget();
-      if (res.status === 413) {
-        const kb = files.reduce((s,f) => s + (f.code ? f.code.length : 0), 0) / 1024;
-        renderBanner("err", `Превышен soft-limit: загружено ${kb.toFixed(1)} KB, лимит 50 KB`,
-                     typeof res.body === "string" ? res.body : (res.body.detail || ""));
-        return;
-      }
-      if (res.status === 422) {
-        const det = (res.body && res.body.detail) ? JSON.stringify(res.body.detail) : "Validation error";
-        renderBanner("err", "Ошибка валидации запроса (422)", det);
-        return;
-      }
-      if (!res.ok) {
-        const et = (res.body && res.body.error_type) || "HTTP " + res.status;
-        renderBanner("err", "Ошибка сервера: " + et, "");
-        return;
-      }
-      renderResult(res.body);
-    } catch (e) {
-      if (e && e.name === "AbortError") {
-        renderBanner("err", "Превышен таймаут UI", "Проверь логи сервера.");
-      } else {
-        renderBanner("err", "Network error", String(e && e.message || e));
-      }
-    } finally {
-      btn.disabled = false;
-      btn.textContent = prev;
-      updateAnalyzeBtn();
+    function toast(message, kind, durationMs) {
+        kind = kind || 'info';
+        durationMs = durationMs || 4500;
+        const host = document.getElementById('toast-host');
+        if (!host) return;
+        const item = document.createElement('div');
+        item.className = 'toast-item ' + (kind === 'error' ? 'error' : kind === 'success' ? 'success' : 'info');
+        item.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+        item.textContent = message;
+        host.appendChild(item);
+        setTimeout(() => { item.remove(); }, durationMs);
     }
-  }
 
-  async function loadExamples(){
-    if (examplesCache) return examplesCache;
-    try {
-      const res = await fetchJSON("/api/ui/examples", {}, 5000);
-      if (res.ok && Array.isArray(res.body)) { examplesCache = res.body; return examplesCache; }
-    } catch(_) {}
-    return [];
-  }
-
-  async function renderExampleButtons(){
-    const ex = await loadExamples();
-    const wrap = $("#examples-buttons"); clearChildren(wrap);
-    ex.forEach(e => {
-      const b = ce("button", {text: e.name || "example", attrs: {type: "button"}});
-      b.title = e.description || "";
-      b.addEventListener("click", () => applyExample(e));
-      wrap.appendChild(b);
-    });
-  }
-
-  function applyExample(ex){
-    const form = $("#files-form"); clearChildren(form);
-    const files = (ex && Array.isArray(ex.files)) ? ex.files : [];
-    if (files.length === 0) form.appendChild(makeFileBlock({}));
-    files.forEach(f => form.appendChild(makeFileBlock({
-      path: f.path || "", language: (f.language || "python").toLowerCase(), code: f.code || ""
-    })));
-    updateAnalyzeBtn(); saveState();
-  }
-
-  function resetAll(){
-    try { localStorage.removeItem(STORAGE_KEY); } catch(_) {}
-    window.__lastResult = null;
-    const form = $("#files-form"); clearChildren(form);
-    form.appendChild(makeFileBlock({language: "python"}));
-    clearChildren($("#status-area"));
-    clearChildren($("#result-area"));
-    updateAnalyzeBtn();
-  }
-
-  function init(){
-    const form = $("#files-form");
-    const state = loadState();
-    if (state && Array.isArray(state.files) && state.files.length > 0) {
-      state.files.forEach(f => form.appendChild(makeFileBlock(f)));
-    } else {
-      form.appendChild(makeFileBlock({language: "python"}));
+    function el(tag, attrs, children) {
+        const node = document.createElement(tag);
+        if (attrs) {
+            for (const k in attrs) {
+                if (!Object.prototype.hasOwnProperty.call(attrs, k)) continue;
+                const v = attrs[k];
+                if (v === null || v === undefined) continue;
+                if (k === 'class') node.className = v;
+                else if (k === 'text') node.textContent = v;
+                else if (k.indexOf('on') === 0 && typeof v === 'function') node.addEventListener(k.slice(2), v);
+                else node.setAttribute(k, String(v));
+            }
+        }
+        if (children) {
+            for (let i = 0; i < children.length; i++) {
+                const ch = children[i];
+                if (ch === null || ch === undefined || ch === false) continue;
+                if (typeof ch === 'string' || typeof ch === 'number') node.appendChild(document.createTextNode(String(ch)));
+                else node.appendChild(ch);
+            }
+        }
+        return node;
     }
-    $("#btn-add-file").addEventListener("click", () => {
-      form.appendChild(makeFileBlock({language: "python"}));
-      updateAnalyzeBtn(); saveState();
-    });
-    $("#btn-reset").addEventListener("click", resetAll);
-    $("#btn-analyze").addEventListener("click", onAnalyzeClick);
-    updateAnalyzeBtn();
-    checkHealth();
-    refreshBudget();
-    renderExampleButtons();
-    if (state && state.lastResult) {
-      window.__lastResult = state.lastResult;
-      try { renderResult(state.lastResult); } catch(_) {}
+
+    function icon(name) {
+        const i = document.createElement('iconify-icon');
+        i.setAttribute('icon', name);
+        i.setAttribute('width', '1.2em');
+        i.setAttribute('height', '1.2em');
+        return i;
     }
-  }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else { init(); }
-})();
-</script>
+
+    function fmtDate(ds) {
+        if (!ds) return '—';
+        try {
+            return new Date(ds).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        } catch (_) { return String(ds); }
+    }
+    function fmtDuration(ms) {
+        if (ms === null || ms === undefined) return '—';
+        if (ms >= 1000) return (ms / 1000).toFixed(1) + 's';
+        return ms + 'ms';
+    }
+    function fmtRub(n) {
+        if (n === null || n === undefined || isNaN(n)) return '— ₽';
+        return Number(n).toFixed(2) + ' ₽';
+    }
+
+    function statusBadge(status) {
+        const styles = {
+            completed: 'bg-green-500/10 text-green-400 border-green-500/20',
+            failed:    'bg-red-500/10 text-red-400 border-red-500/20',
+            skipped:   'bg-zinc-500/10 text-zinc-400 border-zinc-500/20',
+            running:   'bg-blue-500/10 text-blue-400 border-blue-500/20'
+        };
+        const cls = styles[status] || styles.skipped;
+        return el('span', { class: 'px-2 py-0.5 rounded text-[10px] uppercase tracking-wider border ' + cls, text: status || 'unknown' });
+    }
+    function severityBadge(sev) {
+        const styles = {
+            critical: 'bg-red-500/10 text-red-400 border-red-500/20',
+            high:     'bg-orange-500/10 text-orange-400 border-orange-500/20',
+            medium:   'bg-amber-500/10 text-amber-400 border-amber-500/20',
+            low:      'bg-green-500/10 text-green-400 border-green-500/20',
+            info:     'bg-blue-500/10 text-blue-400 border-blue-500/20'
+        };
+        const cls = styles[sev] || styles.info;
+        return el('span', { class: 'px-2 py-0.5 rounded text-[10px] uppercase tracking-wider border ' + cls, text: sev || 'info' });
+    }
+
+    function emptyState(title, hint) {
+        return el('div', { class: 'flex flex-col items-center justify-center text-center py-16 text-zinc-500 gap-2' }, [
+            el('div', { class: 'text-base text-zinc-400', text: title }),
+            hint ? el('div', { class: 'text-xs', text: hint }) : null
+        ]);
+    }
+
+    function errorPanel(message) {
+        return el('div', { class: 'p-4 bg-red-500/10 text-red-400 border border-red-500/20 rounded-md text-sm', text: 'Error: ' + message });
+    }
+
+    function loadingBlock() {
+        return el('div', { class: 'flex items-center justify-center py-16' }, [
+            el('span', { class: 'loader w-6 h-6', role: 'status', 'aria-label': 'Loading' })
+        ]);
+    }
+
+    const app = {
+        state: { currentView: null, activeCheckId: null },
+
+        async init() {
+            this.bindNav();
+            await this.refreshHeader();
+            this.navigate('dashboard');
+        },
+
+        bindNav() {
+            const btns = document.querySelectorAll('.nav-item[data-view]');
+            const self = this;
+            btns.forEach((b) => b.addEventListener('click', () => self.navigate(b.getAttribute('data-view'))));
+        },
+
+        async refreshHeader() {
+            try {
+                const b = await API.getBudget();
+                const txt = (b && typeof b.spentRub === 'number')
+                    ? (b.spentRub.toFixed(2) + ' / ' + b.limitRub.toFixed(2) + ' ₽')
+                    : '— / — ₽';
+                document.getElementById('global-budget').textContent = txt;
+            } catch (_) {
+                document.getElementById('global-budget').textContent = '— / — ₽';
+            }
+            try {
+                const s = await API.getSettings();
+                const llmEl = document.getElementById('footer-llm');
+                const vcsEl = document.getElementById('footer-vcs');
+                llmEl.replaceChildren(
+                    el('span', { class: 'w-1.5 h-1.5 rounded-full bg-green-500' }),
+                    document.createTextNode(' ' + (s && s.model ? s.model : 'unknown'))
+                );
+                vcsEl.replaceChildren(
+                    el('span', { class: 'w-1.5 h-1.5 rounded-full bg-green-500' }),
+                    document.createTextNode(' ' + (s && s.vcsProvider ? s.vcsProvider : 'unknown'))
+                );
+                document.getElementById('topbar-context').textContent =
+                    'env=' + (s.appEnv || '?') + '  provider=' + (s.llmProvider || '?');
+            } catch (_) { /* keep defaults */ }
+        },
+
+        navigate(view, params) {
+            params = params || {};
+            this.state.currentView = view;
+            document.querySelectorAll('.nav-item').forEach((e) => e.classList.remove('active'));
+            const navId = view === 'check-details' ? 'nav-checks' : 'nav-' + view;
+            const navBtn = document.getElementById(navId);
+            if (navBtn) navBtn.classList.add('active');
+
+            const container = document.getElementById('app-container');
+            container.setAttribute('aria-busy', 'true');
+            container.replaceChildren(loadingBlock());
+
+            (async () => {
+                try {
+                    let node;
+                    if (view === 'dashboard') node = await renderDashboard();
+                    else if (view === 'checks') node = await renderChecks();
+                    else if (view === 'check-details') node = await renderCheckDetails(params.id);
+                    else if (view === 'settings') node = await renderSettings();
+                    else if (view === 'budget') node = await renderBudget();
+                    else if (view === 'manual') node = await renderManualAnalyze();
+                    else if (view === 'repos') node = await renderRepos();
+                    else node = errorPanel('View not found: ' + view);
+                    container.replaceChildren(node);
+                } catch (e) {
+                    container.replaceChildren(errorPanel(e && e.message ? e.message : String(e)));
+                    toast('Failed to load view: ' + (e && e.message ? e.message : 'unknown'), 'error');
+                } finally {
+                    container.setAttribute('aria-busy', 'false');
+                }
+            })();
+        }
+    };
+
+    async function renderDashboard() {
+        let dashboard = null;
+        let budget = null;
+        let checks = [];
+        try { dashboard = await API.getDashboard(); } catch (_) { dashboard = null; }
+        try { budget = await API.getBudget(); } catch (_) { budget = null; }
+        if (dashboard && Array.isArray(dashboard.recentChecks)) {
+            checks = dashboard.recentChecks;
+        } else {
+            try { checks = (await API.getChecks({ limit: 5 })) || []; } catch (_) { checks = []; }
+        }
+
+        const todayChecks = checks.length;
+        const successChecks = checks.filter((c) => c.status === 'completed').length;
+        const successRate = todayChecks > 0 ? Math.round((successChecks / todayChecks) * 100) : 0;
+        const highSev = checks.reduce((acc, c) => {
+            const s = c.severityCounts || {};
+            return acc + (s.critical || 0) + (s.high || 0);
+        }, 0);
+
+        const wrap = el('div', { class: 'max-w-6xl mx-auto space-y-6' });
+        wrap.appendChild(el('div', { class: 'flex items-end justify-between' }, [
+            el('div', null, [
+                el('h1', { class: 'text-xl font-medium tracking-tight text-zinc-100', text: 'Overview' }),
+                el('p', { class: 'text-xs text-zinc-500 mt-1', text: 'System status and recent activity' })
+            ])
+        ]));
+
+        const metricsRow = el('div', { class: 'grid grid-cols-1 md:grid-cols-4 gap-4' });
+        function card(label, value, valueClass) {
+            return el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md p-4 flex flex-col gap-1' }, [
+                el('span', { class: 'text-xs text-zinc-500 tracking-tight', text: label }),
+                el('span', { class: 'text-2xl font-medium ' + (valueClass || 'text-zinc-100'), text: value })
+            ]);
+        }
+        metricsRow.appendChild(card('Recent Checks', String(todayChecks)));
+        metricsRow.appendChild(card('Success Rate', successRate + '%'));
+        metricsRow.appendChild(card('Crit/High Findings', String(highSev), highSev > 0 ? 'text-red-400' : 'text-zinc-100'));
+        const budgetCard = el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md p-4 flex flex-col gap-1' }, [
+            el('span', { class: 'text-xs text-zinc-500 tracking-tight', text: 'Budget Remaining' }),
+            el('span', { class: 'text-2xl font-medium text-zinc-100', text: budget ? fmtRub(budget.remainingRub) : '— ₽' })
+        ]);
+        const bar = el('div', { class: 'w-full bg-zinc-800 h-1 mt-2 rounded-full overflow-hidden' });
+        const fill = el('div', { class: 'bg-[#1736dd] h-full' });
+        const pct = budget && typeof budget.limitPercent === 'number' ? Math.min(100, Math.max(0, budget.limitPercent)) : 0;
+        fill.style.width = pct + '%';
+        bar.appendChild(fill);
+        budgetCard.appendChild(bar);
+        metricsRow.appendChild(budgetCard);
+        wrap.appendChild(metricsRow);
+
+        const tableCard = el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md' });
+        tableCard.appendChild(el('div', { class: 'px-4 py-3 border-b border-zinc-800/60 flex justify-between items-center bg-zinc-900/80 rounded-t-md' }, [
+            el('h2', { class: 'text-sm font-medium text-zinc-200 tracking-tight', text: 'Recent Activity' }),
+            el('button', {
+                type: 'button',
+                class: 'text-xs text-[#1736dd] hover:text-[#142fc0]',
+                text: 'View all',
+                onclick: () => app.navigate('checks')
+            })
+        ]));
+
+        if (checks.length === 0) {
+            tableCard.appendChild(emptyState('No checks yet', 'Register a repo in the Repos view and trigger a webhook.'));
+        } else {
+            const table = el('table', { class: 'w-full text-left text-xs whitespace-nowrap' });
+            const thead = el('thead', null, [
+                el('tr', { class: 'text-zinc-500 border-b border-zinc-800/60' }, [
+                    el('th', { class: 'px-4 py-2 font-normal', text: 'Repo / PR' }),
+                    el('th', { class: 'px-4 py-2 font-normal', text: 'Status' }),
+                    el('th', { class: 'px-4 py-2 font-normal', text: 'Findings' }),
+                    el('th', { class: 'px-4 py-2 font-normal', text: 'Time' })
+                ])
+            ]);
+            const tbody = el('tbody', { class: 'divide-y divide-zinc-800/60' });
+            checks.slice(0, 5).forEach((c) => {
+                const row = el('tr', { class: 'hover:bg-zinc-800/20 transition-colors cursor-pointer', tabindex: '0' });
+                row.addEventListener('click', () => app.navigate('check-details', { id: c.id }));
+                row.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') app.navigate('check-details', { id: c.id }); });
+                row.appendChild(el('td', { class: 'px-4 py-3' }, [
+                    el('div', { class: 'flex items-center gap-2' }, [
+                        icon('solar:folder-with-files-linear'),
+                        el('span', { class: 'text-zinc-300', text: c.repository || '—' }),
+                        el('span', { class: 'text-zinc-600', text: '#' + (c.prNumber || 0) })
+                    ])
+                ]));
+                row.appendChild(el('td', { class: 'px-4 py-3' }, [statusBadge(c.status)]));
+                if (c.findingsCount > 0) {
+                    row.appendChild(el('td', { class: 'px-4 py-3' }, [
+                        el('span', { class: 'flex items-center gap-1 text-orange-400' }, [
+                            icon('solar:danger-circle-linear'),
+                            document.createTextNode(String(c.findingsCount))
+                        ])
+                    ]));
+                } else {
+                    row.appendChild(el('td', { class: 'px-4 py-3' }, [el('span', { class: 'text-zinc-600', text: '—' })]));
+                }
+                row.appendChild(el('td', { class: 'px-4 py-3 text-zinc-500', text: fmtDate(c.startedAt) }));
+                tbody.appendChild(row);
+            });
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            tableCard.appendChild(el('div', { class: 'overflow-x-auto' }, [table]));
+        }
+        wrap.appendChild(tableCard);
+        return wrap;
+    }
+
+    async function renderChecks() {
+        const wrap = el('div', { class: 'max-w-7xl mx-auto space-y-4' });
+        wrap.appendChild(el('h1', { class: 'text-xl font-medium tracking-tight text-zinc-100 mb-6', text: 'Checks History' }));
+
+        const filterBar = el('div', { class: 'flex items-center gap-3 pb-4 border-b border-zinc-800/60' });
+        const statusSel = el('select', { class: 'bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-zinc-600' });
+        ['', 'completed', 'failed', 'skipped', 'running'].forEach((v) => {
+            const opt = document.createElement('option');
+            opt.value = v;
+            opt.textContent = v ? v : 'All statuses';
+            statusSel.appendChild(opt);
+        });
+        const repoInput = el('input', {
+            type: 'text', placeholder: 'Filter by repo (owner/name)',
+            class: 'bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-300 w-72 focus:outline-none focus:border-zinc-600 font-mono'
+        });
+        const applyBtn = el('button', {
+            type: 'button',
+            class: 'bg-[#1736dd] hover:bg-[#142fc0] text-white px-3 py-1.5 rounded text-xs',
+            text: 'Apply'
+        });
+        filterBar.append(statusSel, repoInput, applyBtn);
+        wrap.appendChild(filterBar);
+
+        const tableHost = el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md overflow-hidden' });
+        wrap.appendChild(tableHost);
+
+        async function load() {
+            tableHost.replaceChildren(loadingBlock());
+            try {
+                const filters = {};
+                if (statusSel.value) filters.status = statusSel.value;
+                if (repoInput.value.trim()) filters.repo = repoInput.value.trim();
+                const checks = await API.getChecks(filters);
+                if (!checks || checks.length === 0) {
+                    tableHost.replaceChildren(emptyState('No checks match the filter', 'Try adjusting the filter or wait for a webhook.'));
+                    return;
+                }
+                const table = el('table', { class: 'w-full text-left text-xs whitespace-nowrap' });
+                table.appendChild(el('thead', null, [
+                    el('tr', { class: 'text-zinc-500 border-b border-zinc-800/60 bg-zinc-900/80' }, [
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'ID' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Repository & PR' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Commit' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Status' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Findings' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Duration' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Started' })
+                    ])
+                ]));
+                const tbody = el('tbody', { class: 'divide-y divide-zinc-800/60' });
+                checks.forEach((c) => {
+                    const row = el('tr', { class: 'hover:bg-zinc-800/20 transition-colors cursor-pointer', tabindex: '0' });
+                    row.addEventListener('click', () => app.navigate('check-details', { id: c.id }));
+                    row.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') app.navigate('check-details', { id: c.id }); });
+                    const idParts = (c.id || '').split('_');
+                    const idShort = idParts.length > 1 ? idParts.slice(-1)[0] : (c.id || '—');
+                    row.appendChild(el('td', { class: 'px-4 py-3 font-mono text-zinc-500', text: idShort }));
+                    row.appendChild(el('td', { class: 'px-4 py-3' }, [
+                        el('div', { class: 'flex flex-col' }, [
+                            el('span', { class: 'text-zinc-200', text: (c.repository || '—') + '  #' + (c.prNumber || 0) }),
+                            el('span', { class: 'text-[10px] text-zinc-500 truncate', text: c.prTitle || '' })
+                        ])
+                    ]));
+                    row.appendChild(el('td', { class: 'px-4 py-3 font-mono text-zinc-400', text: (c.headSha || '').slice(0, 7) || '—' }));
+                    row.appendChild(el('td', { class: 'px-4 py-3' }, [statusBadge(c.status)]));
+                    row.appendChild(el('td', { class: 'px-4 py-3' }, [
+                        c.findingsCount > 0
+                            ? el('span', { class: 'text-orange-400', text: c.findingsCount + ' issues' })
+                            : el('span', { class: 'text-zinc-600', text: 'Clean' })
+                    ]));
+                    row.appendChild(el('td', { class: 'px-4 py-3 text-zinc-400', text: fmtDuration(c.durationMs) }));
+                    row.appendChild(el('td', { class: 'px-4 py-3 text-zinc-500', text: fmtDate(c.startedAt) }));
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+                tableHost.replaceChildren(table);
+            } catch (err) {
+                tableHost.replaceChildren(errorPanel(err.message || 'Failed to load checks'));
+            }
+        }
+        applyBtn.addEventListener('click', load);
+        repoInput.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') load(); });
+        await load();
+        return wrap;
+    }
+
+    async function renderCheckDetails(id) {
+        if (!id) return errorPanel('Missing check id');
+        const data = await API.getCheckById(id);
+        if (data === null) {
+            const wrap = el('div', { class: 'max-w-3xl mx-auto' });
+            wrap.appendChild(el('button', {
+                type: 'button',
+                class: 'flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-300 mb-4',
+                onclick: () => app.navigate('checks')
+            }, [icon('solar:arrow-left-linear'), document.createTextNode(' Back to Checks')]));
+            wrap.appendChild(emptyState('Check not found', 'The check has been deleted or never existed.'));
+            return wrap;
+        }
+        const wrap = el('div', { class: 'max-w-6xl mx-auto space-y-6' });
+
+        const header = el('div', { class: 'flex items-start justify-between' });
+        const headerLeft = el('div');
+        headerLeft.appendChild(el('button', {
+            type: 'button',
+            class: 'flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-300 mb-2 transition-colors',
+            onclick: () => app.navigate('checks')
+        }, [icon('solar:arrow-left-linear'), document.createTextNode(' Back to Checks')]));
+        const titleRow = el('div', { class: 'flex items-center gap-3' });
+        titleRow.appendChild(el('h1', { class: 'text-xl font-medium tracking-tight text-zinc-100' }, [
+            document.createTextNode((data.repository || '—') + ' '),
+            el('span', { class: 'text-zinc-500 font-normal', text: '#' + (data.prNumber || 0) })
+        ]));
+        titleRow.appendChild(statusBadge(data.status));
+        headerLeft.appendChild(titleRow);
+        headerLeft.appendChild(el('p', { class: 'text-sm text-zinc-400 mt-1', text: data.prTitle || '' }));
+        header.appendChild(headerLeft);
+        header.appendChild(el('div', { class: 'text-right text-xs text-zinc-500 font-mono space-y-1' }, [
+            el('div', null, [document.createTextNode('HEAD: '), el('span', { class: 'text-zinc-300', text: (data.headSha || '—') })]),
+            el('div', null, [document.createTextNode('BASE: '), el('span', { class: 'text-zinc-300', text: (data.baseSha || '—') })])
+        ]));
+        wrap.appendChild(header);
+
+        const grid = el('div', { class: 'grid grid-cols-1 lg:grid-cols-4 gap-6' });
+        const left = el('div', { class: 'lg:col-span-3 space-y-6' });
+
+        const summaryCard = el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md p-5' });
+        summaryCard.appendChild(el('h3', { class: 'text-xs font-mono text-zinc-500 uppercase tracking-tight mb-3 flex items-center gap-2' }, [
+            icon('solar:magic-stick-3-linear'),
+            document.createTextNode(' AI Summary')
+        ]));
+        summaryCard.appendChild(el('p', { class: 'text-zinc-300 leading-relaxed whitespace-pre-wrap', text: data.summary || '—' }));
+        left.appendChild(summaryCard);
+
+        const findings = Array.isArray(data.findings) ? data.findings : [];
+        const skipped = Array.isArray(data.skippedFiles) ? data.skippedFiles : [];
+        const tabs = el('div', { class: 'flex gap-4 border-b border-zinc-800/60 text-sm' });
+        tabs.appendChild(el('div', { class: 'pb-2 border-b-2 border-[#1736dd] text-zinc-100 font-medium px-1', text: 'Findings (' + findings.length + ')' }));
+        tabs.appendChild(el('div', { class: 'pb-2 border-b-2 border-transparent text-zinc-500 px-1', text: 'Skipped Files (' + skipped.length + ')' }));
+        left.appendChild(tabs);
+
+        if (findings.length === 0) {
+            left.appendChild(emptyState('No findings', 'The analyser did not flag any issues for this check.'));
+        } else {
+            const findingsList = el('div', { class: 'space-y-4' });
+            findings.forEach((f) => {
+                const card = el('div', { class: 'bg-zinc-900/30 border border-zinc-800/60 rounded-md overflow-hidden' });
+                const head = el('div', { class: 'px-4 py-3 bg-zinc-900/80 border-b border-zinc-800/60 flex items-center justify-between' });
+                head.appendChild(el('div', { class: 'flex items-center gap-3' }, [
+                    severityBadge(f.severity),
+                    el('span', { class: 'font-mono text-xs text-zinc-300' }, [
+                        document.createTextNode(f.file || '—'),
+                        el('span', { class: 'text-zinc-600', text: ':' + (f.line || 0) })
+                    ])
+                ]));
+                head.appendChild(el('span', { class: 'text-[10px] font-mono text-zinc-500 uppercase tracking-wider', text: (f.class || '').replace(/_/g, ' ') }));
+                card.appendChild(head);
+                const body = el('div', { class: 'p-4 space-y-3' });
+                body.appendChild(el('p', { class: 'text-zinc-200 text-sm whitespace-pre-wrap', text: f.message || '' }));
+                if (f.suggestion) {
+                    body.appendChild(el('div', { class: 'flex items-start gap-2 bg-blue-500/5 border border-blue-500/10 rounded p-3 text-xs text-blue-200/80' }, [
+                        icon('solar:lightbulb-bolt-linear'),
+                        el('span', { class: 'whitespace-pre-wrap', text: f.suggestion })
+                    ]));
+                }
+                if (f.codeContext) {
+                    const codeCard = el('div', { class: 'mt-4 bg-[#0d0d0f] border border-zinc-800/80 rounded-md overflow-hidden font-mono text-xs' });
+                    codeCard.appendChild(el('div', { class: 'flex items-center gap-2 px-3 py-1.5 bg-zinc-900 border-b border-zinc-800/80 text-zinc-500' }, [
+                        icon('solar:document-code-linear'),
+                        document.createTextNode(' Context')
+                    ]));
+                    const pre = el('pre', { class: 'p-3 overflow-x-auto text-zinc-300 leading-relaxed' });
+                    const codeNode = el('code', { class: 'block' });
+                    codeNode.textContent = f.codeContext;
+                    pre.appendChild(codeNode);
+                    codeCard.appendChild(pre);
+                    body.appendChild(codeCard);
+                }
+                card.appendChild(body);
+                findingsList.appendChild(card);
+            });
+            left.appendChild(findingsList);
+        }
+
+        grid.appendChild(left);
+
+        const right = el('div', { class: 'space-y-6' });
+        const meta = el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md p-4 text-xs space-y-3' });
+        function metaRow(k, v) {
+            return el('div', { class: 'flex justify-between' }, [
+                el('span', { class: 'text-zinc-500', text: k }),
+                el('span', { class: 'text-zinc-200', text: String(v) })
+            ]);
+        }
+        meta.appendChild(metaRow('Engine', data.llmModel || '—'));
+        meta.appendChild(metaRow('Provider', data.llmProvider || '—'));
+        meta.appendChild(metaRow('Action', data.action || '—'));
+        meta.appendChild(metaRow('Duration', fmtDuration(data.durationMs)));
+        meta.appendChild(metaRow('Cost', fmtRub(data.costRub)));
+        right.appendChild(meta);
+
+        const tl = Array.isArray(data.timeline) ? data.timeline : [];
+        const tlCard = el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md p-4' });
+        tlCard.appendChild(el('h3', { class: 'text-xs font-mono text-zinc-500 uppercase tracking-tight mb-4', text: 'Pipeline' }));
+        if (tl.length === 0) {
+            tlCard.appendChild(el('div', { class: 'text-xs text-zinc-500', text: 'No timeline data available.' }));
+        } else {
+            const tlList = el('div', { class: 'space-y-4' });
+            tl.forEach((s) => {
+                tlList.appendChild(el('div', { class: 'relative flex items-start gap-3' }, [
+                    el('div', { class: 'w-3 h-3 rounded-full bg-zinc-900 border-2 border-[#1736dd] mt-1' }),
+                    el('div', { class: 'flex-1 min-w-0' }, [
+                        el('div', { class: 'text-xs text-zinc-200 font-medium', text: s.stage || '' }),
+                        el('div', { class: 'text-[10px] text-zinc-500 mt-0.5', text: (s.message || '') + ' • ' + fmtDuration(s.durationMs) })
+                    ])
+                ]));
+            });
+            tlCard.appendChild(tlList);
+        }
+        right.appendChild(tlCard);
+
+        grid.appendChild(right);
+        wrap.appendChild(grid);
+        return wrap;
+    }
+
+    async function renderSettings() {
+        const s = await API.getSettings();
+        const wrap = el('div', { class: 'max-w-4xl mx-auto' });
+        wrap.appendChild(el('div', { class: 'flex items-center justify-between mb-6' }, [
+            el('h1', { class: 'text-xl font-medium tracking-tight text-zinc-100', text: 'Configuration' }),
+            el('span', { class: 'px-2 py-1 text-xs bg-zinc-800/50 text-zinc-400 rounded border border-zinc-700/50', text: 'Read-only MVP' })
+        ]));
+        function section(title, iconName, content) {
+            const sec = el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md overflow-hidden mb-6' });
+            sec.appendChild(el('div', { class: 'px-4 py-3 bg-zinc-900/80 border-b border-zinc-800/60 flex items-center gap-2' }, [
+                icon(iconName),
+                el('h2', { class: 'text-sm font-medium text-zinc-200 tracking-tight', text: title })
+            ]));
+            sec.appendChild(content);
+            return sec;
+        }
+        function grid() {
+            return el('div', { class: 'p-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4' });
+        }
+        function field(label, value, mono) {
+            const display = (value === null || value === undefined || value === '') ? '—' : String(value);
+            return el('div', { class: 'flex flex-col gap-1' }, [
+                el('span', { class: 'text-[10px] uppercase tracking-wider text-zinc-500', text: label }),
+                el('span', { class: 'text-sm text-zinc-200 ' + (mono ? 'font-mono text-xs' : ''), text: display })
+            ]);
+        }
+
+        const llmGrid = grid();
+        [['Provider', s.llmProvider], ['Model', s.model, true], ['Temperature', s.temperature], ['Max Tokens', s.maxTokens],
+         ['Timeout (s)', s.timeoutSeconds], ['Max Retries', s.maxRetries], ['Budget Limit', s.budgetLimitRub + ' ₽']]
+         .forEach((a) => llmGrid.appendChild(field(a[0], a[1], !!a[2])));
+        wrap.appendChild(section('LLM Engine', 'solar:cpu-linear', llmGrid));
+
+        const vcsGrid = grid();
+        [['Provider', s.vcsProvider], ['API Base URL', s.githubApiBase, true],
+         ['Publish Comments', s.publishCommentsEnabled ? 'Enabled' : 'Disabled'],
+         ['Skip Drafts', s.skipDrafts ? 'Yes' : 'No'],
+         ['Console UI', s.enableConsoleUi ? 'Enabled' : 'Disabled']]
+         .forEach((a) => vcsGrid.appendChild(field(a[0], a[1], !!a[2])));
+        wrap.appendChild(section('VCS & UI Integration', 'solar:branching-paths-up-linear', vcsGrid));
+
+        const filtersContent = el('div', { class: 'p-4 space-y-4' });
+        function filterRow(label, items) {
+            const row = el('div');
+            row.appendChild(el('span', { class: 'text-[10px] uppercase tracking-wider text-zinc-500 block mb-2', text: label }));
+            const chips = el('div', { class: 'flex flex-wrap gap-2' });
+            if (!items || items.length === 0) {
+                chips.appendChild(el('span', { class: 'text-xs text-zinc-600', text: '— none —' }));
+            } else {
+                items.forEach((x) => chips.appendChild(el('span', { class: 'px-2 py-0.5 bg-zinc-800 text-zinc-300 text-xs rounded font-mono', text: String(x) })));
+            }
+            row.appendChild(chips);
+            return row;
+        }
+        filtersContent.appendChild(filterRow('Excluded Extensions', s.filterExcludeExtensions));
+        filtersContent.appendChild(filterRow('Excluded Names', s.filterExcludeNames));
+        filtersContent.appendChild(filterRow('Excluded Globs', s.filterExcludeGlobs));
+        wrap.appendChild(section('Filters & Exclusions', 'solar:filter-linear', filtersContent));
+
+        const stateGrid = grid();
+        [['Backend', s.stateStoreBackend], ['FP min confidence', s.fpMinConfidence], ['App env', s.appEnv]]
+         .forEach((a) => stateGrid.appendChild(field(a[0], a[1])));
+        wrap.appendChild(section('Storage & ML', 'solar:database-linear', stateGrid));
+        return wrap;
+    }
+
+    async function renderBudget() {
+        const b = await API.getBudget();
+        const wrap = el('div', { class: 'max-w-4xl mx-auto space-y-6' });
+        wrap.appendChild(el('h1', { class: 'text-xl font-medium tracking-tight text-zinc-100', text: 'Budget Control' }));
+        const top = el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md p-6' });
+        top.appendChild(el('div', { class: 'flex justify-between items-end mb-4' }, [
+            el('div', null, [
+                el('div', { class: 'text-sm text-zinc-400', text: 'Total Spent' }),
+                el('div', { class: 'text-3xl font-medium text-zinc-100 mt-1', text: fmtRub(b.spentRub) })
+            ]),
+            el('div', { class: 'text-right' }, [
+                el('div', { class: 'text-sm text-zinc-400', text: 'Limit' }),
+                el('div', { class: 'text-xl text-zinc-300', text: fmtRub(b.limitRub) })
+            ])
+        ]));
+        const bar = el('div', { class: 'w-full bg-zinc-950 h-3 rounded-full overflow-hidden border border-zinc-800' });
+        const fill = el('div', { class: 'bg-[#1736dd] h-full rounded-full transition-all duration-500' });
+        const pct = Math.min(100, Math.max(0, b.limitPercent || 0));
+        fill.style.width = pct + '%';
+        bar.appendChild(fill);
+        top.appendChild(bar);
+        top.appendChild(el('div', { class: 'flex justify-between mt-2 text-xs text-zinc-500' }, [
+            el('span', { text: '0' }),
+            el('span', { text: pct.toFixed(2) + '% utilized' }),
+            el('span', { text: fmtRub(b.limitRub) })
+        ]));
+        wrap.appendChild(top);
+
+        const grid = el('div', { class: 'grid grid-cols-2 gap-4' });
+        function card(label, value) {
+            return el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md p-4' }, [
+                el('div', { class: 'text-xs text-zinc-500 mb-1', text: label }),
+                el('div', { class: 'text-xl text-zinc-200', text: String(value) })
+            ]);
+        }
+        grid.appendChild(card('Total API Calls', b.callsCount === undefined || b.callsCount === null ? 0 : b.callsCount));
+        grid.appendChild(card('Remaining', fmtRub(b.remainingRub)));
+        wrap.appendChild(grid);
+        return wrap;
+    }
+
+    async function renderManualAnalyze() {
+        const wrap = el('div', { class: 'h-full flex flex-col max-w-7xl mx-auto' });
+        wrap.appendChild(el('div', { class: 'flex items-center justify-between mb-4 flex-shrink-0' }, [
+            el('div', null, [
+                el('h1', { class: 'text-xl font-medium tracking-tight text-zinc-100', text: 'Manual Analyze Sandbox' }),
+                el('p', { class: 'text-xs text-zinc-500 mt-1', text: 'Test LLM detection on custom code snippets' })
+            ])
+        ]));
+
+        const grid = el('div', { class: 'flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[500px]' });
+
+        const inputCol = el('div', { class: 'flex flex-col gap-3' });
+
+        const pathRow = el('div', { class: 'flex items-center justify-between gap-3' });
+        const pathLabel = el('label', { class: 'text-xs font-mono text-zinc-400', for: 'manual-path', text: 'Target File' });
+        const pathInput = el('input', {
+            type: 'text', id: 'manual-path', value: 'app/utils/crypto.py',
+            class: 'bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-xs text-zinc-300 w-1/2 focus:outline-none focus:border-zinc-600 font-mono'
+        });
+        pathRow.append(pathLabel, pathInput);
+        inputCol.appendChild(pathRow);
+
+        const langRow = el('div', { class: 'flex items-center justify-between gap-3' });
+        const langLabel = el('label', { class: 'text-xs font-mono text-zinc-400', for: 'manual-lang', text: 'Language' });
+        const langSel = el('select', { id: 'manual-lang', class: 'bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-xs text-zinc-300 w-1/2 focus:outline-none focus:border-zinc-600 font-mono' });
+        ['python', 'javascript', 'typescript', 'go', 'java', 'php', 'ruby'].forEach((v) => {
+            const o = document.createElement('option'); o.value = v; o.textContent = v; langSel.appendChild(o);
+        });
+        langRow.append(langLabel, langSel);
+        inputCol.appendChild(langRow);
+
+        const editorWrap = el('div', { class: 'flex-1 flex flex-col' });
+        editorWrap.appendChild(el('div', { class: 'h-8 bg-zinc-900 border-x border-t border-zinc-800 rounded-t-md flex items-center px-3 text-xs text-zinc-500 font-mono', text: 'Code Editor' }));
+        const codeArea = el('textarea', {
+            id: 'manual-code', spellcheck: 'false',
+            class: 'flex-1 w-full bg-[#09090b] border border-zinc-800 rounded-b-md p-4 text-xs font-mono text-zinc-300 focus:outline-none focus:border-[#1736dd] resize-none leading-relaxed shadow-inner',
+            'aria-label': 'Code to analyze'
+        });
+        codeArea.value =
+"def verify_signature(payload, signature):\n" +
+"    # TODO: implement secure comparison\n" +
+"    secret = \"my_super_secret_key_123\"\n" +
+"    expected = hmac.new(secret.encode(), payload.encode(), hashlib.sha256).hexdigest()\n" +
+"\n" +
+"    # Vulnerable to timing attacks\n" +
+"    if expected == signature:\n" +
+"        return True\n" +
+"    return False\n";
+        editorWrap.appendChild(codeArea);
+        inputCol.appendChild(editorWrap);
+
+        const analyzeBtn = el('button', {
+            type: 'button', id: 'btn-analyze',
+            class: 'bg-[#1736dd] hover:bg-[#142fc0] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2'
+        }, [icon('solar:play-linear'), document.createTextNode(' Analyze Code')]);
+        inputCol.appendChild(analyzeBtn);
+        grid.appendChild(inputCol);
+
+        const resultsCol = el('div', { class: 'flex flex-col border border-zinc-800/60 rounded-md bg-zinc-900/30 overflow-hidden' });
+        resultsCol.appendChild(el('div', { class: 'px-4 py-2 bg-zinc-900 border-b border-zinc-800/60 text-xs font-mono text-zinc-400', text: 'Analysis Results' }));
+        const resultsHost = el('div', { id: 'manual-results', class: 'flex-1 p-4 overflow-y-auto text-zinc-600 text-sm' });
+        resultsHost.appendChild(el('div', { class: 'flex items-center justify-center h-full text-zinc-600', text: 'Run analysis to see results' }));
+        resultsCol.appendChild(resultsHost);
+        grid.appendChild(resultsCol);
+
+        wrap.appendChild(grid);
+
+        analyzeBtn.addEventListener('click', async () => {
+            analyzeBtn.disabled = true;
+            const previousChildren = Array.prototype.slice.call(analyzeBtn.childNodes);
+            analyzeBtn.replaceChildren(
+                el('span', { class: 'loader w-4 h-4', role: 'status', 'aria-label': 'Analyzing' }),
+                document.createTextNode(' Analyzing...')
+            );
+            resultsHost.replaceChildren(
+                el('div', { class: 'flex flex-col items-center gap-2 text-zinc-500 justify-center h-full' }, [
+                    el('span', { class: 'loader w-6 h-6' }),
+                    document.createTextNode('Running analysis pipeline...')
+                ])
+            );
+            try {
+                const payload = { files: [{ path: pathInput.value || 'snippet.txt', code: codeArea.value || '', language: langSel.value || 'python' }] };
+                const res = await API.analyzeManual(payload);
+                renderManualResults(resultsHost, res);
+            } catch (e) {
+                resultsHost.replaceChildren(errorPanel(e.message || 'Analysis failed'));
+                toast('Analyze failed: ' + (e.message || 'unknown'), 'error');
+            } finally {
+                analyzeBtn.disabled = false;
+                analyzeBtn.replaceChildren.apply(analyzeBtn, previousChildren);
+            }
+        });
+        return wrap;
+    }
+
+    function renderManualResults(host, res) {
+        host.replaceChildren();
+        host.classList.remove('text-zinc-600');
+        const wrap = el('div', { class: 'w-full space-y-4' });
+        wrap.appendChild(el('div', { class: 'bg-[#1736dd]/10 border border-[#1736dd]/20 p-3 rounded text-sm text-blue-200 flex items-start gap-2' }, [
+            icon('solar:info-circle-linear'),
+            el('span', { class: 'whitespace-pre-wrap', text: res.summary || '—' })
+        ]));
+        const findings = Array.isArray(res.findings) ? res.findings : [];
+        if (findings.length === 0) {
+            wrap.appendChild(el('div', { class: 'text-zinc-500 text-xs', text: 'No findings reported.' }));
+        } else {
+            findings.forEach((f) => {
+                const card = el('div', { class: 'border border-orange-500/20 bg-orange-500/5 rounded p-4 space-y-2' });
+                card.appendChild(el('div', { class: 'flex justify-between items-start' }, [
+                    severityBadge(f.severity),
+                    el('span', { class: 'text-[10px] font-mono text-zinc-500', text: f.class || '' })
+                ]));
+                card.appendChild(el('div', { class: 'text-sm text-zinc-200 whitespace-pre-wrap', text: f.message || '' }));
+                card.appendChild(el('div', { class: 'text-xs text-zinc-500 font-mono', text: 'File: ' + (f.file || '—') + ':' + (f.line || 0) }));
+                if (f.suggestion) {
+                    card.appendChild(el('div', { class: 'text-xs text-blue-200/80 whitespace-pre-wrap', text: 'Suggestion: ' + f.suggestion }));
+                }
+                if (f.codeContext) {
+                    const pre = el('pre', { class: 'mt-2 p-3 bg-[#0d0d0f] text-zinc-300 text-xs font-mono rounded overflow-x-auto' });
+                    const code = el('code'); code.textContent = f.codeContext;
+                    pre.appendChild(code);
+                    card.appendChild(pre);
+                }
+                wrap.appendChild(card);
+            });
+        }
+        const meta = res.llm || {};
+        const cost = (meta.costRub !== undefined && meta.costRub !== null) ? fmtRub(meta.costRub) : '—';
+        const latency = (meta.latencyMs !== undefined && meta.latencyMs !== null) ? meta.latencyMs + 'ms' : '—';
+        wrap.appendChild(el('div', { class: 'text-[10px] text-zinc-600 font-mono pt-4 border-t border-zinc-800/60 mt-4' }, [
+            document.createTextNode(
+                'Status: ' + (meta.status || '?') +
+                ' | Model: ' + (meta.model || '?') +
+                ' | Latency: ' + latency +
+                ' | Cost: ' + cost
+            )
+        ]));
+        host.appendChild(wrap);
+    }
+
+    async function renderRepos() {
+        const wrap = el('div', { class: 'max-w-6xl mx-auto space-y-6' });
+        const addBtn = el('button', {
+            type: 'button', id: 'btn-add-repo',
+            class: 'bg-[#1736dd] hover:bg-[#142fc0] text-white px-3 py-1.5 rounded text-sm flex items-center gap-2'
+        }, [icon('solar:add-circle-linear'), document.createTextNode(' Add Repository')]);
+
+        wrap.appendChild(el('div', { class: 'flex items-center justify-between' }, [
+            el('div', null, [
+                el('h1', { class: 'text-xl font-medium tracking-tight text-zinc-100', text: 'Repos & Onboarding' }),
+                el('p', { class: 'text-xs text-zinc-500 mt-1', text: 'Register repositories the bot should monitor. Tokens are stored as env-references; the DB never contains plaintext secrets.' })
+            ]),
+            addBtn
+        ]));
+
+        const formHost = el('div', { id: 'repo-form-host' });
+        wrap.appendChild(formHost);
+
+        const tableHost = el('div', { class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md overflow-hidden' });
+        wrap.appendChild(tableHost);
+
+        async function reload() {
+            tableHost.replaceChildren(loadingBlock());
+            try {
+                const repos = await API.getRepos();
+                if (!repos || repos.length === 0) {
+                    tableHost.replaceChildren(emptyState('No repositories registered yet', 'Click "Add Repository" to onboard one.'));
+                    return;
+                }
+                const table = el('table', { class: 'w-full text-left text-xs whitespace-nowrap' });
+                table.appendChild(el('thead', null, [
+                    el('tr', { class: 'text-zinc-500 border-b border-zinc-800/60 bg-zinc-900/80' }, [
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Full Name' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Provider' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Enabled' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Token' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Webhook Secret' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'LLM Override' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Last Seen' }),
+                        el('th', { class: 'px-4 py-2 font-normal text-right', text: 'Actions' })
+                    ])
+                ]));
+                const tbody = el('tbody', { class: 'divide-y divide-zinc-800/60' });
+                repos.forEach((r) => {
+                    const tokenChip = r.vcsTokenSet
+                        ? el('span', { class: 'text-green-400 text-[10px]', text: 'set' })
+                        : el('span', { class: 'text-amber-400 text-[10px]', text: 'missing — re-input' });
+                    const secretChip = r.webhookSecretSet
+                        ? el('span', { class: 'text-green-400 text-[10px]', text: 'set' })
+                        : el('span', { class: 'text-amber-400 text-[10px]', text: 'missing — re-input' });
+                    const enabledChip = el('span', {
+                        class: r.enabled ? 'text-green-400 text-[10px]' : 'text-zinc-500 text-[10px]',
+                        text: r.enabled ? 'enabled' : 'disabled'
+                    });
+
+                    const editBtn = el('button', { type: 'button', class: 'text-xs text-[#1736dd] hover:text-[#142fc0]', text: 'Edit' });
+                    editBtn.addEventListener('click', () => openRepoForm(r));
+
+                    const toggleBtn = el('button', {
+                        type: 'button',
+                        class: 'text-xs ' + (r.enabled ? 'text-amber-400 hover:text-amber-300' : 'text-green-400 hover:text-green-300'),
+                        text: r.enabled ? 'Disable' : 'Enable'
+                    });
+                    toggleBtn.addEventListener('click', async () => {
+                        try {
+                            await API.updateRepo(r.id, { enabled: !r.enabled });
+                            toast('Repo ' + (r.enabled ? 'disabled' : 'enabled'), 'success');
+                            await reload();
+                        } catch (e) { toast(e.message || 'Update failed', 'error'); }
+                    });
+
+                    const deleteBtn = el('button', { type: 'button', class: 'text-xs text-red-400 hover:text-red-300', text: 'Delete' });
+                    deleteBtn.addEventListener('click', async () => {
+                        if (!confirm('Delete repo ' + r.fullName + '? Webhook handling will fall back to global .env credentials.')) return;
+                        try {
+                            await API.deleteRepo(r.id);
+                            toast('Repo deleted', 'success');
+                            await reload();
+                        } catch (e) { toast(e.message || 'Delete failed', 'error'); }
+                    });
+
+                    const row = el('tr', { class: 'hover:bg-zinc-800/20 transition-colors' });
+                    row.appendChild(el('td', { class: 'px-4 py-3 font-mono text-zinc-200', text: r.fullName || '—' }));
+                    row.appendChild(el('td', { class: 'px-4 py-3 text-zinc-400', text: r.vcsProvider || '—' }));
+                    row.appendChild(el('td', { class: 'px-4 py-3' }, [enabledChip]));
+                    row.appendChild(el('td', { class: 'px-4 py-3' }, [tokenChip]));
+                    row.appendChild(el('td', { class: 'px-4 py-3' }, [secretChip]));
+                    row.appendChild(el('td', { class: 'px-4 py-3 text-zinc-400', text: r.llmProviderOverride || '—' }));
+                    row.appendChild(el('td', { class: 'px-4 py-3 text-zinc-500', text: r.lastSeenAt ? fmtDate(r.lastSeenAt) : 'never' }));
+                    row.appendChild(el('td', { class: 'px-4 py-3 text-right' }, [
+                        el('div', { class: 'flex gap-3 justify-end' }, [editBtn, toggleBtn, deleteBtn])
+                    ]));
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+                tableHost.replaceChildren(table);
+            } catch (err) {
+                tableHost.replaceChildren(errorPanel(err.message || 'Failed to load repos'));
+            }
+        }
+
+        function openRepoForm(existing) {
+            formHost.replaceChildren(buildRepoForm(existing, reload, () => formHost.replaceChildren()));
+            formHost.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        addBtn.addEventListener('click', () => openRepoForm(null));
+        await reload();
+        return wrap;
+    }
+
+    function buildRepoForm(existing, onSaved, onCancel) {
+        const isEdit = !!existing;
+        const form = el('form', {
+            class: 'bg-zinc-900/50 border border-zinc-800/60 rounded-md p-5 space-y-4',
+            'aria-label': isEdit ? 'Edit repository' : 'Add repository'
+        });
+        form.appendChild(el('div', { class: 'flex items-center justify-between' }, [
+            el('h2', { class: 'text-sm font-medium text-zinc-200', text: isEdit ? ('Edit ' + existing.fullName) : 'Add Repository' }),
+            el('button', { type: 'button', class: 'text-xs text-zinc-500 hover:text-zinc-300', text: 'Cancel', onclick: onCancel })
+        ]));
+
+        const errorBox = el('div', { class: 'hidden bg-red-500/10 text-red-400 border border-red-500/20 rounded-md p-3 text-xs', role: 'alert' });
+        form.appendChild(errorBox);
+
+        const grid = el('div', { class: 'grid grid-cols-1 md:grid-cols-2 gap-4' });
+
+        function fieldBlock(label, input, hint) {
+            const blk = el('div', { class: 'flex flex-col gap-1' });
+            blk.appendChild(el('label', { class: 'text-[10px] uppercase tracking-wider text-zinc-500', for: input.id, text: label }));
+            blk.appendChild(input);
+            if (hint) blk.appendChild(el('span', { class: 'text-[10px] text-zinc-500', text: hint }));
+            return blk;
+        }
+
+        const fullNameInput = el('input', {
+            type: 'text', id: 'repo-full-name',
+            placeholder: 'owner/repo',
+            class: 'bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-200 font-mono focus:outline-none focus:border-zinc-600',
+            value: existing ? existing.fullName : ''
+        });
+        if (isEdit) fullNameInput.readOnly = true;
+        grid.appendChild(fieldBlock('Repository Full Name', fullNameInput, 'Format: owner/repo (e.g. stellar/core-api).'));
+
+        const providerSel = el('select', {
+            id: 'repo-provider',
+            class: 'bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-600'
+        });
+        ['github'].forEach((v) => { const o = document.createElement('option'); o.value = v; o.textContent = v; providerSel.appendChild(o); });
+        if (existing && existing.vcsProvider) providerSel.value = existing.vcsProvider;
+        grid.appendChild(fieldBlock('VCS Provider', providerSel, 'Only "github" is supported in the MVP.'));
+
+        const tokenInput = el('input', {
+            type: 'password', id: 'repo-token', autocomplete: 'off',
+            placeholder: isEdit ? 'leave blank to keep current' : 'ghp_...',
+            class: 'bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-200 font-mono focus:outline-none focus:border-zinc-600'
+        });
+        grid.appendChild(fieldBlock('VCS Token', tokenInput, 'GitHub PAT with "repo" scope. Write-only; never returned by the API.'));
+
+        const secretInput = el('input', {
+            type: 'password', id: 'repo-secret', autocomplete: 'off',
+            placeholder: isEdit ? 'leave blank to keep current' : 'webhook hmac secret',
+            class: 'bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-200 font-mono focus:outline-none focus:border-zinc-600'
+        });
+        grid.appendChild(fieldBlock('Webhook Secret', secretInput, 'HMAC secret used to verify GitHub webhook signatures.'));
+
+        const llmSel = el('select', {
+            id: 'repo-llm',
+            class: 'bg-zinc-900 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-600'
+        });
+        ['', 'polza', 'openrouter'].forEach((v) => {
+            const o = document.createElement('option');
+            o.value = v;
+            o.textContent = v ? v : '(use global default)';
+            llmSel.appendChild(o);
+        });
+        if (existing && existing.llmProviderOverride) llmSel.value = existing.llmProviderOverride;
+        grid.appendChild(fieldBlock('LLM Provider Override', llmSel, 'Optional per-repo override.'));
+
+        const enabledWrap = el('div', { class: 'flex items-center gap-2 pt-6' });
+        const enabledChk = el('input', { type: 'checkbox', id: 'repo-enabled' });
+        enabledChk.checked = existing ? !!existing.enabled : true;
+        const enabledLabel = el('label', { for: 'repo-enabled', class: 'text-xs text-zinc-300', text: 'Enabled (bot monitors webhooks for this repo)' });
+        enabledWrap.append(enabledChk, enabledLabel);
+        grid.appendChild(enabledWrap);
+
+        form.appendChild(grid);
+
+        const submitBtn = el('button', {
+            type: 'submit',
+            class: 'bg-[#1736dd] hover:bg-[#142fc0] disabled:bg-zinc-700 text-white px-4 py-1.5 rounded text-sm',
+            text: isEdit ? 'Save Changes' : 'Register Repository'
+        });
+        form.appendChild(el('div', { class: 'flex justify-end gap-3' }, [
+            el('button', { type: 'button', class: 'text-xs text-zinc-400 hover:text-zinc-200', text: 'Cancel', onclick: onCancel }),
+            submitBtn
+        ]));
+
+        function showError(msg) {
+            errorBox.textContent = msg;
+            errorBox.classList.remove('hidden');
+        }
+        function clearError() {
+            errorBox.textContent = '';
+            errorBox.classList.add('hidden');
+        }
+
+        form.addEventListener('submit', async (ev) => {
+            ev.preventDefault();
+            clearError();
+            const fullName = fullNameInput.value.trim();
+            if (!isEdit) {
+                const parts = fullName.split('/');
+                if (!fullName || parts.length !== 2 || !parts[0] || !parts[1]) {
+                    showError('Full name must be in form owner/repo.');
+                    return;
+                }
+            }
+            submitBtn.disabled = true;
+            const prevText = submitBtn.textContent;
+            submitBtn.textContent = isEdit ? 'Saving...' : 'Registering...';
+            try {
+                if (isEdit) {
+                    const patch = {
+                        vcsProvider: providerSel.value,
+                        enabled: enabledChk.checked,
+                        llmProviderOverride: llmSel.value || null
+                    };
+                    if (tokenInput.value) patch.vcsToken = tokenInput.value;
+                    if (secretInput.value) patch.webhookSecret = secretInput.value;
+                    await API.updateRepo(existing.id, patch);
+                    toast('Repo updated', 'success');
+                } else {
+                    const payload = {
+                        fullName: fullName,
+                        vcsProvider: providerSel.value,
+                        enabled: enabledChk.checked
+                    };
+                    if (tokenInput.value) payload.vcsToken = tokenInput.value;
+                    if (secretInput.value) payload.webhookSecret = secretInput.value;
+                    if (llmSel.value) payload.llmProviderOverride = llmSel.value;
+                    await API.createRepo(payload);
+                    toast('Repo registered', 'success');
+                }
+                onCancel();
+                if (onSaved) onSaved();
+            } catch (e) {
+                showError(e.message || 'Save failed');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = prevText;
+            }
+        });
+
+        return form;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => app.init());
+    </script>
 </body>
 </html>

@@ -440,6 +440,94 @@
         "documentation": {}
     },
     {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
         "label": "hashlib",
         "kind": 6,
         "isExtraImport": true,
@@ -523,14 +611,6 @@
         "documentation": {}
     },
     {
-        "label": "Literal",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
         "label": "Optional",
         "importPath": "typing",
         "description": "typing",
@@ -556,6 +636,30 @@
     },
     {
         "label": "Literal",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -755,6 +859,78 @@
         "documentation": {}
     },
     {
+        "label": "Sequence",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Sequence",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Sequence",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Awaitable",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Callable",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "Optional",
         "importPath": "typing",
         "description": "typing",
@@ -820,6 +996,22 @@
     },
     {
         "label": "Iterable",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -916,6 +1108,22 @@
     },
     {
         "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -1187,6 +1395,14 @@
         "documentation": {}
     },
     {
+        "label": "LLMResponseSchema",
+        "importPath": "sunsec.contracts",
+        "description": "sunsec.contracts",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts",
+        "documentation": {}
+    },
+    {
         "label": "Finding",
         "importPath": "sunsec.contracts",
         "description": "sunsec.contracts",
@@ -1364,6 +1580,14 @@
     },
     {
         "label": "LLMResponseSchema",
+        "importPath": "sunsec.contracts",
+        "description": "sunsec.contracts",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts",
+        "documentation": {}
+    },
+    {
+        "label": "# noqa: E402\n    GitHubPullRequestEvent",
         "importPath": "sunsec.contracts",
         "description": "sunsec.contracts",
         "isExtraImport": true,
@@ -1932,6 +2156,54 @@
         "documentation": {}
     },
     {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
         "label": "BaseModel",
         "importPath": "pydantic",
         "description": "pydantic",
@@ -2020,6 +2292,30 @@
         "documentation": {}
     },
     {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigDict",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
         "label": "computed_field",
         "importPath": "pydantic",
         "description": "pydantic",
@@ -2061,6 +2357,38 @@
     },
     {
         "label": "ConfigDict",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigDict",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "ValidationError",
         "importPath": "pydantic",
         "description": "pydantic",
         "isExtraImport": true,
@@ -2180,6 +2508,86 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "timezone",
         "importPath": "datetime",
         "description": "datetime",
@@ -2220,6 +2628,46 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "to_camel",
+        "importPath": "pydantic.alias_generators",
+        "description": "pydantic.alias_generators",
+        "isExtraImport": true,
+        "detail": "pydantic.alias_generators",
+        "documentation": {}
+    },
+    {
         "label": "dataclass",
         "importPath": "dataclasses",
         "description": "dataclasses",
@@ -2261,6 +2709,14 @@
     },
     {
         "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
         "importPath": "dataclasses",
         "description": "dataclasses",
         "isExtraImport": true,
@@ -2857,6 +3313,22 @@
         "documentation": {}
     },
     {
+        "label": "Finding",
+        "importPath": "sunsec.contracts.llm_response",
+        "description": "sunsec.contracts.llm_response",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.llm_response",
+        "documentation": {}
+    },
+    {
+        "label": "LLMResponseSchema",
+        "importPath": "sunsec.contracts.llm_response",
+        "description": "sunsec.contracts.llm_response",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.llm_response",
+        "documentation": {}
+    },
+    {
         "label": "PROMPT_VERSION",
         "importPath": "sunsec.llm.prompts",
         "description": "sunsec.llm.prompts",
@@ -2891,6 +3363,207 @@
         "documentation": {}
     },
     {
+        "label": "secrets",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "secrets",
+        "description": "secrets",
+        "detail": "secrets",
+        "documentation": {}
+    },
+    {
+        "label": "CheckRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "CommentRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "FindingRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "CheckRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "CommentRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "FindingRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "CheckRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "CommentRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "FindingRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "CheckRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "CommentRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "FindingRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "CheckRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "# noqa: E402\n    CheckRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "FindingRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "# noqa: E402\n    CheckRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "CommentRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "FindingRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigRecord",
+        "importPath": "sunsec.contracts.storage",
+        "description": "sunsec.contracts.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
         "label": "StateStore",
         "importPath": "sunsec.state.base",
         "description": "sunsec.state.base",
@@ -2913,6 +3586,273 @@
         "importPath": "asyncio",
         "description": "asyncio",
         "detail": "asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "copy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "copy",
+        "description": "copy",
+        "detail": "copy",
+        "documentation": {}
+    },
+    {
+        "label": "aiosqlite",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "aiosqlite",
+        "description": "aiosqlite",
+        "detail": "aiosqlite",
+        "documentation": {}
+    },
+    {
+        "label": "ALL_DDL_STATEMENTS",
+        "importPath": "sunsec.storage.schema",
+        "description": "sunsec.storage.schema",
+        "isExtraImport": true,
+        "detail": "sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "PRAGMA_STATEMENTS",
+        "importPath": "sunsec.storage.schema",
+        "description": "sunsec.storage.schema",
+        "isExtraImport": true,
+        "detail": "sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "InMemoryStateStore",
+        "importPath": "sunsec.state.memory",
+        "description": "sunsec.state.memory",
+        "isExtraImport": true,
+        "detail": "sunsec.state.memory",
+        "documentation": {}
+    },
+    {
+        "label": "InMemoryStateStore",
+        "importPath": "sunsec.state.memory",
+        "description": "sunsec.state.memory",
+        "isExtraImport": true,
+        "detail": "sunsec.state.memory",
+        "documentation": {}
+    },
+    {
+        "label": "InMemoryStateStore",
+        "importPath": "sunsec.state.memory",
+        "description": "sunsec.state.memory",
+        "isExtraImport": true,
+        "detail": "sunsec.state.memory",
+        "documentation": {}
+    },
+    {
+        "label": "InMemoryStateStore",
+        "importPath": "sunsec.state.memory",
+        "description": "sunsec.state.memory",
+        "isExtraImport": true,
+        "detail": "sunsec.state.memory",
+        "documentation": {}
+    },
+    {
+        "label": "InMemoryStateStore",
+        "importPath": "sunsec.state.memory",
+        "description": "sunsec.state.memory",
+        "isExtraImport": true,
+        "detail": "sunsec.state.memory",
+        "documentation": {}
+    },
+    {
+        "label": "InMemoryStateStore",
+        "importPath": "sunsec.state.memory",
+        "description": "sunsec.state.memory",
+        "isExtraImport": true,
+        "detail": "sunsec.state.memory",
+        "documentation": {}
+    },
+    {
+        "label": "InMemoryStateStore",
+        "importPath": "sunsec.state.memory",
+        "description": "sunsec.state.memory",
+        "isExtraImport": true,
+        "detail": "sunsec.state.memory",
+        "documentation": {}
+    },
+    {
+        "label": "StorageConflictError",
+        "importPath": "sunsec.storage.errors",
+        "description": "sunsec.storage.errors",
+        "isExtraImport": true,
+        "detail": "sunsec.storage.errors",
+        "documentation": {}
+    },
+    {
+        "label": "StorageError",
+        "importPath": "sunsec.storage.errors",
+        "description": "sunsec.storage.errors",
+        "isExtraImport": true,
+        "detail": "sunsec.storage.errors",
+        "documentation": {}
+    },
+    {
+        "label": "StorageConflictError",
+        "importPath": "sunsec.storage.errors",
+        "description": "sunsec.storage.errors",
+        "isExtraImport": true,
+        "detail": "sunsec.storage.errors",
+        "documentation": {}
+    },
+    {
+        "label": "StorageError",
+        "importPath": "sunsec.storage.errors",
+        "description": "sunsec.storage.errors",
+        "isExtraImport": true,
+        "detail": "sunsec.storage.errors",
+        "documentation": {}
+    },
+    {
+        "label": "StorageNotFoundError",
+        "importPath": "sunsec.storage.errors",
+        "description": "sunsec.storage.errors",
+        "isExtraImport": true,
+        "detail": "sunsec.storage.errors",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "BudgetOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "CheckDetailsOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "CheckSummaryOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "DashboardOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "FindingDetailOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "FindingsBySeverityOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "ManualAnalyzeIn",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "ManualAnalyzeOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "ManualFindingOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "ManualLLMMetaOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigIn",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigPatchIn",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "SeverityCountsOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "TimelineEntryOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
         "documentation": {}
     },
     {
@@ -3151,6 +4091,14 @@
         "documentation": {}
     },
     {
+        "label": "PipelineOrchestrator",
+        "importPath": "sunsec.pipeline.orchestrator",
+        "description": "sunsec.pipeline.orchestrator",
+        "isExtraImport": true,
+        "detail": "sunsec.pipeline.orchestrator",
+        "documentation": {}
+    },
+    {
         "label": "# noqa: E402\n    PipelineOrchestrator",
         "importPath": "sunsec.pipeline.orchestrator",
         "description": "sunsec.pipeline.orchestrator",
@@ -3172,6 +4120,22 @@
         "description": "sunsec.pipeline.orchestrator",
         "isExtraImport": true,
         "detail": "sunsec.pipeline.orchestrator",
+        "documentation": {}
+    },
+    {
+        "label": "ResolvedCredentials",
+        "importPath": "sunsec.webhook.repo_resolver",
+        "description": "sunsec.webhook.repo_resolver",
+        "isExtraImport": true,
+        "detail": "sunsec.webhook.repo_resolver",
+        "documentation": {}
+    },
+    {
+        "label": "resolve_webhook_credentials",
+        "importPath": "sunsec.webhook.repo_resolver",
+        "description": "sunsec.webhook.repo_resolver",
+        "isExtraImport": true,
+        "detail": "sunsec.webhook.repo_resolver",
         "documentation": {}
     },
     {
@@ -3455,43 +4419,67 @@
         "documentation": {}
     },
     {
-        "label": "InMemoryStateStore",
-        "importPath": "sunsec.state.memory",
-        "description": "sunsec.state.memory",
+        "label": "build_storage_from_settings",
+        "importPath": "sunsec.storage",
+        "description": "sunsec.storage",
         "isExtraImport": true,
-        "detail": "sunsec.state.memory",
+        "detail": "sunsec.storage",
         "documentation": {}
     },
     {
-        "label": "InMemoryStateStore",
-        "importPath": "sunsec.state.memory",
-        "description": "sunsec.state.memory",
+        "label": "build_storage_from_settings",
+        "importPath": "sunsec.storage",
+        "description": "sunsec.storage",
         "isExtraImport": true,
-        "detail": "sunsec.state.memory",
+        "detail": "sunsec.storage",
         "documentation": {}
     },
     {
-        "label": "InMemoryStateStore",
-        "importPath": "sunsec.state.memory",
-        "description": "sunsec.state.memory",
+        "label": "run_migrations",
+        "importPath": "sunsec.storage",
+        "description": "sunsec.storage",
         "isExtraImport": true,
-        "detail": "sunsec.state.memory",
+        "detail": "sunsec.storage",
         "documentation": {}
     },
     {
-        "label": "InMemoryStateStore",
-        "importPath": "sunsec.state.memory",
-        "description": "sunsec.state.memory",
+        "label": "# noqa: E402\n    SQLiteStateStore",
+        "importPath": "sunsec.storage",
+        "description": "sunsec.storage",
         "isExtraImport": true,
-        "detail": "sunsec.state.memory",
+        "detail": "sunsec.storage",
         "documentation": {}
     },
     {
-        "label": "InMemoryStateStore",
-        "importPath": "sunsec.state.memory",
-        "description": "sunsec.state.memory",
+        "label": "build_storage_from_settings",
+        "importPath": "sunsec.storage",
+        "description": "sunsec.storage",
         "isExtraImport": true,
-        "detail": "sunsec.state.memory",
+        "detail": "sunsec.storage",
+        "documentation": {}
+    },
+    {
+        "label": "run_migrations",
+        "importPath": "sunsec.storage",
+        "description": "sunsec.storage",
+        "isExtraImport": true,
+        "detail": "sunsec.storage",
+        "documentation": {}
+    },
+    {
+        "label": "SQLiteStateStore",
+        "importPath": "sunsec.storage.sqlite_store",
+        "description": "sunsec.storage.sqlite_store",
+        "isExtraImport": true,
+        "detail": "sunsec.storage.sqlite_store",
+        "documentation": {}
+    },
+    {
+        "label": "SQLiteStateStore",
+        "importPath": "sunsec.storage.sqlite_store",
+        "description": "sunsec.storage.sqlite_store",
+        "isExtraImport": true,
+        "detail": "sunsec.storage.sqlite_store",
         "documentation": {}
     },
     {
@@ -3601,6 +4589,22 @@
     },
     {
         "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -3793,6 +4797,14 @@
         "documentation": {}
     },
     {
+        "label": "LLMClient",
+        "importPath": "sunsec.llm.client",
+        "description": "sunsec.llm.client",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.client",
+        "documentation": {}
+    },
+    {
         "label": "AsyncMock",
         "importPath": "unittest.mock",
         "description": "unittest.mock",
@@ -3802,6 +4814,22 @@
     },
     {
         "label": "AsyncMock",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "AsyncMock",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "MagicMock",
         "importPath": "unittest.mock",
         "description": "unittest.mock",
         "isExtraImport": true,
@@ -3914,6 +4942,38 @@
         "documentation": {}
     },
     {
+        "label": "TestClient",
+        "importPath": "fastapi.testclient",
+        "description": "fastapi.testclient",
+        "isExtraImport": true,
+        "detail": "fastapi.testclient",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "sunsec.config.settings",
+        "description": "sunsec.config.settings",
+        "isExtraImport": true,
+        "detail": "sunsec.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "sunsec.config.settings",
+        "description": "sunsec.config.settings",
+        "isExtraImport": true,
+        "detail": "sunsec.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "sunsec.config.settings",
+        "description": "sunsec.config.settings",
+        "isExtraImport": true,
+        "detail": "sunsec.config.settings",
+        "documentation": {}
+    },
+    {
         "label": "Settings",
         "importPath": "sunsec.config.settings",
         "description": "sunsec.config.settings",
@@ -3984,6 +5044,46 @@
         "importPath": "argparse",
         "description": "argparse",
         "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "build_console_router",
+        "importPath": "sunsec.ui.console_router",
+        "description": "sunsec.ui.console_router",
+        "isExtraImport": true,
+        "detail": "sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "# noqa: E402\n    build_console_router",
+        "importPath": "sunsec.ui.console_router",
+        "description": "sunsec.ui.console_router",
+        "isExtraImport": true,
+        "detail": "sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "slug_for_repo",
+        "importPath": "sunsec.ui.console_router",
+        "description": "sunsec.ui.console_router",
+        "isExtraImport": true,
+        "detail": "sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "vcs_token_ref_name",
+        "importPath": "sunsec.ui.console_router",
+        "description": "sunsec.ui.console_router",
+        "isExtraImport": true,
+        "detail": "sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "webhook_secret_ref_name",
+        "importPath": "sunsec.ui.console_router",
+        "description": "sunsec.ui.console_router",
+        "isExtraImport": true,
+        "detail": "sunsec.ui.console_router",
         "documentation": {}
     },
     {
@@ -4231,6 +5331,186 @@
         "documentation": {}
     },
     {
+        "label": "_ConsoleBase",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class _ConsoleBase(BaseModel):\n    \"\"\"Базовый класс для всех console-контрактов.\n    `alias_generator=to_camel` + `populate_by_name=True` — модель принимает\n    оба варианта (`fullName` / `full_name`) на входе и сериализует камелями\n    на выход. `from_attributes=True` — чтобы можно было собирать из ORM/\n    dataclass-like объектов (Pydantic v2 равноценно `from_orm`).\n    \"\"\"\n    model_config = ConfigDict(\n        alias_generator=to_camel,\n        populate_by_name=True,",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "BudgetOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class BudgetOut(_ConsoleBase):\n    \"\"\"Снимок LLM-бюджета (BudgetCounter, ADR-2 / §3.4 / §3.6).\"\"\"\n    spent_rub: float\n    limit_rub: float\n    remaining_rub: float\n    limit_percent: float\n    calls_count: int\n# ---------------------------------------------------------------------------\n# §13.3.2 GET /api/console/settings\n# ---------------------------------------------------------------------------",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class SettingsOut(_ConsoleBase):\n    \"\"\"Read-only снимок Settings БЕЗ секретов.\n    Explicit allow-list (§13.5): любое поле `Settings`, имя которого\n    содержит `_api_key` / `_token` / `_secret` / `_password` — в эту\n    модель НЕ попадает (даже если завтра вырастет `Settings`).\n    \"\"\"\n    app_env: str\n    vcs_provider: str\n    github_api_base: str\n    llm_provider: str",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "SeverityCountsOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class SeverityCountsOut(_ConsoleBase):\n    critical: int = 0\n    high: int = 0\n    medium: int = 0\n    low: int = 0\n    info: int = 0\nclass CheckSummaryOut(_ConsoleBase):\n    \"\"\"Один элемент списка истории проверок (`MOCK_DATA.checks[*]`).\"\"\"\n    id: str\n    repository: str",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "CheckSummaryOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class CheckSummaryOut(_ConsoleBase):\n    \"\"\"Один элемент списка истории проверок (`MOCK_DATA.checks[*]`).\"\"\"\n    id: str\n    repository: str\n    pr_number: int\n    pr_title: Optional[str] = None\n    author: Optional[str] = None\n    source_branch: Optional[str] = None\n    target_branch: Optional[str] = None\n    head_sha: Optional[str] = None",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "TimelineEntryOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class TimelineEntryOut(_ConsoleBase):\n    stage: str\n    status: str\n    duration_ms: int\n    message: Optional[str] = None\nclass FindingDetailOut(_ConsoleBase):\n    \"\"\"Finding с alias `class_` → `class` (внешний JSON — `class`).\"\"\"\n    id: str\n    file: str\n    line: int",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "FindingDetailOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class FindingDetailOut(_ConsoleBase):\n    \"\"\"Finding с alias `class_` → `class` (внешний JSON — `class`).\"\"\"\n    id: str\n    file: str\n    line: int\n    class_: str = Field(alias=\"class\")\n    severity: str\n    confidence: Optional[float] = None\n    message: str\n    suggestion: Optional[str] = None",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "SkippedFileOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class SkippedFileOut(_ConsoleBase):\n    path: str\n    reason: str\n    detail: Optional[str] = None\nclass CheckDetailsOut(_ConsoleBase):\n    id: str\n    repository: str\n    pr_number: int\n    pr_title: Optional[str] = None\n    status: str",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "CheckDetailsOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class CheckDetailsOut(_ConsoleBase):\n    id: str\n    repository: str\n    pr_number: int\n    pr_title: Optional[str] = None\n    status: str\n    llm_provider: Optional[str] = None\n    llm_model: Optional[str] = None\n    cost_rub: float = 0.0\n    started_at: datetime",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "ManualFileIn",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class ManualFileIn(_ConsoleBase):\n    path: str = Field(..., min_length=1, max_length=512)\n    code: str = Field(default=\"\")\n    language: Optional[str] = Field(default=None, max_length=64)\nclass ManualAnalyzeIn(_ConsoleBase):\n    files: list[ManualFileIn] = Field(..., min_length=1, max_length=50)\nclass ManualFindingOut(_ConsoleBase):\n    severity: str\n    class_: str = Field(alias=\"class\")\n    file: str",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "ManualAnalyzeIn",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class ManualAnalyzeIn(_ConsoleBase):\n    files: list[ManualFileIn] = Field(..., min_length=1, max_length=50)\nclass ManualFindingOut(_ConsoleBase):\n    severity: str\n    class_: str = Field(alias=\"class\")\n    file: str\n    line: int\n    message: str\n    suggestion: Optional[str] = None\n    confidence: Optional[float] = None",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "ManualFindingOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class ManualFindingOut(_ConsoleBase):\n    severity: str\n    class_: str = Field(alias=\"class\")\n    file: str\n    line: int\n    message: str\n    suggestion: Optional[str] = None\n    confidence: Optional[float] = None\n    code_context: Optional[str] = None\nclass ManualLLMMetaOut(_ConsoleBase):",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "ManualLLMMetaOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class ManualLLMMetaOut(_ConsoleBase):\n    status: str\n    model: str\n    cost_rub: float\n    latency_ms: int\nclass ManualAnalyzeOut(_ConsoleBase):\n    summary: str\n    findings: list[ManualFindingOut]\n    llm: ManualLLMMetaOut\n# ---------------------------------------------------------------------------",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "ManualAnalyzeOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class ManualAnalyzeOut(_ConsoleBase):\n    summary: str\n    findings: list[ManualFindingOut]\n    llm: ManualLLMMetaOut\n# ---------------------------------------------------------------------------\n# §13.3.6 GET /api/console/dashboard (опциональный)\n# ---------------------------------------------------------------------------\nclass FindingsBySeverityOut(_ConsoleBase):\n    critical: int = 0\n    high: int = 0",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "FindingsBySeverityOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class FindingsBySeverityOut(_ConsoleBase):\n    critical: int = 0\n    high: int = 0\n    medium: int = 0\n    low: int = 0\n    info: int = 0\nclass DashboardOut(_ConsoleBase):\n    recent_checks: list[CheckSummaryOut] = Field(default_factory=list)\n    findings_by_severity: FindingsBySeverityOut = Field(\n        default_factory=FindingsBySeverityOut",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "DashboardOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class DashboardOut(_ConsoleBase):\n    recent_checks: list[CheckSummaryOut] = Field(default_factory=list)\n    findings_by_severity: FindingsBySeverityOut = Field(\n        default_factory=FindingsBySeverityOut\n    )\n    llm_cost_today: float = 0.0\n    llm_cost_total: float = 0.0\n    success_rate: float = 0.0\n    repos_count: int = 0\n# ---------------------------------------------------------------------------",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigIn",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class RepoConfigIn(_ConsoleBase):\n    \"\"\"POST body. `vcs_token` / `webhook_secret` — write-only; в response не возвращаются.\"\"\"\n    full_name: str = Field(..., min_length=3, max_length=200)\n    vcs_provider: str = \"github\"\n    vcs_token: Optional[str] = Field(default=None, repr=False)\n    webhook_secret: Optional[str] = Field(default=None, repr=False)\n    llm_provider_override: Optional[str] = None\n    enabled: bool = True\nclass RepoConfigPatchIn(_ConsoleBase):\n    \"\"\"PATCH body — все поля Optional.\"\"\"",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigPatchIn",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class RepoConfigPatchIn(_ConsoleBase):\n    \"\"\"PATCH body — все поля Optional.\"\"\"\n    vcs_provider: Optional[str] = None\n    vcs_token: Optional[str] = Field(default=None, repr=False)\n    webhook_secret: Optional[str] = Field(default=None, repr=False)\n    llm_provider_override: Optional[str] = None\n    enabled: Optional[bool] = None\nclass RepoConfigOut(_ConsoleBase):\n    \"\"\"GET/POST/PATCH response. БЕЗ plaintext-секретов — только `*_ref`-имена.\"\"\"\n    id: str",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class RepoConfigOut(_ConsoleBase):\n    \"\"\"GET/POST/PATCH response. БЕЗ plaintext-секретов — только `*_ref`-имена.\"\"\"\n    id: str\n    full_name: str\n    vcs_provider: str\n    vcs_token_ref: Optional[str] = None\n    webhook_secret_ref: Optional[str] = None\n    vcs_token_set: bool = False\n    webhook_secret_set: bool = False\n    llm_provider_override: Optional[str] = None",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "__all__ = [\n    \"BudgetOut\",\n    \"SettingsOut\",\n    \"SeverityCountsOut\",\n    \"CheckSummaryOut\",\n    \"TimelineEntryOut\",\n    \"FindingDetailOut\",\n    \"SkippedFileOut\",\n    \"CheckDetailsOut\",\n    \"ManualFileIn\",",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
         "label": "DiffLine",
         "kind": 6,
         "importPath": "src.sunsec.contracts.diff",
@@ -4399,6 +5679,51 @@
         "description": "src.sunsec.contracts.llm_response",
         "peekOfCode": "Severity = Literal[\"info\", \"low\", \"medium\", \"high\", \"critical\"]\nclass Finding(BaseModel):\n    \"\"\"Одна находка LLM. Поле `class` через alias (Python keyword).\"\"\"\n    model_config = ConfigDict(populate_by_name=True, extra=\"ignore\")\n    file: str = Field(..., description=\"Путь файла как в FilteredDiffFile.path\")\n    line: int = Field(..., ge=1, description=\"new_line_no в FilteredDiff\")\n    class_: VulnClass = Field(..., alias=\"class\")\n    severity: Severity\n    message: str = Field(..., min_length=10, max_length=500)\n    suggestion: Optional[str] = None",
         "detail": "src.sunsec.contracts.llm_response",
+        "documentation": {}
+    },
+    {
+        "label": "CheckRecord",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.storage",
+        "description": "src.sunsec.contracts.storage",
+        "peekOfCode": "class CheckRecord(BaseModel):\n    \"\"\"Запись `checks` (системный design §11.3.1).\n    Поле `severity_counts` — словарь `{critical/high/medium/low/info → int}`,\n    в БД хранится в денормализованных колонках `severity_counts_*`.\n    \"\"\"\n    model_config = ConfigDict(extra=\"ignore\")\n    id: str\n    repo: str\n    pr_number: int\n    pr_title: Optional[str] = None",
+        "detail": "src.sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "FindingRecord",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.storage",
+        "description": "src.sunsec.contracts.storage",
+        "peekOfCode": "class FindingRecord(BaseModel):\n    \"\"\"Запись `findings` (§11.3.2). `class_` — alias на SQL-колонку `class`.\"\"\"\n    model_config = ConfigDict(populate_by_name=True, extra=\"ignore\")\n    id: str\n    check_id: str\n    file: str\n    line: int\n    class_: str = Field(alias=\"class\")\n    severity: str\n    confidence: Optional[float] = None",
+        "detail": "src.sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "CommentRecord",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.storage",
+        "description": "src.sunsec.contracts.storage",
+        "peekOfCode": "class CommentRecord(BaseModel):\n    \"\"\"Запись `comments` (§11.3.3).\"\"\"\n    model_config = ConfigDict(extra=\"ignore\")\n    id: str\n    check_id: str\n    finding_id: Optional[str] = None\n    kind: str\n    marker: Optional[str] = None\n    posted_at: datetime\n    vcs_comment_id: Optional[str] = None",
+        "detail": "src.sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "RepoConfigRecord",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.storage",
+        "description": "src.sunsec.contracts.storage",
+        "peekOfCode": "class RepoConfigRecord(BaseModel):\n    \"\"\"Запись `repo_configs` (§11.3.4).\n    Внимание: ни `vcs_token`, ни `webhook_secret` в plaintext в эту модель\n    не попадают — только `*_ref` имена env-переменных (см. §11.4).\n    \"\"\"\n    model_config = ConfigDict(extra=\"ignore\")\n    id: str\n    full_name: str\n    vcs_provider: str = \"github\"\n    vcs_token_ref: Optional[str] = None",
+        "detail": "src.sunsec.contracts.storage",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "src.sunsec.contracts.storage",
+        "description": "src.sunsec.contracts.storage",
+        "peekOfCode": "__all__ = [\n    \"CheckRecord\",\n    \"FindingRecord\",\n    \"CommentRecord\",\n    \"RepoConfigRecord\",\n]",
+        "detail": "src.sunsec.contracts.storage",
         "documentation": {}
     },
     {
@@ -4856,7 +6181,7 @@
         "kind": 5,
         "importPath": "src.sunsec.pipeline.orchestrator",
         "description": "src.sunsec.pipeline.orchestrator",
-        "peekOfCode": "log = logging.getLogger(__name__)\ndef _build_short_summary(findings: list, llm_summary: str) -> str:\n    \"\"\"Короткая агрегация для CommentPublisher.publish (T-016 minimal summary).\n    Полная агрегация по severity + топ-N — T-017; здесь мы передаём LLM\n    summary как есть. CommentPublisher сам рендерит breakdown по severity\n    (см. `_render_summary_body` в `comments/publisher.py`).\n    \"\"\"\n    return llm_summary or \"\"\ndef idempotency_key(event: GitHubPullRequestEvent) -> str:\n    \"\"\"`owner/repo#42@sha` — единый ключ дедупликации.",
+        "peekOfCode": "log = logging.getLogger(__name__)\ndef _generate_check_id() -> str:\n    \"\"\"`chk_` + 5-байтный hex (system_design §11.3.1).\"\"\"\n    return f\"chk_{secrets.token_hex(5)}\"\ndef _generate_finding_id() -> str:\n    return f\"fnd_{secrets.token_hex(6)}\"\ndef _generate_comment_id() -> str:\n    return f\"cmt_{secrets.token_hex(6)}\"\ndef _severity_counts_from_findings(findings: list) -> dict[str, int]:\n    counts = {\"critical\": 0, \"high\": 0, \"medium\": 0, \"low\": 0, \"info\": 0}",
         "detail": "src.sunsec.pipeline.orchestrator",
         "documentation": {}
     },
@@ -4865,7 +6190,7 @@
         "kind": 6,
         "importPath": "src.sunsec.state.base",
         "description": "src.sunsec.state.base",
-        "peekOfCode": "class StateStore(Protocol):\n    async def mark_pr_in_progress(self, key: str, ttl: int = 86400) -> bool: ...\n    async def mark_pr_done(self, key: str) -> None: ...\n    async def mark_pr_failed(self, key: str) -> None: ...\n    async def seen_delivery(self, delivery_id: str) -> bool: ...\n    async def get_cached_llm_response(self, cache_key: str) -> Optional[LLMResponseSchema]: ...\n    async def set_cached_llm_response(self, cache_key: str, response: LLMResponseSchema) -> None: ...\n    async def has_posted_finding(self, repo: str, pr_number: int, finding_hash: str) -> bool: ...\n    async def register_posted_finding(self, repo: str, pr_number: int, finding_hash: str) -> None: ...",
+        "peekOfCode": "class StateStore(Protocol):\n    # --- Existing (M-2/M-7) — НЕ менять ---\n    async def mark_pr_in_progress(self, key: str, ttl: int = 86400) -> bool: ...\n    async def mark_pr_done(self, key: str) -> None: ...\n    async def mark_pr_failed(self, key: str) -> None: ...\n    async def seen_delivery(self, delivery_id: str) -> bool: ...\n    async def get_cached_llm_response(\n        self, cache_key: str\n    ) -> Optional[LLMResponseSchema]: ...\n    async def set_cached_llm_response(",
         "detail": "src.sunsec.state.base",
         "documentation": {}
     },
@@ -4876,6 +6201,267 @@
         "description": "src.sunsec.state.memory",
         "peekOfCode": "class InMemoryStateStore:\n    \"\"\"Минимальная in-memory реализация StateStore.\n    Все мутации защищены asyncio.Lock'ом — webhook-handler async, разные PR\n    могут приходить параллельно. Lock дешёвый, гарантирует, что\n    `mark_pr_in_progress` атомарен (check-and-set).\n    \"\"\"\n    def __init__(self) -> None:\n        self._inprogress: set[str] = set()\n        self._done: set[str] = set()\n        self._llm_cache: dict[str, LLMResponseSchema] = {}",
         "detail": "src.sunsec.state.memory",
+        "documentation": {}
+    },
+    {
+        "label": "_SEVERITY_KEYS",
+        "kind": 5,
+        "importPath": "src.sunsec.state.memory",
+        "description": "src.sunsec.state.memory",
+        "peekOfCode": "_SEVERITY_KEYS = (\"critical\", \"high\", \"medium\", \"low\", \"info\")\ndef _severity_rank(severity: str) -> int:\n    order = {\"critical\": 0, \"high\": 1, \"medium\": 2, \"low\": 3, \"info\": 4}\n    return order.get(severity, 5)\nclass InMemoryStateStore:\n    \"\"\"Минимальная in-memory реализация StateStore.\n    Все мутации защищены asyncio.Lock'ом — webhook-handler async, разные PR\n    могут приходить параллельно. Lock дешёвый, гарантирует, что\n    `mark_pr_in_progress` атомарен (check-and-set).\n    \"\"\"",
+        "detail": "src.sunsec.state.memory",
+        "documentation": {}
+    },
+    {
+        "label": "StorageError",
+        "kind": 6,
+        "importPath": "src.sunsec.storage.errors",
+        "description": "src.sunsec.storage.errors",
+        "peekOfCode": "class StorageError(Exception):\n    \"\"\"Общая ошибка persistence-слоя.\"\"\"\nclass StorageConflictError(StorageError):\n    \"\"\"UNIQUE constraint violation (например, дубликат `repo_configs.full_name`).\"\"\"\nclass StorageNotFoundError(StorageError):\n    \"\"\"Запрошенная запись не найдена (для PATCH/DELETE routes).\"\"\"\n__all__ = [\n    \"StorageError\",\n    \"StorageConflictError\",\n    \"StorageNotFoundError\",",
+        "detail": "src.sunsec.storage.errors",
+        "documentation": {}
+    },
+    {
+        "label": "StorageConflictError",
+        "kind": 6,
+        "importPath": "src.sunsec.storage.errors",
+        "description": "src.sunsec.storage.errors",
+        "peekOfCode": "class StorageConflictError(StorageError):\n    \"\"\"UNIQUE constraint violation (например, дубликат `repo_configs.full_name`).\"\"\"\nclass StorageNotFoundError(StorageError):\n    \"\"\"Запрошенная запись не найдена (для PATCH/DELETE routes).\"\"\"\n__all__ = [\n    \"StorageError\",\n    \"StorageConflictError\",\n    \"StorageNotFoundError\",\n]",
+        "detail": "src.sunsec.storage.errors",
+        "documentation": {}
+    },
+    {
+        "label": "StorageNotFoundError",
+        "kind": 6,
+        "importPath": "src.sunsec.storage.errors",
+        "description": "src.sunsec.storage.errors",
+        "peekOfCode": "class StorageNotFoundError(StorageError):\n    \"\"\"Запрошенная запись не найдена (для PATCH/DELETE routes).\"\"\"\n__all__ = [\n    \"StorageError\",\n    \"StorageConflictError\",\n    \"StorageNotFoundError\",\n]",
+        "detail": "src.sunsec.storage.errors",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.errors",
+        "description": "src.sunsec.storage.errors",
+        "peekOfCode": "__all__ = [\n    \"StorageError\",\n    \"StorageConflictError\",\n    \"StorageNotFoundError\",\n]",
+        "detail": "src.sunsec.storage.errors",
+        "documentation": {}
+    },
+    {
+        "label": "log",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.migrations",
+        "description": "src.sunsec.storage.migrations",
+        "peekOfCode": "log = logging.getLogger(__name__)\ndef _is_in_memory(db_path: str) -> bool:\n    return db_path == \":memory:\" or db_path.startswith(\"file::memory:\")\ndef _ensure_parent_dir(db_path: str) -> None:\n    \"\"\"Если родительская директория `./data/sunsec.db` не существует — создаём.\"\"\"\n    if _is_in_memory(db_path):\n        return\n    parent = Path(db_path).resolve().parent\n    parent.mkdir(parents=True, exist_ok=True)\nasync def run_migrations(db_path: str) -> None:",
+        "detail": "src.sunsec.storage.migrations",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.migrations",
+        "description": "src.sunsec.storage.migrations",
+        "peekOfCode": "__all__ = [\"run_migrations\"]",
+        "detail": "src.sunsec.storage.migrations",
+        "documentation": {}
+    },
+    {
+        "label": "SCHEMA_VERSION",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.schema",
+        "description": "src.sunsec.storage.schema",
+        "peekOfCode": "SCHEMA_VERSION = \"1\"\nCREATE_TABLE_CHECKS = \"\"\"\nCREATE TABLE IF NOT EXISTS checks (\n    id                          TEXT PRIMARY KEY,\n    repo                        TEXT NOT NULL,\n    pr_number                   INTEGER NOT NULL,\n    pr_title                    TEXT,\n    author                      TEXT,\n    source_branch               TEXT,\n    target_branch               TEXT,",
+        "detail": "src.sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "CREATE_TABLE_CHECKS",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.schema",
+        "description": "src.sunsec.storage.schema",
+        "peekOfCode": "CREATE_TABLE_CHECKS = \"\"\"\nCREATE TABLE IF NOT EXISTS checks (\n    id                          TEXT PRIMARY KEY,\n    repo                        TEXT NOT NULL,\n    pr_number                   INTEGER NOT NULL,\n    pr_title                    TEXT,\n    author                      TEXT,\n    source_branch               TEXT,\n    target_branch               TEXT,\n    head_sha                    TEXT NOT NULL,",
+        "detail": "src.sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "CREATE_INDEX_CHECKS_REPO_STARTED",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.schema",
+        "description": "src.sunsec.storage.schema",
+        "peekOfCode": "CREATE_INDEX_CHECKS_REPO_STARTED = \"\"\"\nCREATE INDEX IF NOT EXISTS idx_checks_repo_started\n    ON checks(repo, started_at DESC)\n\"\"\"\nCREATE_TABLE_FINDINGS = \"\"\"\nCREATE TABLE IF NOT EXISTS findings (\n    id              TEXT PRIMARY KEY,\n    check_id        TEXT NOT NULL REFERENCES checks(id) ON DELETE CASCADE,\n    file            TEXT NOT NULL,\n    line            INTEGER NOT NULL,",
+        "detail": "src.sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "CREATE_TABLE_FINDINGS",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.schema",
+        "description": "src.sunsec.storage.schema",
+        "peekOfCode": "CREATE_TABLE_FINDINGS = \"\"\"\nCREATE TABLE IF NOT EXISTS findings (\n    id              TEXT PRIMARY KEY,\n    check_id        TEXT NOT NULL REFERENCES checks(id) ON DELETE CASCADE,\n    file            TEXT NOT NULL,\n    line            INTEGER NOT NULL,\n    class           TEXT NOT NULL,\n    severity        TEXT NOT NULL,\n    confidence      REAL,\n    message         TEXT NOT NULL,",
+        "detail": "src.sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "CREATE_INDEX_FINDINGS_CHECK",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.schema",
+        "description": "src.sunsec.storage.schema",
+        "peekOfCode": "CREATE_INDEX_FINDINGS_CHECK = \"\"\"\nCREATE INDEX IF NOT EXISTS idx_findings_check\n    ON findings(check_id)\n\"\"\"\nCREATE_TABLE_COMMENTS = \"\"\"\nCREATE TABLE IF NOT EXISTS comments (\n    id              TEXT PRIMARY KEY,\n    check_id        TEXT NOT NULL REFERENCES checks(id) ON DELETE CASCADE,\n    finding_id      TEXT REFERENCES findings(id) ON DELETE SET NULL,\n    kind            TEXT NOT NULL,",
+        "detail": "src.sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "CREATE_TABLE_COMMENTS",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.schema",
+        "description": "src.sunsec.storage.schema",
+        "peekOfCode": "CREATE_TABLE_COMMENTS = \"\"\"\nCREATE TABLE IF NOT EXISTS comments (\n    id              TEXT PRIMARY KEY,\n    check_id        TEXT NOT NULL REFERENCES checks(id) ON DELETE CASCADE,\n    finding_id      TEXT REFERENCES findings(id) ON DELETE SET NULL,\n    kind            TEXT NOT NULL,\n    marker          TEXT,\n    posted_at       TIMESTAMP NOT NULL,\n    vcs_comment_id  TEXT,\n    vcs_url         TEXT,",
+        "detail": "src.sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "CREATE_INDEX_COMMENTS_CHECK",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.schema",
+        "description": "src.sunsec.storage.schema",
+        "peekOfCode": "CREATE_INDEX_COMMENTS_CHECK = \"\"\"\nCREATE INDEX IF NOT EXISTS idx_comments_check\n    ON comments(check_id)\n\"\"\"\nCREATE_TABLE_REPO_CONFIGS = \"\"\"\nCREATE TABLE IF NOT EXISTS repo_configs (\n    id                      TEXT PRIMARY KEY,\n    full_name               TEXT NOT NULL UNIQUE,\n    vcs_provider            TEXT NOT NULL DEFAULT 'github',\n    vcs_token_ref           TEXT,",
+        "detail": "src.sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "CREATE_TABLE_REPO_CONFIGS",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.schema",
+        "description": "src.sunsec.storage.schema",
+        "peekOfCode": "CREATE_TABLE_REPO_CONFIGS = \"\"\"\nCREATE TABLE IF NOT EXISTS repo_configs (\n    id                      TEXT PRIMARY KEY,\n    full_name               TEXT NOT NULL UNIQUE,\n    vcs_provider            TEXT NOT NULL DEFAULT 'github',\n    vcs_token_ref           TEXT,\n    webhook_secret_ref      TEXT,\n    llm_provider_override   TEXT,\n    enabled                 INTEGER NOT NULL DEFAULT 1,\n    created_at              TIMESTAMP NOT NULL,",
+        "detail": "src.sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "CREATE_INDEX_REPO_CONFIGS_FULL_NAME",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.schema",
+        "description": "src.sunsec.storage.schema",
+        "peekOfCode": "CREATE_INDEX_REPO_CONFIGS_FULL_NAME = \"\"\"\nCREATE UNIQUE INDEX IF NOT EXISTS idx_repo_configs_full_name\n    ON repo_configs(full_name)\n\"\"\"\n# Применяется последовательно в `migrations.run_migrations`.\n# Порядок важен: таблицы — до индексов на них; FK-таблицы — после parent.\nALL_DDL_STATEMENTS: list[str] = [\n    CREATE_TABLE_CHECKS,\n    CREATE_INDEX_CHECKS_REPO_STARTED,\n    CREATE_TABLE_FINDINGS,",
+        "detail": "src.sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.schema",
+        "description": "src.sunsec.storage.schema",
+        "peekOfCode": "__all__ = [\n    \"SCHEMA_VERSION\",\n    \"ALL_DDL_STATEMENTS\",\n    \"PRAGMA_STATEMENTS\",\n    \"CREATE_TABLE_CHECKS\",\n    \"CREATE_TABLE_FINDINGS\",\n    \"CREATE_TABLE_COMMENTS\",\n    \"CREATE_TABLE_REPO_CONFIGS\",\n    \"CREATE_INDEX_CHECKS_REPO_STARTED\",\n    \"CREATE_INDEX_FINDINGS_CHECK\",",
+        "detail": "src.sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "SQLiteStateStore",
+        "kind": 6,
+        "importPath": "src.sunsec.storage.sqlite_store",
+        "description": "src.sunsec.storage.sqlite_store",
+        "peekOfCode": "class SQLiteStateStore:\n    \"\"\"Durable `StateStore`.\n    Жизненный цикл соединения — per-request (`async with aiosqlite.connect`),\n    см. system_design §11.6. Все SQL-запросы параметризованы (`?`).\n    Существующие 8 методов M-2/M-7 делегируются `InMemoryStateStore` — они\n    не durable (ADR-3 in-memory остаётся в силе для idempotency / LLM-cache /\n    posted-finding registry).\n    \"\"\"\n    def __init__(self, db_path: str) -> None:\n        if not db_path:",
+        "detail": "src.sunsec.storage.sqlite_store",
+        "documentation": {}
+    },
+    {
+        "label": "log",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.sqlite_store",
+        "description": "src.sunsec.storage.sqlite_store",
+        "peekOfCode": "log = logging.getLogger(__name__)\n_SEVERITY_KEYS = (\"critical\", \"high\", \"medium\", \"low\", \"info\")\ndef _row_to_check(row: aiosqlite.Row) -> CheckRecord:\n    d = dict(row)\n    severity_counts = {\n        k: int(d.get(f\"severity_counts_{k}\") or 0) for k in _SEVERITY_KEYS\n    }\n    return CheckRecord(\n        id=d[\"id\"],\n        repo=d[\"repo\"],",
+        "detail": "src.sunsec.storage.sqlite_store",
+        "documentation": {}
+    },
+    {
+        "label": "_SEVERITY_KEYS",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.sqlite_store",
+        "description": "src.sunsec.storage.sqlite_store",
+        "peekOfCode": "_SEVERITY_KEYS = (\"critical\", \"high\", \"medium\", \"low\", \"info\")\ndef _row_to_check(row: aiosqlite.Row) -> CheckRecord:\n    d = dict(row)\n    severity_counts = {\n        k: int(d.get(f\"severity_counts_{k}\") or 0) for k in _SEVERITY_KEYS\n    }\n    return CheckRecord(\n        id=d[\"id\"],\n        repo=d[\"repo\"],\n        pr_number=int(d[\"pr_number\"]),",
+        "detail": "src.sunsec.storage.sqlite_store",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "src.sunsec.storage.sqlite_store",
+        "description": "src.sunsec.storage.sqlite_store",
+        "peekOfCode": "__all__ = [\"SQLiteStateStore\"]",
+        "detail": "src.sunsec.storage.sqlite_store",
+        "documentation": {}
+    },
+    {
+        "label": "slug_for_repo",
+        "kind": 2,
+        "importPath": "src.sunsec.ui.console_router",
+        "description": "src.sunsec.ui.console_router",
+        "peekOfCode": "def slug_for_repo(full_name: str) -> str:\n    \"\"\"Нормализация `owner/repo` → `OWNER_REPO` (alphanumeric_underscore).\n    Spec — `system_design v1.2.1 §13.4` («Слаг функция»):\n        slug = re.sub(r'[^A-Za-z0-9]+', '_', full_name).strip('_').upper()\n    \"\"\"\n    return re.sub(r\"[^A-Za-z0-9]+\", \"_\", full_name).strip(\"_\").upper()\ndef vcs_token_ref_name(full_name: str) -> str:\n    \"\"\"`REPO_<NORMALIZED>_VCS_TOKEN` — детерминированное имя env-переменной.\"\"\"\n    return f\"REPO_{slug_for_repo(full_name)}_VCS_TOKEN\"\ndef webhook_secret_ref_name(full_name: str) -> str:",
+        "detail": "src.sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "vcs_token_ref_name",
+        "kind": 2,
+        "importPath": "src.sunsec.ui.console_router",
+        "description": "src.sunsec.ui.console_router",
+        "peekOfCode": "def vcs_token_ref_name(full_name: str) -> str:\n    \"\"\"`REPO_<NORMALIZED>_VCS_TOKEN` — детерминированное имя env-переменной.\"\"\"\n    return f\"REPO_{slug_for_repo(full_name)}_VCS_TOKEN\"\ndef webhook_secret_ref_name(full_name: str) -> str:\n    \"\"\"`REPO_<NORMALIZED>_WEBHOOK_SECRET`.\"\"\"\n    return f\"REPO_{slug_for_repo(full_name)}_WEBHOOK_SECRET\"\ndef _record_to_repo_out(rec: RepoConfigRecord) -> RepoConfigOut:\n    \"\"\"Конвертация persistence-модели в HTTP-response (без секретов).\"\"\"\n    return RepoConfigOut(\n        id=rec.id,",
+        "detail": "src.sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "webhook_secret_ref_name",
+        "kind": 2,
+        "importPath": "src.sunsec.ui.console_router",
+        "description": "src.sunsec.ui.console_router",
+        "peekOfCode": "def webhook_secret_ref_name(full_name: str) -> str:\n    \"\"\"`REPO_<NORMALIZED>_WEBHOOK_SECRET`.\"\"\"\n    return f\"REPO_{slug_for_repo(full_name)}_WEBHOOK_SECRET\"\ndef _record_to_repo_out(rec: RepoConfigRecord) -> RepoConfigOut:\n    \"\"\"Конвертация persistence-модели в HTTP-response (без секретов).\"\"\"\n    return RepoConfigOut(\n        id=rec.id,\n        full_name=rec.full_name,\n        vcs_provider=rec.vcs_provider,\n        vcs_token_ref=rec.vcs_token_ref,",
+        "detail": "src.sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "build_console_router",
+        "kind": 2,
+        "importPath": "src.sunsec.ui.console_router",
+        "description": "src.sunsec.ui.console_router",
+        "peekOfCode": "def build_console_router(\n    *,\n    state: Any,\n    settings: Any,\n    llm_client: Any = None,\n    manual_analyze_handler: Optional[Callable[[dict], Awaitable[Any]]] = None,\n    repos_secrets_path: Optional[Path] = None,\n) -> Any:\n    \"\"\"Фабрика console-роутера. DI — все зависимости приходят снаружи.\n    Args:",
+        "detail": "src.sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "log",
+        "kind": 5,
+        "importPath": "src.sunsec.ui.console_router",
+        "description": "src.sunsec.ui.console_router",
+        "peekOfCode": "log = logging.getLogger(__name__)\n# Default путь для gitignored secrets-файла (RT-012 backend-fix).\n# Может быть переопределён в фабрике (для тестов через tmp_path).\nDEFAULT_REPOS_SECRETS_PATH = Path(\"data\") / \"repos_secrets.env\"\n# Названия секретных env-переменных, которые НЕ должны попасть ни в один\n# response (`SettingsOut` уже фильтрует на уровне модели; это backup-grep\n# для защиты от случайного добавления нового секрета в Settings).\n_SECRET_NAME_RE = re.compile(r\"(api[_-]?key|token|secret|password)\", re.IGNORECASE)\n# ---------------------------------------------------------------------------\n# Helpers",
+        "detail": "src.sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_REPOS_SECRETS_PATH",
+        "kind": 5,
+        "importPath": "src.sunsec.ui.console_router",
+        "description": "src.sunsec.ui.console_router",
+        "peekOfCode": "DEFAULT_REPOS_SECRETS_PATH = Path(\"data\") / \"repos_secrets.env\"\n# Названия секретных env-переменных, которые НЕ должны попасть ни в один\n# response (`SettingsOut` уже фильтрует на уровне модели; это backup-grep\n# для защиты от случайного добавления нового секрета в Settings).\n_SECRET_NAME_RE = re.compile(r\"(api[_-]?key|token|secret|password)\", re.IGNORECASE)\n# ---------------------------------------------------------------------------\n# Helpers\n# ---------------------------------------------------------------------------\ndef slug_for_repo(full_name: str) -> str:\n    \"\"\"Нормализация `owner/repo` → `OWNER_REPO` (alphanumeric_underscore).",
+        "detail": "src.sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "_SECRET_NAME_RE",
+        "kind": 5,
+        "importPath": "src.sunsec.ui.console_router",
+        "description": "src.sunsec.ui.console_router",
+        "peekOfCode": "_SECRET_NAME_RE = re.compile(r\"(api[_-]?key|token|secret|password)\", re.IGNORECASE)\n# ---------------------------------------------------------------------------\n# Helpers\n# ---------------------------------------------------------------------------\ndef slug_for_repo(full_name: str) -> str:\n    \"\"\"Нормализация `owner/repo` → `OWNER_REPO` (alphanumeric_underscore).\n    Spec — `system_design v1.2.1 §13.4` («Слаг функция»):\n        slug = re.sub(r'[^A-Za-z0-9]+', '_', full_name).strip('_').upper()\n    \"\"\"\n    return re.sub(r\"[^A-Za-z0-9]+\", \"_\", full_name).strip(\"_\").upper()",
+        "detail": "src.sunsec.ui.console_router",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "src.sunsec.ui.console_router",
+        "description": "src.sunsec.ui.console_router",
+        "peekOfCode": "__all__ = [\n    \"build_console_router\",\n    \"slug_for_repo\",\n    \"vcs_token_ref_name\",\n    \"webhook_secret_ref_name\",\n    \"DEFAULT_REPOS_SECRETS_PATH\",\n]",
+        "detail": "src.sunsec.ui.console_router",
         "documentation": {}
     },
     {
@@ -5104,6 +6690,33 @@
         "documentation": {}
     },
     {
+        "label": "ResolvedCredentials",
+        "kind": 6,
+        "importPath": "src.sunsec.webhook.repo_resolver",
+        "description": "src.sunsec.webhook.repo_resolver",
+        "peekOfCode": "class ResolvedCredentials:\n    \"\"\"Резолвленные credentials для одного входящего webhook'а.\"\"\"\n    vcs_token: str\n    webhook_secret: str\n    source: str  # \"db\" | \"env\" | \"mixed\"\n    repo_full_name: Optional[str] = None\nasync def resolve_webhook_credentials(\n    *,\n    state: \"StateStore\",\n    settings: \"Settings\",",
+        "detail": "src.sunsec.webhook.repo_resolver",
+        "documentation": {}
+    },
+    {
+        "label": "log",
+        "kind": 5,
+        "importPath": "src.sunsec.webhook.repo_resolver",
+        "description": "src.sunsec.webhook.repo_resolver",
+        "peekOfCode": "log = logging.getLogger(__name__)\n@dataclass(frozen=True)\nclass ResolvedCredentials:\n    \"\"\"Резолвленные credentials для одного входящего webhook'а.\"\"\"\n    vcs_token: str\n    webhook_secret: str\n    source: str  # \"db\" | \"env\" | \"mixed\"\n    repo_full_name: Optional[str] = None\nasync def resolve_webhook_credentials(\n    *,",
+        "detail": "src.sunsec.webhook.repo_resolver",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "src.sunsec.webhook.repo_resolver",
+        "description": "src.sunsec.webhook.repo_resolver",
+        "peekOfCode": "__all__ = [\"ResolvedCredentials\", \"resolve_webhook_credentials\"]",
+        "detail": "src.sunsec.webhook.repo_resolver",
+        "documentation": {}
+    },
+    {
         "label": "build_router",
         "kind": 2,
         "importPath": "src.sunsec.webhook.router",
@@ -5180,7 +6793,7 @@
         "kind": 6,
         "importPath": "src.sunsec.webhook.service",
         "description": "src.sunsec.webhook.service",
-        "peekOfCode": "class WebhookService:\n    \"\"\"Чистая бизнес-логика webhook-приёмки (без FastAPI).\"\"\"\n    def __init__(\n        self,\n        *,\n        vcs: VCSAdapter,\n        state: StateStore,\n        webhook_secret: str,\n        skip_drafts: bool = True,\n    ) -> None:",
+        "peekOfCode": "class WebhookService:\n    \"\"\"Чистая бизнес-логика webhook-приёмки (без FastAPI).\"\"\"\n    def __init__(\n        self,\n        *,\n        vcs: VCSAdapter,\n        state: StateStore,\n        webhook_secret: str,\n        skip_drafts: bool = True,\n        settings: Optional[object] = None,",
         "detail": "src.sunsec.webhook.service",
         "documentation": {}
     },
@@ -5252,7 +6865,16 @@
         "kind": 5,
         "importPath": "src.sunsec.app",
         "description": "src.sunsec.app",
-        "peekOfCode": "log = logging.getLogger(__name__)\ndef create_app(settings: Settings | None = None):\n    \"\"\"Application factory (FastAPI).\n    Можно передать `settings` явно (тесты используют это, чтобы не зависеть\n    от `os.environ` через `get_settings`).\n    \"\"\"\n    try:\n        from fastapi import FastAPI  # type: ignore\n    except ImportError as exc:  # pragma: no cover\n        raise RuntimeError(",
+        "peekOfCode": "log = logging.getLogger(__name__)\n_REPOS_SECRETS_PATH = Path(\"data\") / \"repos_secrets.env\"\ndef _load_repos_secrets_if_present(path: Path = _REPOS_SECRETS_PATH) -> bool:\n    \"\"\"Durability fix RT-012: подгрузка gitignored secrets-файла на startup.\n    Вызывается **до** `Settings.from_env()` инициализации, чтобы\n    `os.environ[REPO_<X>_VCS_TOKEN]` был доступен резолверу webhook'а\n    (`webhook_secret_ref` / `vcs_token_ref`).\n    `override=False` — реальные env / `.env` имеют приоритет; secrets-файл\n    добавляет только те ключи, которых ещё нет.\n    Returns:",
+        "detail": "src.sunsec.app",
+        "documentation": {}
+    },
+    {
+        "label": "_REPOS_SECRETS_PATH",
+        "kind": 5,
+        "importPath": "src.sunsec.app",
+        "description": "src.sunsec.app",
+        "peekOfCode": "_REPOS_SECRETS_PATH = Path(\"data\") / \"repos_secrets.env\"\ndef _load_repos_secrets_if_present(path: Path = _REPOS_SECRETS_PATH) -> bool:\n    \"\"\"Durability fix RT-012: подгрузка gitignored secrets-файла на startup.\n    Вызывается **до** `Settings.from_env()` инициализации, чтобы\n    `os.environ[REPO_<X>_VCS_TOKEN]` был доступен резолверу webhook'а\n    (`webhook_secret_ref` / `vcs_token_ref`).\n    `override=False` — реальные env / `.env` имеют приоритет; secrets-файл\n    добавляет только те ключи, которых ещё нет.\n    Returns:\n        True — файл существовал и был подгружен;",
         "detail": "src.sunsec.app",
         "documentation": {}
     },
@@ -5806,6 +7428,51 @@
         "documentation": {}
     },
     {
+        "label": "db_path",
+        "kind": 2,
+        "importPath": "tests.integration.test_m9_e2e_smoke",
+        "description": "tests.integration.test_m9_e2e_smoke",
+        "peekOfCode": "def db_path(tmp_path: Path) -> Path:\n    \"\"\"Чистая SQLite-БД, удаляется автоматически по окончании теста.\"\"\"\n    p = tmp_path / \"test_m9_e2e.db\"\n    if p.exists():\n        p.unlink()\n    return p\n@pytest.fixture\ndef repos_secrets_path(tmp_path: Path) -> Path:\n    \"\"\"Подменённый `data/repos_secrets.env` (RT-012). Удаляется автоматически.\"\"\"\n    return tmp_path / \"repos_secrets.env\"",
+        "detail": "tests.integration.test_m9_e2e_smoke",
+        "documentation": {}
+    },
+    {
+        "label": "repos_secrets_path",
+        "kind": 2,
+        "importPath": "tests.integration.test_m9_e2e_smoke",
+        "description": "tests.integration.test_m9_e2e_smoke",
+        "peekOfCode": "def repos_secrets_path(tmp_path: Path) -> Path:\n    \"\"\"Подменённый `data/repos_secrets.env` (RT-012). Удаляется автоматически.\"\"\"\n    return tmp_path / \"repos_secrets.env\"\n@pytest.fixture\ndef settings(db_path: Path) -> Settings:\n    return Settings(\n        app_env=\"test\",\n        enable_console_ui=True,\n        sunsec_db_path=str(db_path),\n        vcs_token=\"dummy\",",
+        "detail": "tests.integration.test_m9_e2e_smoke",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "kind": 2,
+        "importPath": "tests.integration.test_m9_e2e_smoke",
+        "description": "tests.integration.test_m9_e2e_smoke",
+        "peekOfCode": "def settings(db_path: Path) -> Settings:\n    return Settings(\n        app_env=\"test\",\n        enable_console_ui=True,\n        sunsec_db_path=str(db_path),\n        vcs_token=\"dummy\",\n        webhook_secret=\"dummy\",\n        polza_api_key=\"dummy\",\n        openrouter_api_key=\"dummy\",\n        publish_comments_enabled=False,  # без реальных VCS-вызовов",
+        "detail": "tests.integration.test_m9_e2e_smoke",
+        "documentation": {}
+    },
+    {
+        "label": "state_store",
+        "kind": 2,
+        "importPath": "tests.integration.test_m9_e2e_smoke",
+        "description": "tests.integration.test_m9_e2e_smoke",
+        "peekOfCode": "def state_store(settings: Settings) -> SQLiteStateStore:\n    \"\"\"Реальный `SQLiteStateStore` с применёнными миграциями.\"\"\"\n    state = build_storage_from_settings(settings)\n    assert isinstance(state, SQLiteStateStore)\n    asyncio.run(run_migrations(state.db_path))\n    return state\n@pytest.fixture\ndef app(\n    settings: Settings,\n    state_store: SQLiteStateStore,",
+        "detail": "tests.integration.test_m9_e2e_smoke",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 2,
+        "importPath": "tests.integration.test_m9_e2e_smoke",
+        "description": "tests.integration.test_m9_e2e_smoke",
+        "peekOfCode": "def app(\n    settings: Settings,\n    state_store: SQLiteStateStore,\n    repos_secrets_path: Path,\n) -> FastAPI:\n    \"\"\"Собирает FastAPI-app с реальным console-router'ом + SQLite-store.\"\"\"\n    a = FastAPI()\n    router = build_console_router(\n        state=state_store,\n        settings=settings,",
+        "detail": "tests.integration.test_m9_e2e_smoke",
+        "documentation": {}
+    },
+    {
         "label": "test_mixed_pr_keeps_only_source_filters_readme_and_lock",
         "kind": 2,
         "importPath": "tests.integration.test_pipeline_m2",
@@ -6019,6 +7686,222 @@
         "description": "tests.unit.test_config",
         "peekOfCode": "def test_legacy_env_aliases_supported() -> None:\n    \"\"\"`GITHUB_TOKEN` и `LLM_API_KEY` поддерживаются как алиасы.\"\"\"\n    s = Settings.from_env(env={\n        \"GITHUB_TOKEN\": \"test-token-from-github-alias\",\n        \"LLM_API_KEY\": \"test-token-from-llm-alias\",\n    })\n    assert s.vcs_token == \"test-token-from-github-alias\"\n    assert s.polza_api_key == \"test-token-from-llm-alias\"",
         "detail": "tests.unit.test_config",
+        "documentation": {}
+    },
+    {
+        "label": "test_slug_and_ref_helpers_handle_edge_cases",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_slug_and_ref_helpers_handle_edge_cases() -> None:\n    \"\"\"Slug — A-Z0-9_, strip trailing underscores; refs детерминированы.\"\"\"\n    assert slug_for_repo(\"alice/proj\") == \"ALICE_PROJ\"\n    assert slug_for_repo(\"stellar/core-api\") == \"STELLAR_CORE_API\"\n    assert slug_for_repo(\"a.b/c-d.e\") == \"A_B_C_D_E\"\n    assert slug_for_repo(\"---foo/bar---\") == \"FOO_BAR\"\n    assert vcs_token_ref_name(\"alice/proj\") == \"REPO_ALICE_PROJ_VCS_TOKEN\"\n    assert webhook_secret_ref_name(\"alice/proj\") == \"REPO_ALICE_PROJ_WEBHOOK_SECRET\"\n# ---------------------------------------------------------------------------\n# 2. ENABLE_CONSOLE_UI=false → 404",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_console_disabled_returns_404",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_console_disabled_returns_404() -> None:\n    \"\"\"Если флаг выключен — endpoint'ов нет вовсе (404).\"\"\"\n    app, _ = _make_app(enable=False)\n    with TestClient(app) as client:\n        for path in (\"/api/console/budget\", \"/api/console/settings\", \"/api/console/repos\"):\n            resp = client.get(path)\n            assert resp.status_code == 404\n# ---------------------------------------------------------------------------\n# 3. GET /api/console/budget\n# ---------------------------------------------------------------------------",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_budget_returns_camel_case_snapshot",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_get_budget_returns_camel_case_snapshot() -> None:\n    budget = MagicMock()\n    budget.spent_rub = 12.5\n    budget.limit_rub = 80.0\n    budget.calls = 7\n    llm_client = MagicMock()\n    llm_client.budget = budget\n    app, _ = _make_app(llm_client=llm_client)\n    with TestClient(app) as client:\n        resp = client.get(\"/api/console/budget\")",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_budget_no_llm_returns_zeros",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_get_budget_no_llm_returns_zeros() -> None:\n    app, _ = _make_app(llm_client=None)\n    with TestClient(app) as client:\n        resp = client.get(\"/api/console/budget\")\n        assert resp.status_code == 200\n        data = resp.json()\n        assert data[\"spentRub\"] == 0.0\n        assert data[\"limitRub\"] == 0.0\n        assert data[\"callsCount\"] == 0\n# ---------------------------------------------------------------------------",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_settings_masks_secrets",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_get_settings_masks_secrets() -> None:\n    \"\"\"Response НЕ содержит ни одной строки, похожей на api_key / token / secret / password.\"\"\"\n    settings = _make_settings(\n        polza_api_key=\"real-polza-key-abc123\",\n        openrouter_api_key=\"sk-or-v1-xxx\",\n        vcs_token=\"ghp_secret_token_xyz\",\n        webhook_secret=\"webhook-secret-zzz\",\n    )\n    app, _ = _make_app(settings=settings)\n    with TestClient(app) as client:",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_checks_filter_by_status",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_get_checks_filter_by_status() -> None:\n    state = InMemoryStateStore()\n    async def setup() -> None:\n        await state.save_check(_make_check(id_=\"c1\", status=\"completed\"))\n        await state.save_check(_make_check(id_=\"c2\", status=\"failed\"))\n        await state.save_check(_make_check(id_=\"c3\", status=\"completed\"))\n    asyncio.run(setup())\n    app, _ = _make_app(state=state)\n    with TestClient(app) as client:\n        resp = client.get(\"/api/console/checks\", params={\"status\": \"completed\"})",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_checks_pagination_camel_case_fields",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_get_checks_pagination_camel_case_fields() -> None:\n    state = InMemoryStateStore()\n    async def setup() -> None:\n        for i in range(5):\n            await state.save_check(\n                _make_check(\n                    id_=f\"c{i}\",\n                    pr_number=i + 1,\n                    started_at=datetime(2026, 5, 16, 10, i, tzinfo=timezone.utc),\n                )",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_check_by_id_404_and_200",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_get_check_by_id_404_and_200() -> None:\n    state = InMemoryStateStore()\n    async def setup() -> None:\n        await state.save_check(_make_check(id_=\"c1\", status=\"completed\"))\n        await state.save_findings(\n            \"c1\",\n            [\n                FindingRecord(\n                    id=\"f1\",\n                    check_id=\"c1\",",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_post_repos_happy_path_no_plaintext_in_response",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_post_repos_happy_path_no_plaintext_in_response(tmp_path: Path, monkeypatch) -> None:\n    secrets_file = tmp_path / \"repos_secrets.env\"\n    # Не оставляем мусор в os.environ после теста.\n    monkeypatch.delenv(\"REPO_ALICE_PROJ_VCS_TOKEN\", raising=False)\n    monkeypatch.delenv(\"REPO_ALICE_PROJ_WEBHOOK_SECRET\", raising=False)\n    app, state = _make_app(repos_secrets_path=secrets_file)\n    with TestClient(app) as client:\n        resp = client.post(\n            \"/api/console/repos\",\n            json={",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_post_repos_writes_to_secrets_env_file",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_post_repos_writes_to_secrets_env_file(tmp_path: Path, monkeypatch) -> None:\n    secrets_file = tmp_path / \"repos_secrets.env\"\n    monkeypatch.delenv(\"REPO_STELLAR_CORE_API_VCS_TOKEN\", raising=False)\n    app, _ = _make_app(repos_secrets_path=secrets_file)\n    with TestClient(app) as client:\n        resp = client.post(\n            \"/api/console/repos\",\n            json={\n                \"fullName\": \"stellar/core-api\",\n                \"vcsProvider\": \"github\",",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_post_repos_duplicate_returns_409",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_post_repos_duplicate_returns_409(tmp_path: Path, monkeypatch) -> None:\n    monkeypatch.delenv(\"REPO_DUP_REPO_VCS_TOKEN\", raising=False)\n    secrets_file = tmp_path / \"repos_secrets.env\"\n    app, _ = _make_app(repos_secrets_path=secrets_file)\n    with TestClient(app) as client:\n        body = {\n            \"fullName\": \"dup/repo\",\n            \"vcsProvider\": \"github\",\n            \"vcsToken\": \"x\",\n            \"webhookSecret\": \"y\",",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_post_repos_invalid_full_name_returns_422",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_post_repos_invalid_full_name_returns_422(tmp_path: Path) -> None:\n    app, _ = _make_app(repos_secrets_path=tmp_path / \"x.env\")\n    with TestClient(app) as client:\n        resp = client.post(\n            \"/api/console/repos\",\n            json={\"fullName\": \"notavalidrepo\", \"vcsProvider\": \"github\"},\n        )\n        assert resp.status_code == 422\n# ---------------------------------------------------------------------------\n# 11. PATCH /api/console/repos/{id} — toggle enabled",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_patch_repo_toggle_enabled",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_patch_repo_toggle_enabled(tmp_path: Path, monkeypatch) -> None:\n    monkeypatch.delenv(\"REPO_FOO_BAR_VCS_TOKEN\", raising=False)\n    secrets_file = tmp_path / \"repos_secrets.env\"\n    app, state = _make_app(repos_secrets_path=secrets_file)\n    with TestClient(app) as client:\n        resp = client.post(\n            \"/api/console/repos\",\n            json={\n                \"fullName\": \"foo/bar\",\n                \"vcsProvider\": \"github\",",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_delete_repo_404_and_204",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_delete_repo_404_and_204(tmp_path: Path, monkeypatch) -> None:\n    monkeypatch.delenv(\"REPO_DEL_REPO_VCS_TOKEN\", raising=False)\n    secrets_file = tmp_path / \"repos_secrets.env\"\n    app, _ = _make_app(repos_secrets_path=secrets_file)\n    with TestClient(app) as client:\n        resp = client.delete(\"/api/console/repos/non-existent\")\n        assert resp.status_code == 404\n        r1 = client.post(\n            \"/api/console/repos\",\n            json={",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_post_manual_analyze_proxies_and_returns_findings",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_post_manual_analyze_proxies_and_returns_findings(tmp_path: Path) -> None:\n    # Mock UI handler — возвращает dict напрямую (упрощённая proxy-схема).\n    async def fake_handler(payload: dict[str, Any]) -> dict[str, Any]:\n        return {\n            \"summary\": \"test summary\",\n            \"findings\": [\n                {\n                    \"severity\": \"high\",\n                    \"class\": \"sql_injection\",\n                    \"file\": payload[\"files\"][0][\"path\"],",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_post_manual_analyze_invalid_payload_returns_422",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_post_manual_analyze_invalid_payload_returns_422(tmp_path: Path) -> None:\n    async def fake_handler(payload):\n        return {\"summary\": \"\", \"findings\": [], \"llm\": {\"status\": \"ok\", \"model\": \"\", \"cost_rub\": 0, \"latency_ms\": 0}}\n    app, _ = _make_app(manual_analyze_handler=fake_handler)\n    with TestClient(app) as client:\n        resp = client.post(\"/api/console/manual/analyze\", json={\"files\": []})\n        assert resp.status_code == 422\n# ---------------------------------------------------------------------------\n# 14. GET /api/console/dashboard\n# ---------------------------------------------------------------------------",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_dashboard_aggregates_recent_checks",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_get_dashboard_aggregates_recent_checks() -> None:\n    state = InMemoryStateStore()\n    async def setup() -> None:\n        for i in range(3):\n            await state.save_check(\n                _make_check(\n                    id_=f\"c{i}\",\n                    status=\"completed\" if i < 2 else \"failed\",\n                    severity_counts={\n                        \"critical\": 0,",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_webhook_resolver_db_preferred_over_env",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_webhook_resolver_db_preferred_over_env(monkeypatch) -> None:\n    from sunsec.webhook.repo_resolver import resolve_webhook_credentials\n    state = InMemoryStateStore()\n    settings = _make_settings(\n        vcs_token=\"env_global_token\",\n        webhook_secret=\"env_global_secret\",\n    )\n    monkeypatch.setenv(\"REPO_ALICE_PROJ_VCS_TOKEN\", \"db_specific_token\")\n    monkeypatch.setenv(\"REPO_ALICE_PROJ_WEBHOOK_SECRET\", \"db_specific_secret\")\n    async def setup_and_resolve() -> tuple:",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_webhook_resolver_disabled_repo_falls_back_to_env",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_webhook_resolver_disabled_repo_falls_back_to_env(monkeypatch) -> None:\n    from sunsec.webhook.repo_resolver import resolve_webhook_credentials\n    state = InMemoryStateStore()\n    settings = _make_settings(vcs_token=\"env_t\", webhook_secret=\"env_s\")\n    monkeypatch.setenv(\"REPO_OFF_REPO_VCS_TOKEN\", \"should_not_be_used\")\n    async def setup_and_resolve():\n        await state.upsert_repo(\n            RepoConfigRecord(\n                id=\"r2\",\n                full_name=\"off/repo\",",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_startup_loads_repos_secrets_before_settings",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_startup_loads_repos_secrets_before_settings(tmp_path: Path, monkeypatch) -> None:\n    \"\"\"Симуляция рестарта: положили .env-файл → load_dotenv подгружает\n    его до создания Settings() → значение доступно через os.environ.\"\"\"\n    from sunsec.app import _load_repos_secrets_if_present\n    ref = \"REPO_RESTART_TEST_VCS_TOKEN\"\n    monkeypatch.delenv(ref, raising=False)\n    secrets_file = tmp_path / \"repos_secrets.env\"\n    secrets_file.write_text(f\"{ref}=loaded_after_restart_xyz\\n\", encoding=\"utf-8\")\n    assert os.environ.get(ref) is None\n    ok = _load_repos_secrets_if_present(secrets_file)",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_startup_no_file_returns_false",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_startup_no_file_returns_false(tmp_path: Path) -> None:\n    from sunsec.app import _load_repos_secrets_if_present\n    nope = tmp_path / \"nonexistent.env\"\n    assert _load_repos_secrets_if_present(nope) is False\n# ---------------------------------------------------------------------------\n# 17. Logs do not contain plaintext secret on POST /repos\n# ---------------------------------------------------------------------------\ndef test_post_repos_does_not_log_plaintext_secret(\n    tmp_path: Path, monkeypatch, caplog\n) -> None:",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_post_repos_does_not_log_plaintext_secret",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_post_repos_does_not_log_plaintext_secret(\n    tmp_path: Path, monkeypatch, caplog\n) -> None:\n    monkeypatch.delenv(\"REPO_LOG_TEST_VCS_TOKEN\", raising=False)\n    secrets_file = tmp_path / \"repos_secrets.env\"\n    app, _ = _make_app(repos_secrets_path=secrets_file)\n    with caplog.at_level(\"INFO\", logger=\"sunsec.ui.console_router\"):\n        with TestClient(app) as client:\n            resp = client.post(\n                \"/api/console/repos\",",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_webhook_service_uses_db_secret_when_repo_registered",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_webhook_service_uses_db_secret_when_repo_registered(monkeypatch) -> None:\n    \"\"\"Webhook handler с зарегистрированным repo использует\n    `webhook_secret` из env-переменной (по `webhook_secret_ref`),\n    а не глобальный `Settings.webhook_secret`.\"\"\"\n    import hashlib\n    import hmac\n    import json\n    from sunsec.contracts.storage import RepoConfigRecord\n    from sunsec.state.memory import InMemoryStateStore\n    from sunsec.vcs.github import GitHubAdapter",
+        "detail": "tests.unit.test_console_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_repos_returns_camel_case_list",
+        "kind": 2,
+        "importPath": "tests.unit.test_console_router",
+        "description": "tests.unit.test_console_router",
+        "peekOfCode": "def test_get_repos_returns_camel_case_list(tmp_path: Path, monkeypatch) -> None:\n    monkeypatch.delenv(\"REPO_LIST_TEST_VCS_TOKEN\", raising=False)\n    secrets_file = tmp_path / \"repos_secrets.env\"\n    app, _ = _make_app(repos_secrets_path=secrets_file)\n    with TestClient(app) as client:\n        r1 = client.post(\n            \"/api/console/repos\",\n            json={\n                \"fullName\": \"list/test\",\n                \"vcsProvider\": \"github\",",
+        "detail": "tests.unit.test_console_router",
         "documentation": {}
     },
     {

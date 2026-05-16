@@ -34,6 +34,12 @@ from sunsec.contracts.comments import (
     PostedComment,
     PostedReview,
 )
+from sunsec.contracts.storage import (
+    CheckRecord,
+    CommentRecord,
+    FindingRecord,
+    RepoConfigRecord,
+)
 
 __all__ = [
     # events
@@ -61,4 +67,9 @@ __all__ = [
     "InlineComment",
     "PostedComment",
     "PostedReview",
+    # storage (M-9)
+    "CheckRecord",
+    "CommentRecord",
+    "FindingRecord",
+    "RepoConfigRecord",
 ]

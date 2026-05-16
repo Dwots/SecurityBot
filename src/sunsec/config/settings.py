@@ -158,6 +158,18 @@ class Settings(BaseModel):
         description="Включить /ui и /api/ui/* (dev only). Env: ENABLE_TEST_UI.",
     )
 
+    # --- Console UI control plane (M-9, ADR-7) ---
+    # Включает `/api/console/*` endpoints (T-039) + расширенный `/ui` HTML
+    # фронт (T-040). В отличие от `ENABLE_TEST_UI` (M-6 sandbox), это
+    # **control plane** бота — history / budget / settings / repos / manual.
+    # MVP без authn: pre-condition «UI не выставляется в публичную сеть
+    # без auth» (system_design v1.2.1 §11.7 R-13 HIGH; ADR-7). По умолчанию
+    # выключен, чтобы не ломать M-0..M-8 деплои.
+    enable_console_ui: bool = Field(
+        default=False,
+        description="Включить /api/console/* (M-9 control plane). Env: ENABLE_CONSOLE_UI.",
+    )
+
     # --- Pipeline behavior ---
     publish_empty_pr_comment: bool = Field(default=False)
     # T-016: master-switch для CommentPublisher. В test/dev — выключаем, чтобы
@@ -165,6 +177,13 @@ class Settings(BaseModel):
     publish_comments_enabled: bool = Field(default=True)
     skip_drafts: bool = Field(default=True)
     state_store_backend: str = Field(default="memory")
+
+    # --- SQLite persistence (M-9, ADR-6) ---
+    # Если пустая строка или `:memory:` — фабрика отдаёт InMemoryStateStore
+    # (legacy ADR-3 поведение для M-0..M-8). Любое другое значение —
+    # `SQLiteStateStore(path)` с durable layer; путь создаётся автоматически
+    # на startup (`run_migrations`). См. system_design v1.2.1 §11.
+    sunsec_db_path: str = Field(default="")
 
     # --- FalsePositiveFilter (T-013) ---
     fp_min_confidence: float = Field(
@@ -301,12 +320,14 @@ class Settings(BaseModel):
             "openrouter_fallback_model_ids": as_csv_tuple(get("OPENROUTER_FALLBACK_MODEL_IDS")) or (),
             "openrouter_budget_limit_rub": float(get("OPENROUTER_BUDGET_LIMIT_RUB", 50.0)),  # type: ignore[arg-type]
             "enable_test_ui": as_bool(get("ENABLE_TEST_UI"), False),
+            "enable_console_ui": as_bool(get("ENABLE_CONSOLE_UI"), False),
             "publish_empty_pr_comment": as_bool(get("PUBLISH_EMPTY_PR_COMMENT"), False),
             "publish_comments_enabled": as_bool(
                 get("PUBLISH_COMMENTS_ENABLED"), True
             ),
             "skip_drafts": as_bool(get("SKIP_DRAFTS"), True),
             "state_store_backend": get("STATE_STORE_BACKEND", "memory"),
+            "sunsec_db_path": get("SUNSEC_DB_PATH", ""),
             "filter_exclude_extensions": as_csv_tuple(get("FILTER_EXCLUDE_EXTENSIONS")),
             "filter_exclude_names": as_csv_tuple(get("FILTER_EXCLUDE_NAMES")),
             "filter_exclude_globs": as_csv_tuple(get("FILTER_EXCLUDE_GLOBS")),

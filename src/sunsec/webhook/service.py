@@ -29,6 +29,10 @@ from sunsec.contracts import GitHubPullRequestEvent
 from sunsec.pipeline.orchestrator import idempotency_key
 from sunsec.state.base import StateStore
 from sunsec.vcs.base import VCSAdapter
+from sunsec.webhook.repo_resolver import (
+    ResolvedCredentials,
+    resolve_webhook_credentials,
+)
 
 log = logging.getLogger(__name__)
 
@@ -100,11 +104,50 @@ class WebhookService:
         state: StateStore,
         webhook_secret: str,
         skip_drafts: bool = True,
+        settings: Optional[object] = None,
     ) -> None:
         self._vcs = vcs
         self._state = state
         self._secret = webhook_secret
         self._skip_drafts = skip_drafts
+        # M-9: optional `Settings` (для resolve_webhook_credentials —
+        # см. system_design v1.2.1 §12.3). Если None — backward-compat,
+        # используем self._secret из конструктора как раньше.
+        self._settings = settings
+
+    async def _resolve_secret(self, raw_body: bytes) -> ResolvedCredentials:
+        """Peek в JSON, найти `repository.full_name`, резолвнуть credentials.
+
+        Безопасно: до HMAC-проверки мы НЕ обрабатываем payload, только
+        читаем имя репо для поиска секрета. Если БД пуста / settings нет —
+        возвращаем legacy `self._secret`.
+        """
+        if self._settings is None:
+            # Legacy ветка (M-2/M-7): без settings — secret из __init__.
+            return ResolvedCredentials(
+                vcs_token="",
+                webhook_secret=self._secret,
+                source="env",
+                repo_full_name=None,
+            )
+        full_name: Optional[str] = None
+        try:
+            import json
+
+            payload = json.loads(raw_body.decode("utf-8"))
+            if isinstance(payload, dict):
+                repo = payload.get("repository")
+                if isinstance(repo, dict):
+                    fn = repo.get("full_name")
+                    if isinstance(fn, str) and fn:
+                        full_name = fn
+        except Exception:  # noqa: BLE001 — peek best-effort
+            full_name = None
+        return await resolve_webhook_credentials(
+            state=self._state,
+            settings=self._settings,
+            full_name=full_name,
+        )
 
     async def handle(
         self,
@@ -124,8 +167,12 @@ class WebhookService:
         event_type = norm.get(HEADER_EVENT, "")
         delivery_id = norm.get(HEADER_DELIVERY, "") or None
 
+        # --- 0. Repo resolver (M-9, §12.3): подбираем webhook_secret до HMAC ---
+        creds = await self._resolve_secret(raw_body)
+        effective_secret = creds.webhook_secret or self._secret
+
         # --- 1. HMAC ---
-        if not self._vcs.verify_signature(raw_body, signature, self._secret):
+        if not self._vcs.verify_signature(raw_body, signature, effective_secret):
             # ВАЖНО: в логи попадает delivery_id (не секрет) и event_type.
             # Сам raw_body / подпись НЕ логируются — это «материал» для возможной
             # атаки и не нужен оператору.

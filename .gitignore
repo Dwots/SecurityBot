@@ -43,3 +43,9 @@ htmlcov/
 # OS
 .DS_Store
 Thumbs.db
+
+# SQLite db files (M-9, ADR-6)
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/repos_secrets.env

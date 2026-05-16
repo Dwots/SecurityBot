@@ -1,22 +1,39 @@
 """InMemoryStateStore — RAM-реализация StateStore для MVP (ADR-3).
 
-В T-007 расширена двумя возможностями для webhook-receiver:
+M-2/M-7 поведение (`mark_pr_in_progress` / `mark_pr_done` /
+`mark_pr_failed` / `seen_delivery` / `get_cached_llm_response` /
+`set_cached_llm_response` / `has_posted_finding` /
+`register_posted_finding`) — без изменений.
 
-- `seen_delivery(delivery_id)` — отметка о ранее обработанной доставке GitHub
-  (`X-GitHub-Delivery`), чтобы повторная попытка GitHub'а не запускала анализ
-  второй раз. См. system_design §3.1 (idempotency), §3.6 (StateStore).
-- `mark_pr_in_progress` уже был; теперь возвращает False как для уже
-  in-progress, так и для уже done PR (см. ниже).
-
-TTL-обёртка в MVP не реализована (см. ADR-3 — рестарт = сброс). Эпизодически
-старые записи можно очистить вручную через `reset()` (тесты).
+M-9 расширение (system_design v1.2.1 §11.5): новые методы
+(`save_check` / `update_check_status` / `save_findings` /
+`save_comments` / `get_check` / `list_*` / `*_repo*`) поднимаются как
+in-memory dicts. Логика упрощённая (без CASCADE / транзакций /
+UNIQUE-enforcement за пределами `full_name`) — этого достаточно для
+unit-тестов / regression-сценариев, где БД явно не нужна. В production
+durable-режиме используется `SQLiteStateStore`.
 """
 from __future__ import annotations
 
 import asyncio
-from typing import Optional
+import copy
+from datetime import datetime
+from typing import Optional, Sequence
 
 from sunsec.contracts import LLMResponseSchema
+from sunsec.contracts.storage import (
+    CheckRecord,
+    CommentRecord,
+    FindingRecord,
+    RepoConfigRecord,
+)
+
+_SEVERITY_KEYS = ("critical", "high", "medium", "low", "info")
+
+
+def _severity_rank(severity: str) -> int:
+    order = {"critical": 0, "high": 1, "medium": 2, "low": 3, "info": 4}
+    return order.get(severity, 5)
 
 
 class InMemoryStateStore:
@@ -34,6 +51,12 @@ class InMemoryStateStore:
         self._posted: set[tuple[str, int, str]] = set()
         # T-007: delivery-id дедупликация (GitHub `X-GitHub-Delivery` UUID).
         self._seen_deliveries: set[str] = set()
+        # M-9: durable-shape данные (хранятся in-memory).
+        self._checks: dict[str, CheckRecord] = {}
+        self._findings: dict[str, list[FindingRecord]] = {}
+        self._comments: dict[str, list[CommentRecord]] = {}
+        self._repos: dict[str, RepoConfigRecord] = {}  # PK → record
+        self._repos_by_full_name: dict[str, str] = {}  # full_name → PK
         self._lock = asyncio.Lock()
 
     # --- PR idempotency (по head_sha-ключу) -------------------------------
@@ -111,3 +134,175 @@ class InMemoryStateStore:
         self._llm_cache.clear()
         self._posted.clear()
         self._seen_deliveries.clear()
+        self._checks.clear()
+        self._findings.clear()
+        self._comments.clear()
+        self._repos.clear()
+        self._repos_by_full_name.clear()
+
+    # =====================================================================
+    # M-9: durable-shape методы (in-memory bookkeeping, см. system_design §11.5)
+    # =====================================================================
+
+    async def save_check(self, check: CheckRecord) -> None:
+        async with self._lock:
+            self._checks[check.id] = check.model_copy(deep=True)
+
+    async def update_check_status(
+        self,
+        check_id: str,
+        *,
+        status: Optional[str] = None,
+        llm_status: Optional[str] = None,
+        llm_provider: Optional[str] = None,
+        llm_model: Optional[str] = None,
+        files_checked: Optional[int] = None,
+        files_skipped: Optional[int] = None,
+        findings_count: Optional[int] = None,
+        cost_rub: Optional[float] = None,
+        summary: Optional[str] = None,
+        severity_counts: Optional[dict[str, int]] = None,
+        finished_at: Optional[datetime] = None,
+        duration_ms: Optional[int] = None,
+    ) -> None:
+        async with self._lock:
+            cur = self._checks.get(check_id)
+            if cur is None:
+                return  # no-op; SQLite drop-and-ignore поведение
+            patch: dict = {}
+            if status is not None:
+                patch["status"] = status
+            if llm_status is not None:
+                patch["llm_status"] = llm_status
+            if llm_provider is not None:
+                patch["llm_provider"] = llm_provider
+            if llm_model is not None:
+                patch["llm_model"] = llm_model
+            if files_checked is not None:
+                patch["files_checked"] = int(files_checked)
+            if files_skipped is not None:
+                patch["files_skipped"] = int(files_skipped)
+            if findings_count is not None:
+                patch["findings_count"] = int(findings_count)
+            if cost_rub is not None:
+                patch["cost_rub"] = float(cost_rub)
+            if summary is not None:
+                patch["summary"] = summary
+            if finished_at is not None:
+                patch["finished_at"] = finished_at
+            if duration_ms is not None:
+                patch["duration_ms"] = int(duration_ms)
+            if severity_counts is not None:
+                merged = dict(cur.severity_counts or {})
+                for k in _SEVERITY_KEYS:
+                    if k in severity_counts:
+                        merged[k] = int(severity_counts[k] or 0)
+                patch["severity_counts"] = merged
+            self._checks[check_id] = cur.model_copy(update=patch, deep=True)
+
+    async def get_check(self, check_id: str) -> Optional[CheckRecord]:
+        async with self._lock:
+            rec = self._checks.get(check_id)
+            return rec.model_copy(deep=True) if rec is not None else None
+
+    async def list_checks(
+        self,
+        *,
+        status: Optional[str] = None,
+        repo: Optional[str] = None,
+        limit: int = 50,
+        offset: int = 0,
+    ) -> list[CheckRecord]:
+        async with self._lock:
+            items = list(self._checks.values())
+        if status is not None:
+            items = [c for c in items if c.status == status]
+        if repo is not None:
+            items = [c for c in items if c.repo == repo]
+        items.sort(key=lambda c: c.started_at, reverse=True)
+        return [c.model_copy(deep=True) for c in items[offset : offset + limit]]
+
+    async def save_findings(
+        self, check_id: str, findings: Sequence[FindingRecord]
+    ) -> None:
+        if not findings:
+            return
+        async with self._lock:
+            bucket = self._findings.setdefault(check_id, [])
+            for f in findings:
+                bucket.append(f.model_copy(deep=True))
+
+    async def list_findings(self, check_id: str) -> list[FindingRecord]:
+        async with self._lock:
+            items = list(self._findings.get(check_id, []))
+        items.sort(key=lambda f: (_severity_rank(f.severity), f.file, f.line))
+        return [f.model_copy(deep=True) for f in items]
+
+    async def save_comments(
+        self, check_id: str, comments: Sequence[CommentRecord]
+    ) -> None:
+        if not comments:
+            return
+        async with self._lock:
+            bucket = self._comments.setdefault(check_id, [])
+            for c in comments:
+                bucket.append(c.model_copy(deep=True))
+
+    async def list_comments(self, check_id: str) -> list[CommentRecord]:
+        async with self._lock:
+            items = list(self._comments.get(check_id, []))
+        items.sort(key=lambda c: c.posted_at)
+        return [c.model_copy(deep=True) for c in items]
+
+    async def list_repos(self) -> list[RepoConfigRecord]:
+        async with self._lock:
+            items = list(self._repos.values())
+        items.sort(key=lambda r: r.full_name)
+        return [r.model_copy(deep=True) for r in items]
+
+    async def get_repo(self, repo_id: str) -> Optional[RepoConfigRecord]:
+        async with self._lock:
+            rec = self._repos.get(repo_id)
+            return rec.model_copy(deep=True) if rec is not None else None
+
+    async def get_repo_by_full_name(
+        self, full_name: str
+    ) -> Optional[RepoConfigRecord]:
+        async with self._lock:
+            pk = self._repos_by_full_name.get(full_name)
+            if pk is None:
+                return None
+            rec = self._repos.get(pk)
+            return rec.model_copy(deep=True) if rec is not None else None
+
+    async def upsert_repo(self, repo: RepoConfigRecord) -> RepoConfigRecord:
+        async with self._lock:
+            existing_pk = self._repos_by_full_name.get(repo.full_name)
+            if existing_pk is not None and existing_pk != repo.id:
+                # Маппим под существующий PK, чтобы full_name остался уникальным.
+                stored = repo.model_copy(update={"id": existing_pk}, deep=True)
+            else:
+                stored = repo.model_copy(deep=True)
+            self._repos[stored.id] = stored
+            self._repos_by_full_name[stored.full_name] = stored.id
+            return stored.model_copy(deep=True)
+
+    async def delete_repo(self, repo_id: str) -> bool:
+        async with self._lock:
+            rec = self._repos.pop(repo_id, None)
+            if rec is None:
+                return False
+            self._repos_by_full_name.pop(rec.full_name, None)
+            return True
+
+    async def touch_repo_seen(self, full_name: str) -> None:
+        async with self._lock:
+            pk = self._repos_by_full_name.get(full_name)
+            if pk is None:
+                return
+            cur = self._repos.get(pk)
+            if cur is None:
+                return
+            self._repos[pk] = cur.model_copy(
+                update={"last_seen_at": datetime.utcnow()}, deep=True
+            )
