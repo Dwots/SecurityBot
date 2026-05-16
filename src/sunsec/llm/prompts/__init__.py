@@ -1,7 +1,15 @@
-"""Загрузчик системного промпта v1.0.0.
+"""Загрузчик системного промпта v1.1.0.
 
-Источник истины — `system_v1.md` (этот же каталог), скопировано из
-`agents/artifacts/ml/system_prompt.md` (T-011, Раздел A) без модификаций.
+Источник истины — `system_v1.md` (этот же каталог).
+
+История версий:
+- v1.0.0 (T-011, 2026-05-14) — initial SQLi/secrets/XSS.
+- v1.1.0 (T-032, 2026-05-16) — Server-side template XSS sub-section
+  (Jinja2 `|safe`, `{% autoescape false %}`, Django `mark_safe`,
+  Flask `Markup`, Go `template.HTML`, Handlebars triple-brace, Mako,
+  Pug, ERB, Twig); positive+negative few-shot examples; open-weight
+  optimization (STRICT JSON insistence, explicit instructions).
+  Closes RT-011 (XSS-miss on Jinja2 `{{ user.bio | safe }}`).
 
 `PROMPT_VERSION` версионирует промпт и (через T-012) уходит в:
 - `PromptPayload.system` — пейлоад провайдеру;
@@ -12,7 +20,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-PROMPT_VERSION = "1.0.0"
+PROMPT_VERSION = "1.1.0"
 _PROMPT_FILE = Path(__file__).resolve().parent / "system_v1.md"
 
 

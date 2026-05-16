@@ -349,6 +349,59 @@ def build_polza_provider(*, budget_rub: float) -> tuple["LLMProvider", BudgetCou
     return provider, budget
 
 
+def build_openrouter_provider(
+    *, budget_rub: float, model_id_override: Optional[str] = None
+) -> tuple["LLMProvider", BudgetCounter]:
+    """Реальный OpenRouterProvider через openai SDK + python-dotenv.
+
+    Используется в T-032 smoke для тестирования primary `deepseek/deepseek-v4-flash`
+    (или альтернативы) на goldens. Контракт `LLMProvider` совпадает с Polza,
+    поэтому LLMClient/FP-фильтр работают без изменений.
+    """
+    try:
+        from dotenv import load_dotenv  # type: ignore
+    except ImportError as exc:
+        raise RuntimeError("python-dotenv не установлен — smoke невозможен") from exc
+
+    load_dotenv(PROJECT_ROOT / ".env")
+    api_key = os.environ.get("OPENROUTER_API_KEY")
+    base_url = (
+        os.environ.get("OPENROUTER_BASE_URL") or "https://openrouter.ai/api/v1"
+    )
+    model_id = (
+        model_id_override
+        or os.environ.get("OPENROUTER_MODEL_ID")
+        or "deepseek/deepseek-v4-flash"
+    )
+    if not api_key:
+        raise RuntimeError("OPENROUTER_API_KEY не установлен — smoke невозможен")
+
+    try:
+        from sunsec.llm.openrouter_provider import OpenRouterProvider
+    except Exception as exc:
+        raise RuntimeError(f"OpenRouterProvider импорт упал: {exc}") from exc
+
+    # Тарифы по умолчанию из system_design (DeepSeek V4 Flash ≈ 0.027 ₽/запрос).
+    input_rub = float(os.environ.get("OPENROUTER_INPUT_RUB_PER_1K", 0.01064))
+    output_rub = float(os.environ.get("OPENROUTER_OUTPUT_RUB_PER_1K", 0.02128))
+
+    provider = OpenRouterProvider(
+        api_key=api_key,
+        base_url=base_url,
+        model_id=model_id,
+        timeout_seconds=float(os.environ.get("OPENROUTER_TIMEOUT_SECONDS", 60.0)),
+        max_retries=int(os.environ.get("OPENROUTER_MAX_RETRIES", 1)),
+        temperature=0.0,
+        max_tokens=512,
+        input_rub_per_1k=input_rub,
+        output_rub_per_1k=output_rub,
+        usd_rub_rate=float(os.environ.get("OPENROUTER_USD_RUB_RATE", 95.0)),
+        use_usage_cost=False,
+    )
+    budget = BudgetCounter(limit_rub=budget_rub)
+    return provider, budget
+
+
 # ---------------------------------------------------------------------------
 # Evaluation core
 # ---------------------------------------------------------------------------
@@ -479,7 +532,14 @@ def _pick_smoke_sample(goldens: list[Golden], limit: int) -> list[Golden]:
     return out[:limit]
 
 
-async def run_eval(*, mode: str, limit: Optional[int], budget_rub: float) -> dict[str, Any]:
+async def run_eval(
+    *,
+    mode: str,
+    limit: Optional[int],
+    budget_rub: float,
+    provider_name: str = "polza",
+    model_id_override: Optional[str] = None,
+) -> dict[str, Any]:
     goldens = load_goldens()
     if mode == "smoke" and limit:
         goldens = _pick_smoke_sample(goldens, limit)
@@ -494,8 +554,14 @@ async def run_eval(*, mode: str, limit: Optional[int], budget_rub: float) -> dic
 
     if mode == "smoke":
         try:
-            provider, budget = build_polza_provider(budget_rub=budget_rub)
-            used_provider = "polza.ai (real)"
+            if provider_name == "openrouter":
+                provider, budget = build_openrouter_provider(
+                    budget_rub=budget_rub, model_id_override=model_id_override
+                )
+                used_provider = f"openrouter:{provider._model_id}"
+            else:
+                provider, budget = build_polza_provider(budget_rub=budget_rub)
+                used_provider = "polza.ai (real)"
         except RuntimeError as exc:
             print(f"[smoke fallback] {exc} → переключаюсь в offline-режим")
             mode = "offline"
@@ -511,8 +577,10 @@ async def run_eval(*, mode: str, limit: Optional[int], budget_rub: float) -> dic
         budget = None
         used_provider = "fixture (adversarial)"
     elif mode == "smoke":
-        # Уже создан выше
-        used_provider = "polza.ai (real)"
+        # Уже создан выше (build_polza_provider или build_openrouter_provider).
+        # `used_provider` уже выставлен (либо `polza.ai (real)`, либо
+        # `openrouter:<model_id>`) — НЕ перетираем.
+        pass
     else:
         raise SystemExit(f"unknown mode: {mode}")
 
@@ -770,6 +838,18 @@ def main() -> int:
         "--budget", type=float, default=3.0, help="cap по бюджету для smoke (₽)"
     )
     parser.add_argument(
+        "--provider",
+        choices=["polza", "openrouter"],
+        default="polza",
+        help="LLM-провайдер для smoke-режима (default polza)",
+    )
+    parser.add_argument(
+        "--model-id",
+        type=str,
+        default=None,
+        help="override OPENROUTER_MODEL_ID для smoke (например, deepseek/deepseek-v4-flash)",
+    )
+    parser.add_argument(
         "--out",
         type=str,
         default=str(RESULTS_PATH),
@@ -778,7 +858,13 @@ def main() -> int:
     args = parser.parse_args()
 
     payload = asyncio.run(
-        run_eval(mode=args.mode, limit=args.limit, budget_rub=args.budget)
+        run_eval(
+            mode=args.mode,
+            limit=args.limit,
+            budget_rub=args.budget,
+            provider_name=args.provider,
+            model_id_override=args.model_id,
+        )
     )
     _print_report(payload)
 

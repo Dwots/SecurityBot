@@ -1,0 +1,544 @@
+{
+  "mode": "smoke",
+  "provider": "polza.ai (real)",
+  "goldens_count": 23,
+  "budget_rub_limit": 5.0,
+  "cost_rub_spent": 1.8598,
+  "metrics": {
+    "per_class": {
+      "sql_injection": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "hardcoded_secret": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "xss": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "overall": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "clean": {
+      "total_cases": 5,
+      "no_fp_cases": 5,
+      "fp_free_rate": 1.0
+    }
+  },
+  "cases": [
+    {
+      "id": "sqli_001_fstring_in_execute",
+      "category": "sqli",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "sql_injection",
+          "severity_min": "high",
+          "line": 11,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/users/repo.py",
+          "line": 11,
+          "class": "sql_injection",
+          "severity": "high",
+          "message": "SQL-запрос собран через f-string с пользовательским user_id (\"SELECT * FROM users WHERE id = {user_id}\") — нет параметризации, возможна SQL-инъекция.",
+          "suggestion": "return conn.execute(\"SELECT * FROM users WHERE id = ?\", (user_id,)).fetchone()",
+          "confidence": 0.95
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sec_001_aws_access_key",
+      "category": "secrets",
+      "tp": 1,
+      "fp": 1,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "hardcoded_secret",
+          "severity_min": "high",
+          "line": 3,
+          "confidence_min": 0.8
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/config/aws.py",
+          "line": 3,
+          "class": "hardcoded_secret",
+          "severity": "critical",
+          "message": "Hardcoded secret matches pattern 'aws_access_key_id'. Detected by deterministic pre-LLM scan.",
+          "suggestion": null,
+          "confidence": 0.98
+        },
+        {
+          "file": "src/config/aws.py",
+          "line": 4,
+          "class": "hardcoded_secret",
+          "severity": "critical",
+          "message": "В коде найдено жестко закодированное значение AWS_SECRET_ACCESS_KEY: \"abcd1234abcd1234abcd1234abcd1234abcd1234\" — это секретный ключ AWS, который не должен храниться в исходном коде.",
+          "suggestion": "Используйте переменные окружения для хранения секретов, например: AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')",
+          "confidence": 0.95
+        }
+      ],
+      "notes": [
+        "EXTRA: predicted hardcoded_secret on src/config/aws.py:4 conf=0.95"
+      ]
+    },
+    {
+      "id": "xss_001_innerHTML_userinput",
+      "category": "xss",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "xss",
+          "severity_min": "high",
+          "line": 13,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "web/static/search.js",
+          "line": 13,
+          "class": "xss",
+          "severity": "high",
+          "message": "Пользовательский ввод выводится в HTML без экранирования: \"document.getElementById('out').innerHTML = '<b>' + userQuery + '</b>';\" — возможна XSS-уязвимость.",
+          "suggestion": "document.getElementById('out').textContent = userQuery;",
+          "confidence": 0.95
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "clean_001_env_getter",
+      "category": "clean",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "sqli_002_format_string",
+      "category": "sqli",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "sql_injection",
+          "severity_min": "high",
+          "line": 23,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/auth/login.py",
+          "line": 24,
+          "class": "sql_injection",
+          "severity": "high",
+          "message": "SQL-запрос собран через форматирование строки с пользовательским email (\"SELECT id FROM users WHERE email = '{}'\".format(email)) — нет параметризации, возможна SQL-инъекция.",
+          "suggestion": "cursor.execute(\"SELECT id FROM users WHERE email = ?\", (email,))",
+          "confidence": 0.95
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sqli_003_string_concat_node",
+      "category": "sqli",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "sql_injection",
+          "severity_min": "high",
+          "line": 9,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "server/api/orders.js",
+          "line": 9,
+          "class": "sql_injection",
+          "severity": "high",
+          "message": "SQL-запрос собран через конкатенацию строк с пользовательским orderId (\"SELECT * FROM orders WHERE id = \" + orderId) — нет параметризации, возможна SQL-инъекция.",
+          "suggestion": "const q = \"SELECT * FROM orders WHERE id = ?\"; return pool.query(q, [orderId]);",
+          "confidence": 0.95
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sqli_004_parametrized_safe",
+      "category": "sqli",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "sqli_005_orm_filter_safe",
+      "category": "sqli",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "sec_002_github_pat",
+      "category": "secrets",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "hardcoded_secret",
+          "severity_min": "high",
+          "line": 11,
+          "confidence_min": 0.8
+        }
+      ],
+      "predicted": [
+        {
+          "file": "scripts/deploy.py",
+          "line": 11,
+          "class": "hardcoded_secret",
+          "severity": "critical",
+          "message": "Hardcoded secret matches pattern 'github_pat'. Detected by deterministic pre-LLM scan.",
+          "suggestion": null,
+          "confidence": 0.98
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sec_003_stripe_live",
+      "category": "secrets",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "hardcoded_secret",
+          "severity_min": "high",
+          "line": 5,
+          "confidence_min": 0.8
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/payments/stripe_client.py",
+          "line": 5,
+          "class": "hardcoded_secret",
+          "severity": "critical",
+          "message": "Hardcoded secret matches pattern 'stripe_secret'. Detected by deterministic pre-LLM scan.",
+          "suggestion": null,
+          "confidence": 0.97
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sec_004_jwt_literal",
+      "category": "secrets",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "hardcoded_secret",
+          "severity_min": "medium",
+          "line": 9,
+          "confidence_min": 0.6
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/auth/tokens.py",
+          "line": 9,
+          "class": "hardcoded_secret",
+          "severity": "high",
+          "message": "В строке \"FALLBACK_JWT = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIn0.AbCdEfGhIjKlMnOpQrStUvWxYz0123\"\" содержится жестко закодирован��ый JWT-токен, что представляет собой риск безопасности.",
+          "suggestion": "Используйте переменные окружения для хранения секретов, например: FALLBACK_JWT = os.getenv('FALLBACK_JWT')",
+          "confidence": 0.95
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "sec_005_fake_token_in_tests",
+      "category": "secrets",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "xss_002_dangerously_set_inner_html",
+      "category": "xss",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "xss",
+          "severity_min": "high",
+          "line": 6,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "web/components/Comment.tsx",
+          "line": 6,
+          "class": "xss",
+          "severity": "high",
+          "message": "Использование dangerouslySetInnerHTML с пользовательским вводом (\"dangerouslySetInnerHTML={{ __html: html }}\") — возможна XSS-уязвимость.",
+          "suggestion": "Используйте безопасный метод рендеринга, например, экранирование HTML: <div>{html}</div>",
+          "confidence": 0.95
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "xss_003_document_write",
+      "category": "xss",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "xss",
+          "severity_min": "high",
+          "line": 5,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "web/static/banner.js",
+          "line": 5,
+          "class": "xss",
+          "severity": "high",
+          "message": "Поток пользовательского ввода в HTML без экранирования: \"document.write('<h1>Hello, ' + name + '!</h1>');\" — возможна XSS-уязвимость.",
+          "suggestion": "Используйте безопасный метод, например, document.createElement и textContent для вставки текста.",
+          "confidence": 0.95
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "xss_004_dompurify_safe",
+      "category": "xss",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "xss_005_re_escape_counter_example_rt006",
+      "category": "xss",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "xss",
+          "severity_min": "high",
+          "line": 22,
+          "confidence_min": 0.6
+        }
+      ],
+      "predicted": [
+        {
+          "file": "src/web/search_view.py",
+          "line": 22,
+          "class": "xss",
+          "severity": "high",
+          "message": "Пользовательский ввод выводится без экранирования: \"el.innerHTML = '<b>' + userQuery + '</b>'\" — возможна XSS-уязвимость.",
+          "suggestion": "el.textContent = userQuery; // Используйте textContent для безопасного вывода.",
+          "confidence": 0.95
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "xss_006_jinja_safe_user_bio",
+      "category": "xss",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "xss",
+          "severity_min": "high",
+          "line": 17,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "app/templates/profile.html",
+          "line": 17,
+          "class": "xss",
+          "severity": "high",
+          "message": "Пользовательский ввод выводится без экранирования: \"{{ user.bio | safe }}\" — это позволяет внедрить произвольный HTML и JavaScript.",
+          "suggestion": "Используйте экранирование: <p class=\"bio\">{{ user.bio }}</p>",
+          "confidence": 0.95
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "xss_007_jinja_autoescape_off",
+      "category": "xss",
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "expected": [
+        {
+          "class": "xss",
+          "severity_min": "high",
+          "line": 9,
+          "confidence_min": 0.7
+        }
+      ],
+      "predicted": [
+        {
+          "file": "templates/post.html",
+          "line": 9,
+          "class": "xss",
+          "severity": "high",
+          "message": "Блок отключает экранирование для `post.body`, который является пользовательским полем: `{% autoescape false %}<div class=\"body\">{{ post.body }}</div>{% endautoescape %}` — возможна XSS-уязвимость.",
+          "suggestion": "Замените на: `<div class=\"body\">{{ post.body }}</div>` без отключения экранирования.",
+          "confidence": 0.9
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "xss_008_jinja_default_escape_clean",
+      "category": "xss",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "clean_002_html_escape",
+      "category": "clean",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "clean_003_jsx_mustache",
+      "category": "clean",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "clean_004_sanitize_filename",
+      "category": "clean",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    },
+    {
+      "id": "clean_005_bool_named_secret",
+      "category": "clean",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1,
+      "expected": [],
+      "predicted": [],
+      "notes": []
+    }
+  ],
+  "errors": [],
+  "acceptance": {
+    "thresholds": {
+      "recall_per_class_min": 0.7,
+      "precision_overall_min": 0.6,
+      "clean_fp_free_rate_min": 0.8
+    },
+    "verdict": "PASS"
+  }
+}

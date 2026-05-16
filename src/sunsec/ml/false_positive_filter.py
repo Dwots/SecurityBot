@@ -227,6 +227,19 @@ _XSS_DANGEROUS_PATTERNS: tuple[re.Pattern[str], ...] = tuple(
         r"\|\s*safe\b",
         r"mark_safe\s*\(",
         r"\bMarkup\s*\(",
+        # T-032 (RT-011): server-side template XSS — explicit unsafe markers.
+        # Jinja2/Django `{% autoescape false/off %}` block disables auto-escape
+        # for `{{ var }}` inside; treat as dangerous within the window.
+        r"\{%\s*autoescape\s+(?:false|off)\s*%\}",
+        # Mako `${ x | n }` — `n` filter disables default escape.
+        r"\$\{\s*[^}]+\|\s*n\s*\}",
+        # Go html/template type conversions that bypass context-aware escape.
+        r"\btemplate\.(?:HTML|JS|HTMLAttr|URL)\s*\(",
+        # Twig (PHP) `{{ var | raw }}`.
+        r"\|\s*raw\b",
+        # ERB / Rails `.html_safe` and `<%= raw ... %>`.
+        r"\.html_safe\b",
+        r"<%=\s*raw\b",
     )
 )
 

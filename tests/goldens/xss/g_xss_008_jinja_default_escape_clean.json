@@ -1,0 +1,14 @@
+{
+  "id": "xss_008_jinja_default_escape_clean",
+  "language": "html",
+  "file_path": "app/templates/profile_safe.html",
+  "added_lines": [
+    {"new_line_no": 14, "content": "<section class=\"profile\">"},
+    {"new_line_no": 15, "content": "  <h1>{{ user.username }}</h1>"},
+    {"new_line_no": 16, "content": "  <h2>About me</h2>"},
+    {"new_line_no": 17, "content": "  <p class=\"bio\">{{ user.bio }}</p>"},
+    {"new_line_no": 18, "content": "</section>"}
+  ],
+  "expected_findings": [],
+  "notes": "Negative golden — Jinja2 default auto-escape, no `|safe`. Must NOT be flagged. Twin of g_xss_006 with the dangerous filter removed; precision regression guard for the new prompt section."
+}

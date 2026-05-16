@@ -1,0 +1,16 @@
+{
+  "id": "xss_006_jinja_safe_user_bio",
+  "language": "html",
+  "file_path": "app/templates/profile.html",
+  "added_lines": [
+    {"new_line_no": 14, "content": "<section class=\"profile\">"},
+    {"new_line_no": 15, "content": "  <h1>{{ user.username }}</h1>"},
+    {"new_line_no": 16, "content": "  <h2>About me</h2>"},
+    {"new_line_no": 17, "content": "  <p class=\"bio\">{{ user.bio | safe }}</p>"},
+    {"new_line_no": 18, "content": "</section>"}
+  ],
+  "expected_findings": [
+    {"class": "xss", "severity_min": "high", "line": 17, "confidence_min": 0.7}
+  ],
+  "notes": "RT-011 canonical case: Jinja2 `{{ user.bio | safe }}` rendering user-controlled bio. vuln_taxonomy §5.2 #5 + §5.4 XSS-3. Originated from live e2e T-029 (test_rep/app/templates/profile.html:17) where gpt-4o-mini missed it. After T-032 prompt extension primary `deepseek/deepseek-v4-flash` must detect."
+}

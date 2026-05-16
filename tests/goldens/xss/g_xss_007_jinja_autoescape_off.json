@@ -1,0 +1,18 @@
+{
+  "id": "xss_007_jinja_autoescape_off",
+  "language": "html",
+  "file_path": "templates/post.html",
+  "added_lines": [
+    {"new_line_no": 5, "content": "<article class=\"post\">"},
+    {"new_line_no": 6, "content": "  <h1>{{ post.title }}</h1>"},
+    {"new_line_no": 7, "content": "  <div class=\"author\">by {{ post.author }}</div>"},
+    {"new_line_no": 8, "content": "  {% autoescape false %}"},
+    {"new_line_no": 9, "content": "    <div class=\"body\">{{ post.body }}</div>"},
+    {"new_line_no": 10, "content": "  {% endautoescape %}"},
+    {"new_line_no": 11, "content": "</article>"}
+  ],
+  "expected_findings": [
+    {"class": "xss", "severity_min": "high", "line": 9, "confidence_min": 0.7}
+  ],
+  "notes": "Jinja2 `{% autoescape false %}` block around user-controlled post.body. vuln_taxonomy §5.4 XSS-4. Detector must flag the inner `{{ post.body }}` because the surrounding block disables auto-escape."
+}

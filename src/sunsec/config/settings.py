@@ -111,6 +111,42 @@ class Settings(BaseModel):
     llm_max_tokens: int = Field(default=2048, ge=1)
     allow_direct_fallback: bool = Field(default=False)
 
+    # --- LLM OpenRouter (T-031, M-8 Replan #4) ---
+    # Аддитивный наследник `PolzaProvider` через OpenAI-compat SDK.
+    # См. `agents/artifacts/researcher/llm_provider_choice.md` §21–32
+    # «Пересмотр 2026-05-16: DeepSeek V4 Flash / Qwen3 Coder (free) / MiMo V2 Pro».
+    # Реальный ключ хранится в `.env`, в `.env.example` — placeholder.
+    openrouter_api_key: str = Field(default="", description="Bearer OpenRouter (sk-or-v1-...)")
+    openrouter_base_url: str = Field(default="https://openrouter.ai/api/v1")
+    openrouter_model_id: str = Field(
+        default="deepseek/deepseek-v4-flash",
+        description="Primary модель из T-030 §28 (DeepSeek V4 Flash)",
+    )
+    openrouter_timeout_seconds: float = Field(default=60.0, ge=1.0)
+    openrouter_max_retries: int = Field(default=2, ge=0)
+    # Тарифы в рублях за 1K токенов для primary (T-030 §22 — DeepSeek V4 Flash:
+    # $0.112/1M input × 95 / 1000 = 0.01064 ₽/1K; $0.224/1M output × 95 / 1000 = 0.02128 ₽/1K).
+    # Допустимое значение 0.0 (для `:free` моделей — никаких DBZ/negative).
+    openrouter_input_rub_per_1k: float = Field(default=0.01064, ge=0.0)
+    openrouter_output_rub_per_1k: float = Field(default=0.02128, ge=0.0)
+    # Курс USD→RUB для конверсии `usage.cost` (см. T-030 §24.3).
+    openrouter_usd_rub_rate: float = Field(default=95.0, gt=0.0)
+    # Использовать `usage.cost` от OpenRouter напрямую (приоритет над tariff-table).
+    # Default false — tariff-режим (предсказуемее для CI/тестов).
+    openrouter_use_usage_cost: bool = Field(default=False)
+    # `response_format: json_object` поддерживается DeepSeek V4 Flash и MiMo V2 Pro,
+    # но НЕ поддерживается Qwen3 Coder free (T-030 §24.5 #2). Default false —
+    # полагаемся на промпт + парсер (безопаснее на mixed-rotation).
+    openrouter_use_json_schema: bool = Field(default=False)
+    # `models[]` rotation — OpenRouter-фича (T-030 §24.4). При `true` в payload
+    # передаётся массив `models=[primary, *fallbacks]`; OpenRouter сам fallback'ит
+    # при ошибке/rate-limit primary.
+    openrouter_use_models_rotation: bool = Field(default=False)
+    # CSV строка fallback-моделей. Парсится в tuple через `as_csv_tuple`.
+    openrouter_fallback_model_ids: tuple[str, ...] = Field(default_factory=tuple)
+    # Отдельный kill-switch (независимая корзина от POLZA_BUDGET_LIMIT_RUB).
+    openrouter_budget_limit_rub: float = Field(default=50.0, ge=0.0)
+
     # --- Test UI (dev only, T-023) ---
     # Включает изолированный модуль `src/sunsec/ui/` — `GET /ui` страница
     # тестирования и `/api/ui/*` endpoints (analyze / budget / examples).
@@ -250,6 +286,20 @@ class Settings(BaseModel):
             "llm_temperature": float(get("LLM_TEMPERATURE", 0.0)),  # type: ignore[arg-type]
             "llm_max_tokens": int(get("LLM_MAX_TOKENS", 2048)),  # type: ignore[arg-type]
             "allow_direct_fallback": as_bool(get("ALLOW_DIRECT_FALLBACK"), False),
+            # --- OpenRouter (T-031) ---
+            "openrouter_api_key": get("OPENROUTER_API_KEY", ""),
+            "openrouter_base_url": get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
+            "openrouter_model_id": get("OPENROUTER_MODEL_ID", "deepseek/deepseek-v4-flash"),
+            "openrouter_timeout_seconds": float(get("OPENROUTER_TIMEOUT_SECONDS", 60.0)),  # type: ignore[arg-type]
+            "openrouter_max_retries": int(get("OPENROUTER_MAX_RETRIES", 2)),  # type: ignore[arg-type]
+            "openrouter_input_rub_per_1k": float(get("OPENROUTER_INPUT_RUB_PER_1K", 0.01064)),  # type: ignore[arg-type]
+            "openrouter_output_rub_per_1k": float(get("OPENROUTER_OUTPUT_RUB_PER_1K", 0.02128)),  # type: ignore[arg-type]
+            "openrouter_usd_rub_rate": float(get("OPENROUTER_USD_RUB_RATE", get("USD_TO_RUB", 95.0))),  # type: ignore[arg-type]
+            "openrouter_use_usage_cost": as_bool(get("OPENROUTER_USE_USAGE_COST"), False),
+            "openrouter_use_json_schema": as_bool(get("OPENROUTER_USE_JSON_SCHEMA"), False),
+            "openrouter_use_models_rotation": as_bool(get("OPENROUTER_USE_MODELS_ROTATION"), False),
+            "openrouter_fallback_model_ids": as_csv_tuple(get("OPENROUTER_FALLBACK_MODEL_IDS")) or (),
+            "openrouter_budget_limit_rub": float(get("OPENROUTER_BUDGET_LIMIT_RUB", 50.0)),  # type: ignore[arg-type]
             "enable_test_ui": as_bool(get("ENABLE_TEST_UI"), False),
             "publish_empty_pr_comment": as_bool(get("PUBLISH_EMPTY_PR_COMMENT"), False),
             "publish_comments_enabled": as_bool(

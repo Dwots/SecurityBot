@@ -424,6 +424,22 @@
         "documentation": {}
     },
     {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
         "label": "hashlib",
         "kind": 6,
         "isExtraImport": true,
@@ -604,6 +620,30 @@
     },
     {
         "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Sequence",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -876,6 +916,14 @@
     },
     {
         "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -1579,6 +1627,30 @@
         "documentation": {}
     },
     {
+        "label": "# noqa: E402\n    AddedLine",
+        "importPath": "sunsec.contracts",
+        "description": "sunsec.contracts",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts",
+        "documentation": {}
+    },
+    {
+        "label": "FilteredDiff",
+        "importPath": "sunsec.contracts",
+        "description": "sunsec.contracts",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts",
+        "documentation": {}
+    },
+    {
+        "label": "FilteredDiffFile",
+        "importPath": "sunsec.contracts",
+        "description": "sunsec.contracts",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts",
+        "documentation": {}
+    },
+    {
         "label": "Finding",
         "importPath": "sunsec.contracts",
         "description": "sunsec.contracts",
@@ -2012,6 +2084,14 @@
         "documentation": {}
     },
     {
+        "label": "ValidationError",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
         "label": "BaseModel",
         "importPath": "pydantic",
         "description": "pydantic",
@@ -2383,6 +2463,54 @@
         "documentation": {}
     },
     {
+        "label": "LLMParseError",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "LLMProviderUnavailable",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "LLMRawResponse",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "LLMTimeout",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "PromptPayload",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "TokenUsage",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
         "label": "PromptPayload",
         "importPath": "sunsec.llm.base",
         "description": "sunsec.llm.base",
@@ -2543,6 +2671,46 @@
         "documentation": {}
     },
     {
+        "label": "# noqa: E402\n    BudgetExceeded",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "LLMProviderUnavailable",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "LLMTimeout",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "PromptPayload",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "TokenUsage",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
         "label": "BudgetExceeded",
         "importPath": "sunsec.llm.base",
         "description": "sunsec.llm.base",
@@ -2566,6 +2734,14 @@
         "importPath": "time",
         "description": "time",
         "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "BudgetCounter",
+        "importPath": "sunsec.llm.budget",
+        "description": "sunsec.llm.budget",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.budget",
         "documentation": {}
     },
     {
@@ -3167,6 +3343,14 @@
         "documentation": {}
     },
     {
+        "label": "build_llm_client_from_settings",
+        "importPath": "sunsec.llm",
+        "description": "sunsec.llm",
+        "isExtraImport": true,
+        "detail": "sunsec.llm",
+        "documentation": {}
+    },
+    {
         "label": "configure_logging",
         "importPath": "sunsec.logging_ext",
         "description": "sunsec.logging_ext",
@@ -3601,7 +3785,31 @@
         "documentation": {}
     },
     {
+        "label": "LLMClient",
+        "importPath": "sunsec.llm.client",
+        "description": "sunsec.llm.client",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.client",
+        "documentation": {}
+    },
+    {
         "label": "AsyncMock",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "AsyncMock",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "MagicMock",
         "importPath": "unittest.mock",
         "description": "unittest.mock",
         "isExtraImport": true,
@@ -3738,6 +3946,14 @@
         "documentation": {}
     },
     {
+        "label": "Settings",
+        "importPath": "sunsec.config.settings",
+        "description": "sunsec.config.settings",
+        "isExtraImport": true,
+        "detail": "sunsec.config.settings",
+        "documentation": {}
+    },
+    {
         "label": "build_router",
         "importPath": "sunsec.webhook.router",
         "description": "sunsec.webhook.router",
@@ -3787,6 +4003,14 @@
         "documentation": {}
     },
     {
+        "label": "PolzaProvider",
+        "importPath": "sunsec.llm.polza_provider",
+        "description": "sunsec.llm.polza_provider",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.polza_provider",
+        "documentation": {}
+    },
+    {
         "label": "io",
         "kind": 6,
         "isExtraImport": true,
@@ -3801,6 +4025,22 @@
         "description": "sunsec.logging_ext.setup",
         "isExtraImport": true,
         "detail": "sunsec.logging_ext.setup",
+        "documentation": {}
+    },
+    {
+        "label": "OpenRouterProvider",
+        "importPath": "sunsec.llm.openrouter_provider",
+        "description": "sunsec.llm.openrouter_provider",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "_safe_error_dict",
+        "importPath": "sunsec.llm.openrouter_provider",
+        "description": "sunsec.llm.openrouter_provider",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.openrouter_provider",
         "documentation": {}
     },
     {
@@ -4312,6 +4552,51 @@
         "description": "src.sunsec.llm.client",
         "peekOfCode": "__all__ = [\"LLMClient\", \"_empty_response\", \"LLMParseError\"]",
         "detail": "src.sunsec.llm.client",
+        "documentation": {}
+    },
+    {
+        "label": "OpenRouterProvider",
+        "kind": 6,
+        "importPath": "src.sunsec.llm.openrouter_provider",
+        "description": "src.sunsec.llm.openrouter_provider",
+        "peekOfCode": "class OpenRouterProvider:\n    \"\"\"Транспортный `LLMProvider` для OpenRouter.\n    Соответствует `LLMProvider` Protocol из `sunsec.llm.base`.\n    \"\"\"\n    name: str = \"openrouter\"\n    def __init__(\n        self,\n        *,\n        api_key: str,\n        base_url: str,",
+        "detail": "src.sunsec.llm.openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "log",
+        "kind": 5,
+        "importPath": "src.sunsec.llm.openrouter_provider",
+        "description": "src.sunsec.llm.openrouter_provider",
+        "peekOfCode": "log = logging.getLogger(__name__)\n# Безопасный набор полей при логировании ошибок SDK (см. polza_provider §_safe_error_dict).\n_SAFE_OPENAI_ERROR_FIELDS = (\"status_code\", \"code\", \"message\", \"param\", \"type\")\n_RESERVED_LOGRECORD_FIELDS = {\"message\", \"asctime\", \"msg\", \"args\", \"name\", \"levelname\"}\ndef _safe_error_dict(exc: BaseException) -> dict[str, Any]:\n    \"\"\"Извлекает только безопасные поля из openai.APIError / APIStatusError.\n    НЕ трогаем `exc.request` / `exc.response` — там Authorization header.\n    Поля, имена которых конфликтуют с `LogRecord` (например, `message`),\n    переименовываются с префиксом `error_`.\n    \"\"\"",
+        "detail": "src.sunsec.llm.openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "_SAFE_OPENAI_ERROR_FIELDS",
+        "kind": 5,
+        "importPath": "src.sunsec.llm.openrouter_provider",
+        "description": "src.sunsec.llm.openrouter_provider",
+        "peekOfCode": "_SAFE_OPENAI_ERROR_FIELDS = (\"status_code\", \"code\", \"message\", \"param\", \"type\")\n_RESERVED_LOGRECORD_FIELDS = {\"message\", \"asctime\", \"msg\", \"args\", \"name\", \"levelname\"}\ndef _safe_error_dict(exc: BaseException) -> dict[str, Any]:\n    \"\"\"Извлекает только безопасные поля из openai.APIError / APIStatusError.\n    НЕ трогаем `exc.request` / `exc.response` — там Authorization header.\n    Поля, имена которых конфликтуют с `LogRecord` (например, `message`),\n    переименовываются с префиксом `error_`.\n    \"\"\"\n    out: dict[str, Any] = {\"error_class\": type(exc).__name__}\n    for field in _SAFE_OPENAI_ERROR_FIELDS:",
+        "detail": "src.sunsec.llm.openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "_RESERVED_LOGRECORD_FIELDS",
+        "kind": 5,
+        "importPath": "src.sunsec.llm.openrouter_provider",
+        "description": "src.sunsec.llm.openrouter_provider",
+        "peekOfCode": "_RESERVED_LOGRECORD_FIELDS = {\"message\", \"asctime\", \"msg\", \"args\", \"name\", \"levelname\"}\ndef _safe_error_dict(exc: BaseException) -> dict[str, Any]:\n    \"\"\"Извлекает только безопасные поля из openai.APIError / APIStatusError.\n    НЕ трогаем `exc.request` / `exc.response` — там Authorization header.\n    Поля, имена которых конфликтуют с `LogRecord` (например, `message`),\n    переименовываются с префиксом `error_`.\n    \"\"\"\n    out: dict[str, Any] = {\"error_class\": type(exc).__name__}\n    for field in _SAFE_OPENAI_ERROR_FIELDS:\n        val = getattr(exc, field, None)",
+        "detail": "src.sunsec.llm.openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "src.sunsec.llm.openrouter_provider",
+        "description": "src.sunsec.llm.openrouter_provider",
+        "peekOfCode": "__all__ = [\"OpenRouterProvider\", \"_safe_error_dict\"]",
+        "detail": "src.sunsec.llm.openrouter_provider",
         "documentation": {}
     },
     {
@@ -5431,6 +5716,15 @@
         "documentation": {}
     },
     {
+        "label": "build_openrouter_provider",
+        "kind": 2,
+        "importPath": "tests.eval.llm_eval",
+        "description": "tests.eval.llm_eval",
+        "peekOfCode": "def build_openrouter_provider(\n    *, budget_rub: float, model_id_override: Optional[str] = None\n) -> tuple[\"LLMProvider\", BudgetCounter]:\n    \"\"\"Реальный OpenRouterProvider через openai SDK + python-dotenv.\n    Используется в T-032 smoke для тестирования primary `deepseek/deepseek-v4-flash`\n    (или альтернативы) на goldens. Контракт `LLMProvider` совпадает с Polza,\n    поэтому LLMClient/FP-фильтр работают без изменений.\n    \"\"\"\n    try:\n        from dotenv import load_dotenv  # type: ignore",
+        "detail": "tests.eval.llm_eval",
+        "documentation": {}
+    },
+    {
         "label": "score_case",
         "kind": 2,
         "importPath": "tests.eval.llm_eval",
@@ -6139,6 +6433,87 @@
         "description": "tests.unit.test_logging_redaction",
         "peekOfCode": "def test_configure_logging_idempotent_and_json_default() -> None:\n    \"\"\"configure_logging можно вызывать многократно, дефолт — JSON.\"\"\"\n    configure_logging(level=\"DEBUG\", fmt=\"json\")\n    configure_logging(level=\"INFO\", fmt=\"json\")  # повторно\n    root = logging.getLogger()\n    assert root.level == logging.INFO\n    # Ровно один handler на корне после второго вызова.\n    assert len(root.handlers) == 1\n    # Это — JSON formatter.\n    assert isinstance(root.handlers[0].formatter, _RedactingJSONFormatter)",
         "detail": "tests.unit.test_logging_redaction",
+        "documentation": {}
+    },
+    {
+        "label": "test_compute_cost_rub_zero_rate_no_dbz_no_negative",
+        "kind": 2,
+        "importPath": "tests.unit.test_openrouter_provider",
+        "description": "tests.unit.test_openrouter_provider",
+        "peekOfCode": "def test_compute_cost_rub_zero_rate_no_dbz_no_negative() -> None:\n    \"\"\"rate=0 → cost=0.0, не падает на любом усage.\"\"\"\n    provider = OpenRouterProvider(\n        api_key=\"sk-or-v1-test-free\",\n        base_url=\"https://openrouter.ai/api/v1\",\n        model_id=\"qwen/qwen3-coder:free\",\n        input_rub_per_1k=0.0,\n        output_rub_per_1k=0.0,\n        use_usage_cost=False,\n        client=MagicMock(),",
+        "detail": "tests.unit.test_openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "test_openrouter_provider_warns_on_fallbacks_without_rotation",
+        "kind": 2,
+        "importPath": "tests.unit.test_openrouter_provider",
+        "description": "tests.unit.test_openrouter_provider",
+        "peekOfCode": "def test_openrouter_provider_warns_on_fallbacks_without_rotation(\n    caplog: pytest.LogCaptureFixture,\n) -> None:\n    \"\"\"fallback_model_ids непустой + use_models_rotation=False → warning.\"\"\"\n    caplog.set_level(logging.WARNING, logger=\"sunsec.llm.openrouter_provider\")\n    OpenRouterProvider(\n        api_key=\"sk-or-v1-test-warn\",\n        base_url=\"https://openrouter.ai/api/v1\",\n        model_id=\"deepseek/deepseek-v4-flash\",\n        use_models_rotation=False,",
+        "detail": "tests.unit.test_openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "test_openrouter_provider_repr_does_not_leak_api_key",
+        "kind": 2,
+        "importPath": "tests.unit.test_openrouter_provider",
+        "description": "tests.unit.test_openrouter_provider",
+        "peekOfCode": "def test_openrouter_provider_repr_does_not_leak_api_key() -> None:\n    \"\"\"repr(OpenRouterProvider) не содержит api_key.\"\"\"\n    secret = \"sk-or-v1-LEAKED-1234567890abcdef\"\n    provider = OpenRouterProvider(\n        api_key=secret,\n        base_url=\"https://openrouter.ai/api/v1\",\n        model_id=\"deepseek/deepseek-v4-flash\",\n        client=MagicMock(),\n    )\n    rep = repr(provider)",
+        "detail": "tests.unit.test_openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "test_safe_error_dict_strips_request_response_headers",
+        "kind": 2,
+        "importPath": "tests.unit.test_openrouter_provider",
+        "description": "tests.unit.test_openrouter_provider",
+        "peekOfCode": "def test_safe_error_dict_strips_request_response_headers() -> None:\n    \"\"\"_safe_error_dict не пропускает request/response/headers.\"\"\"\n    secret = \"sk-or-v1-LEAKED-2345\"\n    class _FakeAPIError(Exception):\n        status_code = 500\n        code = \"internal_error\"\n        message = \"internal server error\"\n        param = None\n        type = \"api_error\"\n        request = MagicMock()",
+        "detail": "tests.unit.test_openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "test_factory_builds_openrouter_client_when_provider_is_openrouter",
+        "kind": 2,
+        "importPath": "tests.unit.test_openrouter_provider",
+        "description": "tests.unit.test_openrouter_provider",
+        "peekOfCode": "def test_factory_builds_openrouter_client_when_provider_is_openrouter(\n    monkeypatch: pytest.MonkeyPatch,\n) -> None:\n    \"\"\"LLM_PROVIDER=openrouter → клиент с OpenRouterProvider + отдельный budget.\"\"\"\n    settings = Settings.from_env(env={\n        \"LLM_PROVIDER\": \"openrouter\",\n        \"OPENROUTER_API_KEY\": \"sk-or-v1-test-factory\",\n        \"OPENROUTER_MODEL_ID\": \"deepseek/deepseek-v4-flash\",\n        \"OPENROUTER_BUDGET_LIMIT_RUB\": \"42.5\",\n        \"OPENROUTER_USE_MODELS_ROTATION\": \"true\",",
+        "detail": "tests.unit.test_openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "test_factory_defaults_to_polza_for_backwards_compat",
+        "kind": 2,
+        "importPath": "tests.unit.test_openrouter_provider",
+        "description": "tests.unit.test_openrouter_provider",
+        "peekOfCode": "def test_factory_defaults_to_polza_for_backwards_compat(\n    monkeypatch: pytest.MonkeyPatch,\n) -> None:\n    \"\"\"Default LLM_PROVIDER=polza → PolzaProvider (как было до M-8).\"\"\"\n    settings = Settings.from_env(env={\n        # LLM_PROVIDER не задан вовсе → default 'polza'.\n        \"POLZA_API_KEY\": \"test-polza-key\",\n        \"POLZA_MODEL_ID\": \"gpt-4o-mini\",\n        \"POLZA_BUDGET_LIMIT_RUB\": \"80\",\n    })",
+        "detail": "tests.unit.test_openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "test_factory_raises_on_empty_openrouter_api_key",
+        "kind": 2,
+        "importPath": "tests.unit.test_openrouter_provider",
+        "description": "tests.unit.test_openrouter_provider",
+        "peekOfCode": "def test_factory_raises_on_empty_openrouter_api_key() -> None:\n    \"\"\"LLM_PROVIDER=openrouter без ключа → понятная ошибка вместо silent-failure.\"\"\"\n    settings = Settings.from_env(env={\n        \"LLM_PROVIDER\": \"openrouter\",\n        \"OPENROUTER_API_KEY\": \"\",  # пусто\n    })\n    with pytest.raises(ValueError, match=\"OPENROUTER_API_KEY\"):\n        build_llm_client_from_settings(settings)\n# ---------------------------------------------------------------------------\n# 12. BudgetExceeded — отдельная корзина (polza не трогается)",
+        "detail": "tests.unit.test_openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "test_settings_parses_all_new_openrouter_env_vars",
+        "kind": 2,
+        "importPath": "tests.unit.test_openrouter_provider",
+        "description": "tests.unit.test_openrouter_provider",
+        "peekOfCode": "def test_settings_parses_all_new_openrouter_env_vars() -> None:\n    \"\"\"Все новые env-переменные подхватываются Settings.from_env корректно.\"\"\"\n    s = Settings.from_env(env={\n        \"LLM_PROVIDER\": \"openrouter\",\n        \"OPENROUTER_API_KEY\": \"sk-or-v1-test-env\",\n        \"OPENROUTER_BASE_URL\": \"https://openrouter.ai/api/v1\",\n        \"OPENROUTER_MODEL_ID\": \"xiaomi/mimo-v2-pro\",\n        \"OPENROUTER_TIMEOUT_SECONDS\": \"45\",\n        \"OPENROUTER_MAX_RETRIES\": \"3\",\n        \"OPENROUTER_INPUT_RUB_PER_1K\": \"0.05\",",
+        "detail": "tests.unit.test_openrouter_provider",
+        "documentation": {}
+    },
+    {
+        "label": "test_settings_openrouter_defaults_when_env_empty",
+        "kind": 2,
+        "importPath": "tests.unit.test_openrouter_provider",
+        "description": "tests.unit.test_openrouter_provider",
+        "peekOfCode": "def test_settings_openrouter_defaults_when_env_empty() -> None:\n    \"\"\"Без env-переменных Settings даёт default-ы из артефакта T-030.\"\"\"\n    s = Settings.from_env(env={})\n    assert s.openrouter_api_key == \"\"\n    assert s.openrouter_base_url == \"https://openrouter.ai/api/v1\"\n    assert s.openrouter_model_id == \"deepseek/deepseek-v4-flash\"\n    assert s.openrouter_input_rub_per_1k == pytest.approx(0.01064)\n    assert s.openrouter_output_rub_per_1k == pytest.approx(0.02128)\n    assert s.openrouter_usd_rub_rate == pytest.approx(95.0)\n    assert s.openrouter_use_usage_cost is False",
+        "detail": "tests.unit.test_openrouter_provider",
         "documentation": {}
     },
     {

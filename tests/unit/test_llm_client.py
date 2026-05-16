@@ -511,9 +511,11 @@ def test_prompt_builder_emits_system_and_user_with_diff() -> None:
     payload = builder.build(diff)
 
     assert payload.system  # не пустой
-    assert "SunSecurityBot" in payload.system  # системный промпт v1.0.0
+    assert "SunSecurityBot" in payload.system  # системный промпт v1.1.0
     assert payload.response_format == "json_object"  # дефолт по ml_instructions §6
     assert "--- file: src/db/users.py ---" in payload.user
     assert "L42:" in payload.user
     assert "DELETE FROM t" in payload.user
-    assert builder.prompt_version == "1.0.0"
+    # T-032 (RT-011) bump: prompt_version = "1.1.0" — added Server-side template
+    # XSS sub-section + open-weight optimization. Cache-key инвалидация by design.
+    assert builder.prompt_version == "1.1.0"

@@ -1,4 +1,4 @@
-# Рабочие данные
+# Рабочие данные (локальные, не коммитятся)
 agents/
 requirements/
 tmp/
@@ -7,3 +7,39 @@ tmp/
 .env
 .env.local
 *.key
+*.pem
+*.p12
+credentials.json
+
+# Python артефакты сборки и кэши
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+wheels/
+
+# Виртуальные окружения
+.venv/
+venv/
+env/
+ENV/
+
+# Покрытие и кэши тестов / линтеров
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# IDE
+.vscode/PythonImportHelper-v2-Completion.json
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
