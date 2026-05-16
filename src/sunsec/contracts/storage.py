@@ -114,6 +114,12 @@ class RepoConfigRecord(BaseModel):
     created_at: datetime
     updated_at: datetime
     last_seen_at: Optional[datetime] = None
+    # M-9+: GitHub webhook auto-install (Console UI "Install Webhook").
+    # `webhook_id` — id хука, возвращённый GitHub API; `webhook_url` —
+    # public URL (ngrok-туннель), на который зарегистрирован хук. Оба
+    # NULL для репо, у которых webhook ещё не установлен через бот.
+    webhook_id: Optional[int] = None
+    webhook_url: Optional[str] = None
 
 
 __all__ = [

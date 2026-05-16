@@ -278,6 +278,37 @@ class RepoConfigOut(_ConsoleBase):
     created_at: datetime
     updated_at: datetime
     last_seen_at: Optional[datetime] = None
+    # M-9+: GitHub webhook auto-install (Console UI). NULL пока не установлен.
+    webhook_id: Optional[int] = None
+    webhook_url: Optional[str] = None
+
+
+class TunnelOut(_ConsoleBase):
+    """`GET /api/console/tunnel` — статус публичного туннеля.
+
+    Используется UI для авто-подстановки Payload URL при установке
+    webhook. Источник — либо `Settings.public_base_url` (если задан),
+    либо ngrok admin API.
+    """
+
+    running: bool = False
+    public_url: Optional[str] = None
+    source: Optional[str] = None  # 'config' | 'ngrok' | None
+    error: Optional[str] = None
+
+
+class WebhookInstallIn(_ConsoleBase):
+    """`POST /api/console/repos/{id}/webhook` — body."""
+
+    # Если не передано, сервер возьмёт текущий туннель (config / ngrok).
+    public_url: Optional[str] = None
+
+
+class WebhookInstallOut(_ConsoleBase):
+    """`POST /api/console/repos/{id}/webhook` — response."""
+
+    webhook_id: int
+    webhook_url: str
 
 
 __all__ = [
@@ -296,6 +327,9 @@ __all__ = [
     "ManualAnalyzeOut",
     "FindingsBySeverityOut",
     "DashboardOut",
+    "TunnelOut",
+    "WebhookInstallIn",
+    "WebhookInstallOut",
     "RepoConfigIn",
     "RepoConfigPatchIn",
     "RepoConfigOut",

@@ -170,6 +170,23 @@ class Settings(BaseModel):
         description="Включить /api/console/* (M-9 control plane). Env: ENABLE_CONSOLE_UI.",
     )
 
+    # --- Webhook auto-install (Console UI) ---
+    # Admin API локального ngrok-агента (детект публичного URL туннеля для
+    # автоустановки GitHub webhook'ов из Console UI). По умолчанию ngrok
+    # поднимает admin на 127.0.0.1:4040. Если ngrok не запущен — endpoint
+    # `/api/console/tunnel` вернёт `{"running": false}` (без ошибки).
+    ngrok_admin_url: str = Field(
+        default="http://127.0.0.1:4040",
+        description="Ngrok admin API base URL. Env: NGROK_ADMIN_URL.",
+    )
+    # Опциональный override: если задан, Console UI отдаёт его как
+    # «текущий туннель» без обращения к ngrok admin API (полезно для
+    # cloudflared / прод-обратного-прокси, где ngrok не используется).
+    public_base_url: str = Field(
+        default="",
+        description="Жёстко-заданный публичный URL (опционально). Env: PUBLIC_BASE_URL.",
+    )
+
     # --- Pipeline behavior ---
     publish_empty_pr_comment: bool = Field(default=False)
     # T-016: master-switch для CommentPublisher. В test/dev — выключаем, чтобы
@@ -195,6 +212,30 @@ class Settings(BaseModel):
     fp_skip_llm_if_prescan_found: bool = Field(
         default=False,
         description="Если pre-scan нашёл известный секрет — пропускать LLM-вызов целиком (экономия)",
+    )
+
+    # --- Reply mode (T-019, диалог с ботом в комментариях PR) ---
+    # Бот слушает дополнительно `issue_comment` и `pull_request_review_comment`
+    # webhook-события, генерирует через LLM русский ответ и публикует в той
+    # же ветке обсуждения. Триггер для inline-комментария — reply на наш;
+    # для PR conversation — `@<BOT_USERNAME>` в теле.
+    bot_username: str = Field(
+        default="sunsec-bot",
+        description="GitHub-логин бот-аккаунта. Используется для self-filter (anti-loop) и распознавания @mention. Env: BOT_USERNAME.",
+    )
+    enable_reply_mode: bool = Field(
+        default=True,
+        description="Master-switch для reply-режима. Env: ENABLE_REPLY_MODE.",
+    )
+    reply_history_limit: int = Field(
+        default=12,
+        ge=1,
+        description="Сколько последних сообщений ветки кладём в LLM-контекст. Env: REPLY_HISTORY_LIMIT.",
+    )
+    reply_max_tokens: int = Field(
+        default=600,
+        ge=64,
+        description="Лимит ответа бота в токенах. Env: REPLY_MAX_TOKENS.",
     )
 
     # --- DiffFilter (T-009) ---
@@ -321,6 +362,8 @@ class Settings(BaseModel):
             "openrouter_budget_limit_rub": float(get("OPENROUTER_BUDGET_LIMIT_RUB", 50.0)),  # type: ignore[arg-type]
             "enable_test_ui": as_bool(get("ENABLE_TEST_UI"), False),
             "enable_console_ui": as_bool(get("ENABLE_CONSOLE_UI"), False),
+            "ngrok_admin_url": get("NGROK_ADMIN_URL", "http://127.0.0.1:4040"),
+            "public_base_url": get("PUBLIC_BASE_URL", ""),
             "publish_empty_pr_comment": as_bool(get("PUBLISH_EMPTY_PR_COMMENT"), False),
             "publish_comments_enabled": as_bool(
                 get("PUBLISH_COMMENTS_ENABLED"), True
@@ -335,6 +378,11 @@ class Settings(BaseModel):
             "fp_skip_llm_if_prescan_found": as_bool(
                 get("FP_SKIP_LLM_IF_PRESCAN_FOUND"), False
             ),
+            # Reply mode (T-019)
+            "bot_username": get("BOT_USERNAME", "sunsec-bot"),
+            "enable_reply_mode": as_bool(get("ENABLE_REPLY_MODE"), True),
+            "reply_history_limit": int(get("REPLY_HISTORY_LIMIT", 12)),  # type: ignore[arg-type]
+            "reply_max_tokens": int(get("REPLY_MAX_TOKENS", 600)),  # type: ignore[arg-type]
         }
         return cls(**raw)
 

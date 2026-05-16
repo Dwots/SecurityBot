@@ -19,7 +19,10 @@ from pathlib import Path
 from sunsec.comments.publisher import CommentPublisher
 from sunsec.config import Settings, get_settings
 from sunsec.filter import build_filter_from_settings
-from sunsec.llm import build_llm_client_from_settings
+from sunsec.llm import (
+    build_llm_client_from_settings,
+    build_reply_client_from_settings,
+)
 from sunsec.logging_ext import configure_logging, get_logger
 from sunsec.ml import build_fp_filter_from_settings
 from sunsec.pipeline.orchestrator import PipelineOrchestrator
@@ -156,6 +159,17 @@ def create_app(settings: Settings | None = None):
         state=state,
         enabled=settings.publish_comments_enabled,
     )
+    # T-019: reply-режим. Делим budget с основным `llm_client` — единая
+    # корзина рублей (один kill-switch для analyze и reply).
+    shared_budget = getattr(llm_client, "budget", None) if llm_client else None
+    try:
+        reply_client = build_reply_client_from_settings(settings, budget=shared_budget)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning(
+            "reply_client_init_failed",
+            extra={"error_type": type(exc).__name__},
+        )
+        reply_client = None
     pipeline = PipelineOrchestrator(
         vcs=vcs,
         diff_filter=diff_filter,
@@ -163,6 +177,9 @@ def create_app(settings: Settings | None = None):
         state=state,
         fp_filter=fp_filter,
         publisher=publisher,
+        reply_client=reply_client,
+        reply_history_limit=settings.reply_history_limit,
+        bot_username=settings.bot_username,
     )
     webhook_service = WebhookService(
         vcs=vcs,
@@ -170,6 +187,8 @@ def create_app(settings: Settings | None = None):
         webhook_secret=settings.webhook_secret,
         skip_drafts=settings.skip_drafts,
         settings=settings,
+        bot_username=settings.bot_username,
+        enable_reply_mode=settings.enable_reply_mode,
     )
 
     # --- FastAPI app + роутер ---
@@ -190,6 +209,7 @@ def create_app(settings: Settings | None = None):
     app.state.llm_client = llm_client
     app.state.fp_filter = fp_filter
     app.state.publisher = publisher
+    app.state.reply_client = reply_client
 
     # T-023: опциональный test-UI за флагом ENABLE_TEST_UI (`tmp/gui_plan.md §6`).
     # В prod НЕ включать — даёт прямой доступ к polza.ai без HMAC. Defense-in-depth:

@@ -217,7 +217,8 @@ async def test_publish_happy_path_inline_and_summary() -> None:
     assert MARKER_SUMMARY in summary_body
     # review.body — короткий лидер, не дублирует summary.
     assert MARKER_SUMMARY not in kwargs["summary"]
-    assert "summary comment" in kwargs["summary"].lower()
+    # T-019 (Russian lock): review.body упоминает «сводке» вместо "summary comment".
+    assert "сводке" in kwargs["summary"].lower()
 
 
 # --- (b) line not in diff → fallback в summary -----------------------------
@@ -252,7 +253,7 @@ async def test_publish_finding_not_in_diff_goes_to_fallback() -> None:
     # T-017: fallback finding попал в отдельный summary issue-comment.
     vcs.post_issue_comment.assert_awaited_once()
     summary_body = vcs.post_issue_comment.await_args.args[2]
-    assert "without diff anchor" in summary_body
+    assert "без привязки к diff" in summary_body
     assert "src/app.py:99" in summary_body
 
 
@@ -572,7 +573,7 @@ async def test_publish_inline_includes_suggested_fix_snippet_python() -> None:
         filtered_diff=filtered,
     )
     inline = vcs.post_review.await_args.kwargs["comments"][0]
-    assert "### Suggested fix" in inline.body
+    assert "### Предлагаемое исправление" in inline.body
     assert "```python" in inline.body
     assert "cursor.execute" in inline.body
     # fenced block корректно закрыт.
@@ -599,7 +600,7 @@ async def test_publish_inline_includes_suggested_fix_snippet_javascript() -> Non
         filtered_diff=filtered,
     )
     inline = vcs.post_review.await_args.kwargs["comments"][0]
-    assert "### Suggested fix" in inline.body
+    assert "### Предлагаемое исправление" in inline.body
     assert "```javascript" in inline.body
     assert "el.textContent = userInput;" in inline.body
 
@@ -617,7 +618,7 @@ async def test_publish_inline_skips_suggested_fix_when_none() -> None:
         filtered_diff=filtered,
     )
     inline = vcs.post_review.await_args.kwargs["comments"][0]
-    assert "Suggested fix" not in inline.body
+    assert "Предлагаемое исправление" not in inline.body
     # Также не должно быть пустого fenced block'а.
     assert "```" not in inline.body
 
@@ -639,7 +640,7 @@ async def test_publish_inline_snippet_for_unknown_extension_uses_empty_lang() ->
         filtered_diff=filtered,
     )
     inline = vcs.post_review.await_args.kwargs["comments"][0]
-    assert "### Suggested fix" in inline.body
+    assert "### Предлагаемое исправление" in inline.body
     # `` ` `` без указания языка — три бэктика и сразу перевод строки.
     assert "```\n" in inline.body
     assert "```python" not in inline.body
@@ -664,8 +665,8 @@ async def test_publish_summary_aggregates_single_finding_by_severity() -> None:
     vcs.post_issue_comment.assert_awaited_once()
     summary = vcs.post_issue_comment.await_args.args[2]
     # Заголовок + LLM summary + severity-таблица + top + footer + маркер
-    assert "## SunSecurityBot review" in summary
-    assert "Severity breakdown" in summary
+    assert "## Ревью SunSecurityBot" in summary
+    assert "Распределение по severity" in summary
     # Таблица содержит все 5 уровней с числами (icon + label.capitalize()):
     assert "Critical | 0" in summary
     assert "High     | 1" in summary
@@ -673,12 +674,12 @@ async def test_publish_summary_aggregates_single_finding_by_severity() -> None:
     assert "Low      | 0" in summary
     assert "Info     | 0" in summary
     # Top findings присутствуют для 1 finding.
-    assert "Top findings (showing 1 of 1)" in summary
+    assert "Главные находки (показано 1 из 1)" in summary
     assert "src/app.py:10" in summary
-    # Footer + commit
-    assert "1 total" in summary
-    assert "1 anchored inline" in summary
-    assert "0 general" in summary
+    # Footer + commit (T-019: русские формулировки)
+    assert "всего 1" in summary
+    assert "привязано inline: 1" in summary
+    assert "общих: 0" in summary
     assert "abc123d" in summary  # короткий head_sha
     assert MARKER_SUMMARY in summary
 
@@ -724,7 +725,7 @@ async def test_publish_summary_aggregates_many_findings_top5() -> None:
     assert "Low      | 2" in summary
     assert "Info     | 1" in summary
     # Top-5 (не больше).
-    assert "Top findings (showing 5 of 7)" in summary
+    assert "Главные находки (показано 5 из 7)" in summary
     # Top должен сортироваться по severity: critical → high → high → medium → low.
     # «Critical: AWS AKIA leak» — первое сообщение critical.
     crit_pos = summary.index("Critical: AWS AKIA")
@@ -735,9 +736,9 @@ async def test_publish_summary_aggregates_many_findings_top5() -> None:
     # Info НЕ попал в top-5 (5 = critical+2high+medium+low; ещё один low
     # вытеснил info за пределы top-5).
     assert "Info-level finding" not in summary
-    # Footer
-    assert "7 total" in summary
-    assert "7 anchored inline" in summary
+    # Footer (T-019: русские формулировки)
+    assert "всего 7" in summary
+    assert "привязано inline: 7" in summary
 
 
 # --- (T-017 e) идемпотентность summary через PATCH update_issue_comment ---
@@ -876,5 +877,5 @@ async def test_publish_summary_fallback_findings_have_finding_marker() -> None:
     )
     summary_body = vcs.post_issue_comment.await_args.args[2]
     fallback_hash = finding_hash(findings[1])
-    assert "Findings without diff anchor" in summary_body
+    assert "Находки без привязки к diff" in summary_body
     assert finding_marker(fallback_hash) in summary_body

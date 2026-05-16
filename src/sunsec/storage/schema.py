@@ -104,7 +104,9 @@ CREATE TABLE IF NOT EXISTS repo_configs (
     enabled                 INTEGER NOT NULL DEFAULT 1,
     created_at              TIMESTAMP NOT NULL,
     updated_at              TIMESTAMP NOT NULL,
-    last_seen_at            TIMESTAMP
+    last_seen_at            TIMESTAMP,
+    webhook_id              INTEGER,
+    webhook_url             TEXT
 )
 """
 
@@ -128,6 +130,16 @@ ALL_DDL_STATEMENTS: list[str] = [
 ]
 
 
+# Additive migrations for evolving existing tables.
+# SQLite не поддерживает `ALTER TABLE ADD COLUMN IF NOT EXISTS` — поэтому
+# каждое выражение выполняется через try/except в `run_migrations`, дубликат
+# колонки трактуется как no-op.
+ADDITIVE_MIGRATIONS: list[str] = [
+    "ALTER TABLE repo_configs ADD COLUMN webhook_id INTEGER",
+    "ALTER TABLE repo_configs ADD COLUMN webhook_url TEXT",
+]
+
+
 PRAGMA_STATEMENTS: list[str] = [
     "PRAGMA journal_mode=WAL",
     "PRAGMA foreign_keys=ON",
@@ -138,6 +150,7 @@ PRAGMA_STATEMENTS: list[str] = [
 __all__ = [
     "SCHEMA_VERSION",
     "ALL_DDL_STATEMENTS",
+    "ADDITIVE_MIGRATIONS",
     "PRAGMA_STATEMENTS",
     "CREATE_TABLE_CHECKS",
     "CREATE_TABLE_FINDINGS",

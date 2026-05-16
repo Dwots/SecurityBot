@@ -223,6 +223,15 @@
         createRepo(data) { return apiFetch('/repos', { method: 'POST', body: data, timeoutMs: 15000 }); },
         updateRepo(id, d){ return apiFetch('/repos/' + encodeURIComponent(id), { method: 'PATCH', body: d, timeoutMs: 15000 }); },
         deleteRepo(id)   { return apiFetch('/repos/' + encodeURIComponent(id), { method: 'DELETE' }); },
+        getTunnel()      { return apiFetch('/tunnel'); },
+        installWebhook(id, body) {
+            return apiFetch('/repos/' + encodeURIComponent(id) + '/webhook',
+                { method: 'POST', body: body || {}, timeoutMs: 20000 });
+        },
+        removeWebhook(id) {
+            return apiFetch('/repos/' + encodeURIComponent(id) + '/webhook',
+                { method: 'DELETE', timeoutMs: 20000 });
+        },
         analyzeManual(p) { return apiFetch('/manual/analyze', { method: 'POST', body: p, timeoutMs: 90000 }); }
     };
 
@@ -1000,6 +1009,52 @@
             addBtn
         ]));
 
+        // Tunnel status widget — shows the public URL the bot will use as
+        // GitHub webhook target (auto-detected from ngrok or PUBLIC_BASE_URL).
+        const tunnelHost = el('div', {
+            id: 'tunnel-status-host',
+            class: 'bg-zinc-900/40 border border-zinc-800/60 rounded-md p-4 text-xs'
+        });
+        wrap.appendChild(tunnelHost);
+        let tunnelState = { running: false, publicUrl: null, source: null };
+
+        async function refreshTunnel() {
+            tunnelHost.replaceChildren(el('span', { class: 'text-zinc-500', text: 'Detecting public tunnel…' }));
+            try {
+                const t = await API.getTunnel();
+                tunnelState = {
+                    running: !!t.running,
+                    publicUrl: t.publicUrl || null,
+                    source: t.source || null,
+                };
+            } catch (e) {
+                tunnelState = { running: false, publicUrl: null, source: null };
+            }
+            renderTunnel();
+        }
+
+        function renderTunnel() {
+            tunnelHost.replaceChildren();
+            const left = el('div', { class: 'flex items-center gap-3 min-w-0' });
+            if (tunnelState.running && tunnelState.publicUrl) {
+                left.appendChild(el('span', { class: 'inline-block w-2 h-2 rounded-full bg-green-400' }));
+                left.appendChild(el('span', { class: 'text-zinc-400', text: 'Public tunnel:' }));
+                left.appendChild(el('span', { class: 'font-mono text-zinc-200 truncate', text: tunnelState.publicUrl }));
+                left.appendChild(el('span', { class: 'text-[10px] text-zinc-500 uppercase tracking-wide', text: tunnelState.source || '' }));
+            } else {
+                left.appendChild(el('span', { class: 'inline-block w-2 h-2 rounded-full bg-amber-400' }));
+                left.appendChild(el('span', { class: 'text-zinc-300', text: 'No public tunnel detected.' }));
+                left.appendChild(el('span', { class: 'text-zinc-500', text: 'Run `ngrok http 8000` or set PUBLIC_BASE_URL in .env.' }));
+            }
+            const refreshBtn = el('button', {
+                type: 'button',
+                class: 'text-xs text-[#6e9bff] hover:text-[#a5beff]',
+                text: 'Refresh'
+            });
+            refreshBtn.addEventListener('click', () => { void refreshTunnel(); });
+            tunnelHost.appendChild(el('div', { class: 'flex items-center justify-between gap-4' }, [left, refreshBtn]));
+        }
+
         const formHost = el('div', { id: 'repo-form-host' });
         wrap.appendChild(formHost);
 
@@ -1022,6 +1077,7 @@
                         el('th', { class: 'px-4 py-2 font-normal', text: 'Enabled' }),
                         el('th', { class: 'px-4 py-2 font-normal', text: 'Token' }),
                         el('th', { class: 'px-4 py-2 font-normal', text: 'Webhook Secret' }),
+                        el('th', { class: 'px-4 py-2 font-normal', text: 'Webhook' }),
                         el('th', { class: 'px-4 py-2 font-normal', text: 'LLM Override' }),
                         el('th', { class: 'px-4 py-2 font-normal', text: 'Last Seen' }),
                         el('th', { class: 'px-4 py-2 font-normal text-right', text: 'Actions' })
@@ -1040,6 +1096,21 @@
                         text: r.enabled ? 'enabled' : 'disabled'
                     });
 
+                    // Webhook chip — installed/reinstall/none.
+                    const installed = !!r.webhookId;
+                    const expectedUrl = tunnelState.publicUrl
+                        ? (tunnelState.publicUrl + '/webhook/github')
+                        : null;
+                    const stale = installed && expectedUrl && r.webhookUrl && r.webhookUrl !== expectedUrl;
+                    let whChip;
+                    if (!installed) {
+                        whChip = el('span', { class: 'text-zinc-500 text-[10px]', text: 'not installed' });
+                    } else if (stale) {
+                        whChip = el('span', { class: 'text-amber-400 text-[10px] font-mono', text: 'stale — reinstall' });
+                    } else {
+                        whChip = el('span', { class: 'text-green-400 text-[10px] font-mono truncate inline-block max-w-[180px]', text: 'id=' + r.webhookId });
+                    }
+
                     const editBtn = el('button', { type: 'button', class: 'text-xs text-[#1736dd] hover:text-[#142fc0]', text: 'Edit' });
                     editBtn.addEventListener('click', () => openRepoForm(r));
 
@@ -1056,6 +1127,49 @@
                         } catch (e) { toast(e.message || 'Update failed', 'error'); }
                     });
 
+                    // Install / Reinstall / Remove webhook buttons.
+                    const installLabel = installed ? (stale ? 'Reinstall Webhook' : 'Reinstall Webhook') : 'Install Webhook';
+                    const installBtn = el('button', {
+                        type: 'button',
+                        class: 'text-xs ' + (installed && !stale ? 'text-zinc-400 hover:text-zinc-200' : 'text-green-400 hover:text-green-300'),
+                        text: installLabel
+                    });
+                    installBtn.addEventListener('click', async () => {
+                        if (!tunnelState.running || !tunnelState.publicUrl) {
+                            toast('No public tunnel detected. Start ngrok (`ngrok http 8000`) or set PUBLIC_BASE_URL.', 'error', 8000);
+                            return;
+                        }
+                        if (!r.vcsTokenSet || !r.webhookSecretSet) {
+                            toast('Token and Webhook Secret must be set first (Edit the repo).', 'error', 7000);
+                            return;
+                        }
+                        installBtn.disabled = true;
+                        installBtn.textContent = 'Installing…';
+                        try {
+                            const resp = await API.installWebhook(r.id, {});
+                            toast('Webhook installed (id=' + resp.webhookId + ')', 'success');
+                            await reload();
+                        } catch (e) {
+                            toast(e.message || 'Install failed', 'error', 8000);
+                            installBtn.disabled = false;
+                            installBtn.textContent = installLabel;
+                        }
+                    });
+
+                    const removeWhBtn = installed ? el('button', {
+                        type: 'button', class: 'text-xs text-amber-400 hover:text-amber-300', text: 'Remove Webhook'
+                    }) : null;
+                    if (removeWhBtn) {
+                        removeWhBtn.addEventListener('click', async () => {
+                            if (!confirm('Remove GitHub webhook for ' + r.fullName + '? The bot will no longer receive PR events from this repo.')) return;
+                            try {
+                                await API.removeWebhook(r.id);
+                                toast('Webhook removed', 'success');
+                                await reload();
+                            } catch (e) { toast(e.message || 'Remove failed', 'error', 7000); }
+                        });
+                    }
+
                     const deleteBtn = el('button', { type: 'button', class: 'text-xs text-red-400 hover:text-red-300', text: 'Delete' });
                     deleteBtn.addEventListener('click', async () => {
                         if (!confirm('Delete repo ' + r.fullName + '? Webhook handling will fall back to global .env credentials.')) return;
@@ -1066,16 +1180,21 @@
                         } catch (e) { toast(e.message || 'Delete failed', 'error'); }
                     });
 
+                    const actionsChildren = [editBtn, toggleBtn, installBtn];
+                    if (removeWhBtn) actionsChildren.push(removeWhBtn);
+                    actionsChildren.push(deleteBtn);
+
                     const row = el('tr', { class: 'hover:bg-zinc-800/20 transition-colors' });
                     row.appendChild(el('td', { class: 'px-4 py-3 font-mono text-zinc-200', text: r.fullName || '—' }));
                     row.appendChild(el('td', { class: 'px-4 py-3 text-zinc-400', text: r.vcsProvider || '—' }));
                     row.appendChild(el('td', { class: 'px-4 py-3' }, [enabledChip]));
                     row.appendChild(el('td', { class: 'px-4 py-3' }, [tokenChip]));
                     row.appendChild(el('td', { class: 'px-4 py-3' }, [secretChip]));
+                    row.appendChild(el('td', { class: 'px-4 py-3' }, [whChip]));
                     row.appendChild(el('td', { class: 'px-4 py-3 text-zinc-400', text: r.llmProviderOverride || '—' }));
                     row.appendChild(el('td', { class: 'px-4 py-3 text-zinc-500', text: r.lastSeenAt ? fmtDate(r.lastSeenAt) : 'never' }));
                     row.appendChild(el('td', { class: 'px-4 py-3 text-right' }, [
-                        el('div', { class: 'flex gap-3 justify-end' }, [editBtn, toggleBtn, deleteBtn])
+                        el('div', { class: 'flex gap-3 justify-end flex-wrap' }, actionsChildren)
                     ]));
                     tbody.appendChild(row);
                 });
@@ -1092,7 +1211,7 @@
         }
 
         addBtn.addEventListener('click', () => openRepoForm(null));
-        await reload();
+        await Promise.all([refreshTunnel(), reload()]);
         return wrap;
     }
 

@@ -60,7 +60,7 @@ from sunsec.llm.polza_provider import PolzaProvider  # noqa: E402
 
 def _make_fake_response(
     *,
-    content: str = '{"findings": [], "summary": "No security issues detected in diff."}',
+    content: str = '{"findings": [], "summary": "В diff не обнаружено проблем безопасности."}',
     prompt_tokens: int = 3000,
     completion_tokens: int = 200,
     model: str = "deepseek/deepseek-v4-flash",

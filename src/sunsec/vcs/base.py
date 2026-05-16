@@ -118,3 +118,29 @@ class VCSAdapter(Protocol):
     ) -> None:
         """Для T-018 (block merge). В MVP — заглушка."""
         ...
+
+    # --- Reply mode (T-019) ---
+
+    async def reply_to_review_comment(
+        self,
+        repo: str,
+        pr_number: int,
+        in_reply_to_id: int,
+        body: str,
+    ) -> PostedComment:
+        """POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies
+        — публикует ответ в той же ветке (thread) inline-комментариев, без
+        отдельного review-объекта. Используется в reply-режиме (T-019).
+        """
+        ...
+
+    async def get_review_comment(
+        self,
+        repo: str,
+        comment_id: int,
+    ) -> PostedComment:
+        """GET /repos/{owner}/{repo}/pulls/comments/{comment_id} — забирает
+        один review-comment по id. Нужен для определения, является ли
+        родительский комментарий нашим (проверка маркера / автора).
+        """
+        ...

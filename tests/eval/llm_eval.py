@@ -150,7 +150,7 @@ class FixtureProvider:
     def __init__(self, responses: dict[str, dict[str, Any]]) -> None:
         self._responses = responses
         # Резервный ответ — пустой, чтобы пайплайн не падал на неизвестных id.
-        self._fallback = {"findings": [], "summary": "No security issues detected in diff."}
+        self._fallback = {"findings": [], "summary": "В diff не обнаружено проблем безопасности."}
         self.call_count = 0
         self.last_payload: PromptPayload | None = None
 
@@ -218,7 +218,7 @@ def build_realistic_fixtures(goldens: Iterable[Golden]) -> dict[str, dict[str, A
         if g.is_clean:
             payload = {
                 "findings": [],
-                "summary": "No security issues detected in diff.",
+                "summary": "В diff не обнаружено проблем безопасности.",
             }
             by_id[g.id] = payload
             continue
@@ -227,7 +227,7 @@ def build_realistic_fixtures(goldens: Iterable[Golden]) -> dict[str, dict[str, A
             # FN
             by_id[g.id] = {
                 "findings": [],
-                "summary": "No security issues detected in diff.",
+                "summary": "В diff не обнаружено проблем безопасности.",
             }
             continue
 

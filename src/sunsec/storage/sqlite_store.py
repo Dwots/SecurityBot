@@ -104,6 +104,7 @@ def _row_to_comment(row: aiosqlite.Row) -> CommentRecord:
 
 def _row_to_repo(row: aiosqlite.Row) -> RepoConfigRecord:
     d = dict(row)
+    wh_id_raw = d.get("webhook_id")
     return RepoConfigRecord(
         id=d["id"],
         full_name=d["full_name"],
@@ -115,6 +116,8 @@ def _row_to_repo(row: aiosqlite.Row) -> RepoConfigRecord:
         created_at=_parse_dt(d["created_at"]),
         updated_at=_parse_dt(d["updated_at"]),
         last_seen_at=_parse_dt(d.get("last_seen_at")),
+        webhook_id=(int(wh_id_raw) if wh_id_raw is not None else None),
+        webhook_url=d.get("webhook_url"),
     )
 
 
@@ -509,8 +512,9 @@ class SQLiteStateStore:
                     INSERT INTO repo_configs (
                         id, full_name, vcs_provider, vcs_token_ref,
                         webhook_secret_ref, llm_provider_override,
-                        enabled, created_at, updated_at, last_seen_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        enabled, created_at, updated_at, last_seen_at,
+                        webhook_id, webhook_url
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ON CONFLICT(full_name) DO UPDATE SET
                         vcs_provider=excluded.vcs_provider,
                         vcs_token_ref=excluded.vcs_token_ref,
@@ -518,7 +522,9 @@ class SQLiteStateStore:
                         llm_provider_override=excluded.llm_provider_override,
                         enabled=excluded.enabled,
                         updated_at=excluded.updated_at,
-                        last_seen_at=COALESCE(excluded.last_seen_at, repo_configs.last_seen_at)
+                        last_seen_at=COALESCE(excluded.last_seen_at, repo_configs.last_seen_at),
+                        webhook_id=COALESCE(excluded.webhook_id, repo_configs.webhook_id),
+                        webhook_url=COALESCE(excluded.webhook_url, repo_configs.webhook_url)
                     """,
                     (
                         repo.id,
@@ -531,6 +537,8 @@ class SQLiteStateStore:
                         _fmt_dt(repo.created_at),
                         _fmt_dt(repo.updated_at),
                         _fmt_dt(repo.last_seen_at),
+                        repo.webhook_id,
+                        repo.webhook_url,
                     ),
                 )
                 await db.commit()
@@ -567,6 +575,34 @@ class SQLiteStateStore:
             await db.execute(
                 "UPDATE repo_configs SET last_seen_at=? WHERE full_name=?",
                 (now_iso, full_name),
+            )
+            await db.commit()
+
+    async def set_repo_webhook(
+        self, repo_id: str, *, webhook_id: int, webhook_url: str
+    ) -> None:
+        now_iso = datetime.utcnow().isoformat()
+        async with aiosqlite.connect(self._db_path) as db:
+            await db.execute(
+                """
+                UPDATE repo_configs
+                   SET webhook_id=?, webhook_url=?, updated_at=?
+                 WHERE id=?
+                """,
+                (int(webhook_id), webhook_url, now_iso, repo_id),
+            )
+            await db.commit()
+
+    async def clear_repo_webhook(self, repo_id: str) -> None:
+        now_iso = datetime.utcnow().isoformat()
+        async with aiosqlite.connect(self._db_path) as db:
+            await db.execute(
+                """
+                UPDATE repo_configs
+                   SET webhook_id=NULL, webhook_url=NULL, updated_at=?
+                 WHERE id=?
+                """,
+                (now_iso, repo_id),
             )
             await db.commit()
 

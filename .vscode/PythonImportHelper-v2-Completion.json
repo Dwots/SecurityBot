@@ -528,38 +528,92 @@
         "documentation": {}
     },
     {
-        "label": "hashlib",
-        "kind": 6,
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
         "isExtraImport": true,
-        "importPath": "hashlib",
-        "description": "hashlib",
-        "detail": "hashlib",
+        "detail": "__future__",
         "documentation": {}
     },
     {
-        "label": "logging",
-        "kind": 6,
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
         "isExtraImport": true,
-        "importPath": "logging",
-        "description": "logging",
-        "detail": "logging",
+        "detail": "__future__",
         "documentation": {}
     },
     {
-        "label": "re",
-        "kind": 6,
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
         "isExtraImport": true,
-        "importPath": "re",
-        "description": "re",
-        "detail": "re",
+        "detail": "__future__",
         "documentation": {}
     },
     {
-        "label": "Counter",
-        "importPath": "collections",
-        "description": "collections",
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
         "isExtraImport": true,
-        "detail": "collections",
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "sqlite3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Iterable",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
         "documentation": {}
     },
     {
@@ -748,6 +802,22 @@
     },
     {
         "label": "Sequence",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -1187,6 +1257,59 @@
         "documentation": {}
     },
     {
+        "label": "html",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "html",
+        "description": "html",
+        "detail": "html",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "hashlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "hashlib",
+        "description": "hashlib",
+        "detail": "hashlib",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "Counter",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
         "label": "Finding",
         "importPath": "sunsec.contracts",
         "description": "sunsec.contracts",
@@ -1371,7 +1494,23 @@
         "documentation": {}
     },
     {
+        "label": "GitHubIssueCommentEvent",
+        "importPath": "sunsec.contracts",
+        "description": "sunsec.contracts",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts",
+        "documentation": {}
+    },
+    {
         "label": "GitHubPullRequestEvent",
+        "importPath": "sunsec.contracts",
+        "description": "sunsec.contracts",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts",
+        "documentation": {}
+    },
+    {
+        "label": "GitHubPullRequestReviewCommentEvent",
         "importPath": "sunsec.contracts",
         "description": "sunsec.contracts",
         "isExtraImport": true,
@@ -1523,7 +1662,23 @@
         "documentation": {}
     },
     {
+        "label": "GitHubIssueCommentEvent",
+        "importPath": "sunsec.contracts",
+        "description": "sunsec.contracts",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts",
+        "documentation": {}
+    },
+    {
         "label": "GitHubPullRequestEvent",
+        "importPath": "sunsec.contracts",
+        "description": "sunsec.contracts",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts",
+        "documentation": {}
+    },
+    {
+        "label": "GitHubPullRequestReviewCommentEvent",
         "importPath": "sunsec.contracts",
         "description": "sunsec.contracts",
         "isExtraImport": true,
@@ -1907,6 +2062,14 @@
         "documentation": {}
     },
     {
+        "label": "PostedComment",
+        "importPath": "sunsec.contracts",
+        "description": "sunsec.contracts",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts",
+        "documentation": {}
+    },
+    {
         "label": "GitHubPullRequestEvent",
         "importPath": "sunsec.contracts",
         "description": "sunsec.contracts",
@@ -2064,15 +2227,6 @@
         "description": "sunsec.vcs.base",
         "isExtraImport": true,
         "detail": "sunsec.vcs.base",
-        "documentation": {}
-    },
-    {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
         "documentation": {}
     },
     {
@@ -2412,6 +2566,22 @@
         "documentation": {}
     },
     {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigDict",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
         "label": "ValidationError",
         "importPath": "pydantic",
         "description": "pydantic",
@@ -2653,6 +2823,22 @@
     },
     {
         "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -2983,6 +3169,46 @@
         "documentation": {}
     },
     {
+        "label": "LLMParseError",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "LLMProviderUnavailable",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "LLMTimeout",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "TokenUsage",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
+        "label": "BudgetExceeded",
+        "importPath": "sunsec.llm.base",
+        "description": "sunsec.llm.base",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.base",
+        "documentation": {}
+    },
+    {
         "label": "LLMProviderUnavailable",
         "importPath": "sunsec.llm.base",
         "description": "sunsec.llm.base",
@@ -3265,11 +3491,11 @@
         "documentation": {}
     },
     {
-        "label": "PromptBuilder",
-        "importPath": "sunsec.llm.prompt_builder",
-        "description": "sunsec.llm.prompt_builder",
+        "label": "BudgetCounter",
+        "importPath": "sunsec.llm.budget",
+        "description": "sunsec.llm.budget",
         "isExtraImport": true,
-        "detail": "sunsec.llm.prompt_builder",
+        "detail": "sunsec.llm.budget",
         "documentation": {}
     },
     {
@@ -3302,6 +3528,54 @@
         "description": "sunsec.llm.prompt_builder",
         "isExtraImport": true,
         "detail": "sunsec.llm.prompt_builder",
+        "documentation": {}
+    },
+    {
+        "label": "PromptBuilder",
+        "importPath": "sunsec.llm.prompt_builder",
+        "description": "sunsec.llm.prompt_builder",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.prompt_builder",
+        "documentation": {}
+    },
+    {
+        "label": "EMPTY_SUMMARY",
+        "importPath": "sunsec.llm.prompts",
+        "description": "sunsec.llm.prompts",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "PROMPT_VERSION",
+        "importPath": "sunsec.llm.prompts",
+        "description": "sunsec.llm.prompts",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "SYSTEM_PROMPT_V1",
+        "importPath": "sunsec.llm.prompts",
+        "description": "sunsec.llm.prompts",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "REPLY_PROMPT_VERSION",
+        "importPath": "sunsec.llm.prompts",
+        "description": "sunsec.llm.prompts",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "REPLY_SYSTEM_PROMPT_V1",
+        "importPath": "sunsec.llm.prompts",
+        "description": "sunsec.llm.prompts",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.prompts",
         "documentation": {}
     },
     {
@@ -3326,22 +3600,6 @@
         "description": "sunsec.contracts.llm_response",
         "isExtraImport": true,
         "detail": "sunsec.contracts.llm_response",
-        "documentation": {}
-    },
-    {
-        "label": "PROMPT_VERSION",
-        "importPath": "sunsec.llm.prompts",
-        "description": "sunsec.llm.prompts",
-        "isExtraImport": true,
-        "detail": "sunsec.llm.prompts",
-        "documentation": {}
-    },
-    {
-        "label": "SYSTEM_PROMPT_V1",
-        "importPath": "sunsec.llm.prompts",
-        "description": "sunsec.llm.prompts",
-        "isExtraImport": true,
-        "detail": "sunsec.llm.prompts",
         "documentation": {}
     },
     {
@@ -3564,6 +3822,22 @@
         "documentation": {}
     },
     {
+        "label": "ChatTurn",
+        "importPath": "sunsec.llm.reply_client",
+        "description": "sunsec.llm.reply_client",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.reply_client",
+        "documentation": {}
+    },
+    {
+        "label": "ReplyClient",
+        "importPath": "sunsec.llm.reply_client",
+        "description": "sunsec.llm.reply_client",
+        "isExtraImport": true,
+        "detail": "sunsec.llm.reply_client",
+        "documentation": {}
+    },
+    {
         "label": "StateStore",
         "importPath": "sunsec.state.base",
         "description": "sunsec.state.base",
@@ -3607,6 +3881,14 @@
         "documentation": {}
     },
     {
+        "label": "ADDITIVE_MIGRATIONS",
+        "importPath": "sunsec.storage.schema",
+        "description": "sunsec.storage.schema",
+        "isExtraImport": true,
+        "detail": "sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
         "label": "ALL_DDL_STATEMENTS",
         "importPath": "sunsec.storage.schema",
         "description": "sunsec.storage.schema",
@@ -3620,6 +3902,14 @@
         "description": "sunsec.storage.schema",
         "isExtraImport": true,
         "detail": "sunsec.storage.schema",
+        "documentation": {}
+    },
+    {
+        "label": "InMemoryStateStore",
+        "importPath": "sunsec.state.memory",
+        "description": "sunsec.state.memory",
+        "isExtraImport": true,
+        "detail": "sunsec.state.memory",
         "documentation": {}
     },
     {
@@ -3856,6 +4146,30 @@
         "documentation": {}
     },
     {
+        "label": "TunnelOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "WebhookInstallIn",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "WebhookInstallOut",
+        "importPath": "sunsec.contracts.console",
+        "description": "sunsec.contracts.console",
+        "isExtraImport": true,
+        "detail": "sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
         "label": "FileIn",
         "importPath": "sunsec.ui.synthetic",
         "description": "sunsec.ui.synthetic",
@@ -3963,6 +4277,14 @@
         "documentation": {}
     },
     {
+        "label": "EnqueueReply",
+        "importPath": "sunsec.webhook.service",
+        "description": "sunsec.webhook.service",
+        "isExtraImport": true,
+        "detail": "sunsec.webhook.service",
+        "documentation": {}
+    },
+    {
         "label": "Ignored",
         "importPath": "sunsec.webhook.service",
         "description": "sunsec.webhook.service",
@@ -3996,6 +4318,38 @@
     },
     {
         "label": "WebhookService",
+        "importPath": "sunsec.webhook.service",
+        "description": "sunsec.webhook.service",
+        "isExtraImport": true,
+        "detail": "sunsec.webhook.service",
+        "documentation": {}
+    },
+    {
+        "label": "WebhookService",
+        "importPath": "sunsec.webhook.service",
+        "description": "sunsec.webhook.service",
+        "isExtraImport": true,
+        "detail": "sunsec.webhook.service",
+        "documentation": {}
+    },
+    {
+        "label": "AlreadyProcessed",
+        "importPath": "sunsec.webhook.service",
+        "description": "sunsec.webhook.service",
+        "isExtraImport": true,
+        "detail": "sunsec.webhook.service",
+        "documentation": {}
+    },
+    {
+        "label": "EnqueueReply",
+        "importPath": "sunsec.webhook.service",
+        "description": "sunsec.webhook.service",
+        "isExtraImport": true,
+        "detail": "sunsec.webhook.service",
+        "documentation": {}
+    },
+    {
+        "label": "Ignored",
         "importPath": "sunsec.webhook.service",
         "description": "sunsec.webhook.service",
         "isExtraImport": true,
@@ -4307,6 +4661,14 @@
         "documentation": {}
     },
     {
+        "label": "build_reply_client_from_settings",
+        "importPath": "sunsec.llm",
+        "description": "sunsec.llm",
+        "isExtraImport": true,
+        "detail": "sunsec.llm",
+        "documentation": {}
+    },
+    {
         "label": "build_llm_client_from_settings",
         "importPath": "sunsec.llm",
         "description": "sunsec.llm",
@@ -4531,12 +4893,11 @@
         "documentation": {}
     },
     {
-        "label": "sqlite3",
-        "kind": 6,
+        "label": "GitHubAdapter",
+        "importPath": "sunsec.vcs.github",
+        "description": "sunsec.vcs.github",
         "isExtraImport": true,
-        "importPath": "sqlite3",
-        "description": "sqlite3",
-        "detail": "sqlite3",
+        "detail": "sunsec.vcs.github",
         "documentation": {}
     },
     {
@@ -5160,6 +5521,204 @@
         "documentation": {}
     },
     {
+        "label": "charge_customer",
+        "kind": 2,
+        "importPath": "demo.scenarios.00_rehearsal.app.checkout",
+        "description": "demo.scenarios.00_rehearsal.app.checkout",
+        "peekOfCode": "def charge_customer(\n    conn: sqlite3.Connection,\n    customer_id: str,\n    amount_rub: float,\n) -> Optional[tuple]:\n    \"\"\"Списать `amount_rub` со счёта клиента и записать платеж в БД.\n    Уязвимость #2 — SQL-инъекция через f-string. И `customer_id`, и\n    `amount_rub` приходят из HTTP-запроса без санитизации; атакующий\n    может закрыть кавычку и подмешать произвольный SQL (вплоть до\n    `DROP TABLE payments`).",
+        "detail": "demo.scenarios.00_rehearsal.app.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "STRIPE_LIVE_KEY",
+        "kind": 5,
+        "importPath": "demo.scenarios.00_rehearsal.app.checkout",
+        "description": "demo.scenarios.00_rehearsal.app.checkout",
+        "peekOfCode": "STRIPE_LIVE_KEY = \"sk_live_REHEARSALdemoREHEARSALdemo01XY\"\ndef charge_customer(\n    conn: sqlite3.Connection,\n    customer_id: str,\n    amount_rub: float,\n) -> Optional[tuple]:\n    \"\"\"Списать `amount_rub` со счёта клиента и записать платеж в БД.\n    Уязвимость #2 — SQL-инъекция через f-string. И `customer_id`, и\n    `amount_rub` приходят из HTTP-запроса без санитизации; атакующий\n    может закрыть кавычку и подмешать произвольный SQL (вплоть до",
+        "detail": "demo.scenarios.00_rehearsal.app.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "kind": 2,
+        "importPath": "demo.scenarios.01_sqli_login.app.auth_v2",
+        "description": "demo.scenarios.01_sqli_login.app.auth_v2",
+        "peekOfCode": "def authenticate(conn: sqlite3.Connection, email: str, password: str) -> Optional[tuple]:\n    \"\"\"Логин по email/паролю.\n    Уязвимость #1: SQL-инъекция через f-string. Атакующий может ввести\n    `' OR '1'='1` в поле email и обойти проверку пароля (классический\n    auth-bypass).\n    \"\"\"\n    sql = (\n        f\"SELECT id, role FROM users \"\n        f\"WHERE email = '{email}' AND password_hash = '{password}'\"\n    )",
+        "detail": "demo.scenarios.01_sqli_login.app.auth_v2",
+        "documentation": {}
+    },
+    {
+        "label": "find_user_by_name",
+        "kind": 2,
+        "importPath": "demo.scenarios.01_sqli_login.app.auth_v2",
+        "description": "demo.scenarios.01_sqli_login.app.auth_v2",
+        "peekOfCode": "def find_user_by_name(conn: sqlite3.Connection, name: str) -> list[tuple]:\n    \"\"\"Поиск пользователей по имени (autocomplete).\n    Уязвимость #2: SQL-инъекция через `.format()` в LIKE-условии.\n    Атакующий может закрыть кавычку и подмешать UNION SELECT.\n    \"\"\"\n    sql = \"SELECT id, email FROM users WHERE name LIKE '%{n}%' LIMIT 50\".format(n=name)\n    return conn.execute(sql).fetchall()\ndef delete_session(conn: sqlite3.Connection, session_id: str) -> None:\n    \"\"\"Удаление сессии из таблицы sessions.\n    Уязвимость #3: SQL-инъекция через %-форматирование. Атакующий может",
+        "detail": "demo.scenarios.01_sqli_login.app.auth_v2",
+        "documentation": {}
+    },
+    {
+        "label": "delete_session",
+        "kind": 2,
+        "importPath": "demo.scenarios.01_sqli_login.app.auth_v2",
+        "description": "demo.scenarios.01_sqli_login.app.auth_v2",
+        "peekOfCode": "def delete_session(conn: sqlite3.Connection, session_id: str) -> None:\n    \"\"\"Удаление сессии из таблицы sessions.\n    Уязвимость #3: SQL-инъекция через %-форматирование. Атакующий может\n    добавить `; DROP TABLE users; --` и снести таблицу.\n    \"\"\"\n    sql = \"DELETE FROM sessions WHERE id = '%s'\" % session_id\n    conn.execute(sql)\n    conn.commit()",
+        "detail": "demo.scenarios.01_sqli_login.app.auth_v2",
+        "documentation": {}
+    },
+    {
+        "label": "AWS_ACCESS_KEY_ID",
+        "kind": 5,
+        "importPath": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "description": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "peekOfCode": "AWS_ACCESS_KEY_ID = \"AKIAQ7DEMOX9DEMOX9D2\"\nAWS_SECRET_ACCESS_KEY = \"dEmoFakEsEcREt40CharsWithEntropy+xy/abcDEF12\"\n# Уязвимость #2: Stripe live mode (pre-scan: stripe_secret)\nSTRIPE_SECRET_KEY = \"sk_live_DEMOdemoDEMOdemoDEMOdemo01XY\"\n# Уязвимость #3: GitHub Personal Access Token (pre-scan: github_pat)\nGITHUB_TOKEN = \"ghp_DEMO9876DEMO9876DEMO9876DEMO9876DE12\"\n# Уязвимость #4: OpenAI key (pre-scan via prefix `sk-`)\nOPENAI_API_KEY = \"sk-demo9876demo9876demo9876demo9876demo98T3BlbkFJ\"\n# Уязвимость #5: Multi-line JWT — ловит LLM, не pre-scan\nSERVICE_JWT = (",
+        "detail": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "documentation": {}
+    },
+    {
+        "label": "AWS_SECRET_ACCESS_KEY",
+        "kind": 5,
+        "importPath": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "description": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "peekOfCode": "AWS_SECRET_ACCESS_KEY = \"dEmoFakEsEcREt40CharsWithEntropy+xy/abcDEF12\"\n# Уязвимость #2: Stripe live mode (pre-scan: stripe_secret)\nSTRIPE_SECRET_KEY = \"sk_live_DEMOdemoDEMOdemoDEMOdemo01XY\"\n# Уязвимость #3: GitHub Personal Access Token (pre-scan: github_pat)\nGITHUB_TOKEN = \"ghp_DEMO9876DEMO9876DEMO9876DEMO9876DE12\"\n# Уязвимость #4: OpenAI key (pre-scan via prefix `sk-`)\nOPENAI_API_KEY = \"sk-demo9876demo9876demo9876demo9876demo98T3BlbkFJ\"\n# Уязвимость #5: Multi-line JWT — ловит LLM, не pre-scan\nSERVICE_JWT = (\n    \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+        "detail": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "documentation": {}
+    },
+    {
+        "label": "STRIPE_SECRET_KEY",
+        "kind": 5,
+        "importPath": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "description": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "peekOfCode": "STRIPE_SECRET_KEY = \"sk_live_DEMOdemoDEMOdemoDEMOdemo01XY\"\n# Уязвимость #3: GitHub Personal Access Token (pre-scan: github_pat)\nGITHUB_TOKEN = \"ghp_DEMO9876DEMO9876DEMO9876DEMO9876DE12\"\n# Уязвимость #4: OpenAI key (pre-scan via prefix `sk-`)\nOPENAI_API_KEY = \"sk-demo9876demo9876demo9876demo9876demo98T3BlbkFJ\"\n# Уязвимость #5: Multi-line JWT — ловит LLM, не pre-scan\nSERVICE_JWT = (\n    \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"\n    \".eyJzdWIiOiJzZXJ2aWNlLWRlbW8iLCJpYXQiOjE3MDAwMDAwMDB9\"\n    \".synthetic-demo-signature-DO-NOT-USE-IN-PROD\"",
+        "detail": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "documentation": {}
+    },
+    {
+        "label": "GITHUB_TOKEN",
+        "kind": 5,
+        "importPath": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "description": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "peekOfCode": "GITHUB_TOKEN = \"ghp_DEMO9876DEMO9876DEMO9876DEMO9876DE12\"\n# Уязвимость #4: OpenAI key (pre-scan via prefix `sk-`)\nOPENAI_API_KEY = \"sk-demo9876demo9876demo9876demo9876demo98T3BlbkFJ\"\n# Уязвимость #5: Multi-line JWT — ловит LLM, не pre-scan\nSERVICE_JWT = (\n    \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"\n    \".eyJzdWIiOiJzZXJ2aWNlLWRlbW8iLCJpYXQiOjE3MDAwMDAwMDB9\"\n    \".synthetic-demo-signature-DO-NOT-USE-IN-PROD\"\n)\n# Уязвимость #6: connection string с inline-паролем",
+        "detail": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "documentation": {}
+    },
+    {
+        "label": "OPENAI_API_KEY",
+        "kind": 5,
+        "importPath": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "description": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "peekOfCode": "OPENAI_API_KEY = \"sk-demo9876demo9876demo9876demo9876demo98T3BlbkFJ\"\n# Уязвимость #5: Multi-line JWT — ловит LLM, не pre-scan\nSERVICE_JWT = (\n    \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"\n    \".eyJzdWIiOiJzZXJ2aWNlLWRlbW8iLCJpYXQiOjE3MDAwMDAwMDB9\"\n    \".synthetic-demo-signature-DO-NOT-USE-IN-PROD\"\n)\n# Уязвимость #6: connection string с inline-паролем\nDATABASE_URL = \"postgresql://app_user:r3aL_pAssw0rd_d3mo@db.internal.prod.example:5432/payments\"",
+        "detail": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "documentation": {}
+    },
+    {
+        "label": "SERVICE_JWT",
+        "kind": 5,
+        "importPath": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "description": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "peekOfCode": "SERVICE_JWT = (\n    \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"\n    \".eyJzdWIiOiJzZXJ2aWNlLWRlbW8iLCJpYXQiOjE3MDAwMDAwMDB9\"\n    \".synthetic-demo-signature-DO-NOT-USE-IN-PROD\"\n)\n# Уязвимость #6: connection string с inline-паролем\nDATABASE_URL = \"postgresql://app_user:r3aL_pAssw0rd_d3mo@db.internal.prod.example:5432/payments\"",
+        "detail": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "kind": 5,
+        "importPath": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "description": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "peekOfCode": "DATABASE_URL = \"postgresql://app_user:r3aL_pAssw0rd_d3mo@db.internal.prod.example:5432/payments\"",
+        "detail": "demo.scenarios.02_hardcoded_keys.config.credentials_v2",
+        "documentation": {}
+    },
+    {
+        "label": "get_db_url",
+        "kind": 2,
+        "importPath": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "description": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "peekOfCode": "def get_db_url() -> str:\n    \"\"\"Безопасный геттер: секрет — в env, в коде только имя переменной.\"\"\"\n    return os.environ.get(\"DATABASE_URL\", \"sqlite:///app.db\")\ndef get_stripe_key() -> str | None:\n    \"\"\"Безопасно: ключ читается из env, дефолт — None (а не литерал).\"\"\"\n    return os.getenv(\"STRIPE_SECRET_KEY\")\ndef find_active_users(\n    conn: sqlite3.Connection,\n    role: str,\n    limit: int = 100,",
+        "detail": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "documentation": {}
+    },
+    {
+        "label": "get_stripe_key",
+        "kind": 2,
+        "importPath": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "description": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "peekOfCode": "def get_stripe_key() -> str | None:\n    \"\"\"Безопасно: ключ читается из env, дефолт — None (а не литерал).\"\"\"\n    return os.getenv(\"STRIPE_SECRET_KEY\")\ndef find_active_users(\n    conn: sqlite3.Connection,\n    role: str,\n    limit: int = 100,\n) -> list[tuple]:\n    \"\"\"Параметризованный SQL — нет SQL-инъекции.\"\"\"\n    return conn.execute(",
+        "detail": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "documentation": {}
+    },
+    {
+        "label": "find_active_users",
+        "kind": 2,
+        "importPath": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "description": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "peekOfCode": "def find_active_users(\n    conn: sqlite3.Connection,\n    role: str,\n    limit: int = 100,\n) -> list[tuple]:\n    \"\"\"Параметризованный SQL — нет SQL-инъекции.\"\"\"\n    return conn.execute(\n        \"SELECT id, email FROM users WHERE role = ? AND active = 1 LIMIT ?\",\n        (role, int(limit)),\n    ).fetchall()",
+        "detail": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "documentation": {}
+    },
+    {
+        "label": "sanitize_for_html",
+        "kind": 2,
+        "importPath": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "description": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "peekOfCode": "def sanitize_for_html(s: str) -> str:\n    \"\"\"Эскейпинг через stdlib — XSS невозможен.\"\"\"\n    return html.escape(s, quote=True)\ndef bulk_insert_events(\n    conn: sqlite3.Connection,\n    events: Iterable[tuple[str, str, float]],\n) -> int:\n    \"\"\"executemany с placeholder'ами — каждая запись параметризована.\"\"\"\n    cur = conn.executemany(\n        \"INSERT INTO events (kind, payload, ts) VALUES (?, ?, ?)\",",
+        "detail": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "documentation": {}
+    },
+    {
+        "label": "bulk_insert_events",
+        "kind": 2,
+        "importPath": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "description": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "peekOfCode": "def bulk_insert_events(\n    conn: sqlite3.Connection,\n    events: Iterable[tuple[str, str, float]],\n) -> int:\n    \"\"\"executemany с placeholder'ами — каждая запись параметризована.\"\"\"\n    cur = conn.executemany(\n        \"INSERT INTO events (kind, payload, ts) VALUES (?, ?, ?)\",\n        list(events),\n    )\n    conn.commit()",
+        "detail": "demo.scenarios.04_clean_baseline.app.utils_safe",
+        "documentation": {}
+    },
+    {
+        "label": "process_refund",
+        "kind": 2,
+        "importPath": "demo.scenarios.05_mixed_pr.app.payments_v2",
+        "description": "demo.scenarios.05_mixed_pr.app.payments_v2",
+        "peekOfCode": "def process_refund(\n    conn: sqlite3.Connection,\n    payment_id: str,\n    reason: str,\n) -> None:\n    \"\"\"Помечает платёж как возвращённый и сохраняет причину возврата.\n    Уязвимость #2: SQL-инъекция через f-string. И `payment_id`, и\n    `reason` приходят из HTTP-запроса без санитизации, атакующий может\n    добавить произвольный SQL.\n    \"\"\"",
+        "detail": "demo.scenarios.05_mixed_pr.app.payments_v2",
+        "documentation": {}
+    },
+    {
+        "label": "find_payment",
+        "kind": 2,
+        "importPath": "demo.scenarios.05_mixed_pr.app.payments_v2",
+        "description": "demo.scenarios.05_mixed_pr.app.payments_v2",
+        "peekOfCode": "def find_payment(conn: sqlite3.Connection, query: str) -> Optional[tuple]:\n    \"\"\"Поиск платежа по part-of-id (для админки).\n    Уязвимость #3: SQL-инъекция через f-string в LIKE.\n    \"\"\"\n    return conn.execute(\n        f\"SELECT id, amount FROM payments WHERE id LIKE '%{query}%'\"\n    ).fetchone()",
+        "detail": "demo.scenarios.05_mixed_pr.app.payments_v2",
+        "documentation": {}
+    },
+    {
+        "label": "STRIPE_LIVE_KEY",
+        "kind": 5,
+        "importPath": "demo.scenarios.05_mixed_pr.app.payments_v2",
+        "description": "demo.scenarios.05_mixed_pr.app.payments_v2",
+        "peekOfCode": "STRIPE_LIVE_KEY = \"sk_live_MixedDEMOmixedDEMOmixed1234AB\"\ndef process_refund(\n    conn: sqlite3.Connection,\n    payment_id: str,\n    reason: str,\n) -> None:\n    \"\"\"Помечает платёж как возвращённый и сохраняет причину возврата.\n    Уязвимость #2: SQL-инъекция через f-string. И `payment_id`, и\n    `reason` приходят из HTTP-запроса без санитизации, атакующий может\n    добавить произвольный SQL.",
+        "detail": "demo.scenarios.05_mixed_pr.app.payments_v2",
+        "documentation": {}
+    },
+    {
+        "label": "SENTRY_DSN",
+        "kind": 5,
+        "importPath": "demo.scenarios.05_mixed_pr.config.billing_keys",
+        "description": "demo.scenarios.05_mixed_pr.config.billing_keys",
+        "peekOfCode": "SENTRY_DSN = \"https://demo_key:s3ntry_pw_d3mo_x9z@sentry.io/9876543\"\n# Уязвимость #5: GitHub PAT в виде литерала\nRELEASE_BOT_TOKEN = \"ghp_RELEASEdemoDEMOdemoDEMOdemoDEMO1234\"",
+        "detail": "demo.scenarios.05_mixed_pr.config.billing_keys",
+        "documentation": {}
+    },
+    {
+        "label": "RELEASE_BOT_TOKEN",
+        "kind": 5,
+        "importPath": "demo.scenarios.05_mixed_pr.config.billing_keys",
+        "description": "demo.scenarios.05_mixed_pr.config.billing_keys",
+        "peekOfCode": "RELEASE_BOT_TOKEN = \"ghp_RELEASEdemoDEMOdemoDEMOdemoDEMO1234\"",
+        "detail": "demo.scenarios.05_mixed_pr.config.billing_keys",
+        "documentation": {}
+    },
+    {
         "label": "_InvalidLineError",
         "kind": 6,
         "importPath": "src.sunsec.comments.publisher",
@@ -5502,6 +6061,33 @@
         "documentation": {}
     },
     {
+        "label": "TunnelOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class TunnelOut(_ConsoleBase):\n    \"\"\"`GET /api/console/tunnel` — статус публичного туннеля.\n    Используется UI для авто-подстановки Payload URL при установке\n    webhook. Источник — либо `Settings.public_base_url` (если задан),\n    либо ngrok admin API.\n    \"\"\"\n    running: bool = False\n    public_url: Optional[str] = None\n    source: Optional[str] = None  # 'config' | 'ngrok' | None\n    error: Optional[str] = None",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "WebhookInstallIn",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class WebhookInstallIn(_ConsoleBase):\n    \"\"\"`POST /api/console/repos/{id}/webhook` — body.\"\"\"\n    # Если не передано, сервер возьмёт текущий туннель (config / ngrok).\n    public_url: Optional[str] = None\nclass WebhookInstallOut(_ConsoleBase):\n    \"\"\"`POST /api/console/repos/{id}/webhook` — response.\"\"\"\n    webhook_id: int\n    webhook_url: str\n__all__ = [\n    \"BudgetOut\",",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
+        "label": "WebhookInstallOut",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.console",
+        "description": "src.sunsec.contracts.console",
+        "peekOfCode": "class WebhookInstallOut(_ConsoleBase):\n    \"\"\"`POST /api/console/repos/{id}/webhook` — response.\"\"\"\n    webhook_id: int\n    webhook_url: str\n__all__ = [\n    \"BudgetOut\",\n    \"SettingsOut\",\n    \"SeverityCountsOut\",\n    \"CheckSummaryOut\",\n    \"TimelineEntryOut\",",
+        "detail": "src.sunsec.contracts.console",
+        "documentation": {}
+    },
+    {
         "label": "__all__",
         "kind": 5,
         "importPath": "src.sunsec.contracts.console",
@@ -5642,6 +6228,60 @@
         "importPath": "src.sunsec.contracts.events",
         "description": "src.sunsec.contracts.events",
         "peekOfCode": "class GitHubPullRequestEvent(BaseModel):\n    \"\"\"Вход WebhookReceiver. См. system_design §4.1 + ADR-5.\n    Pipeline-код обращается ИСКЛЮЧИТЕЛЬНО к computed-полям `repo`, `pr_number`,\n    `head_sha`. Прямое чтение `event.repository.full_name` — антипаттерн.\n    \"\"\"\n    model_config = ConfigDict(extra=\"allow\")\n    action: Literal[\"opened\", \"synchronize\", \"reopened\", \"ready_for_review\"]\n    number: int\n    pull_request: PullRequestPayload\n    repository: RepositoryPayload",
+        "detail": "src.sunsec.contracts.events",
+        "documentation": {}
+    },
+    {
+        "label": "IssuePullRequestRef",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.events",
+        "description": "src.sunsec.contracts.events",
+        "peekOfCode": "class IssuePullRequestRef(BaseModel):\n    \"\"\"Под-объект `issue.pull_request` (его наличие = issue это PR-issue).\n    Минимально нужен `url` — но мы держим `extra=allow`, чтобы GitHub мог\n    добавлять поля без поломки парсинга.\n    \"\"\"\n    model_config = ConfigDict(extra=\"allow\")\n    url: str\nclass IssueRefPayload(BaseModel):\n    \"\"\"Объект `issue` в `issue_comment` событиях.\"\"\"\n    model_config = ConfigDict(extra=\"allow\")",
+        "detail": "src.sunsec.contracts.events",
+        "documentation": {}
+    },
+    {
+        "label": "IssueRefPayload",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.events",
+        "description": "src.sunsec.contracts.events",
+        "peekOfCode": "class IssueRefPayload(BaseModel):\n    \"\"\"Объект `issue` в `issue_comment` событиях.\"\"\"\n    model_config = ConfigDict(extra=\"allow\")\n    number: int\n    pull_request: Optional[IssuePullRequestRef] = None\nclass IssueCommentPayload(BaseModel):\n    \"\"\"Тело комментария в `issue_comment` событии.\"\"\"\n    model_config = ConfigDict(extra=\"allow\")\n    id: int\n    body: str",
+        "detail": "src.sunsec.contracts.events",
+        "documentation": {}
+    },
+    {
+        "label": "IssueCommentPayload",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.events",
+        "description": "src.sunsec.contracts.events",
+        "peekOfCode": "class IssueCommentPayload(BaseModel):\n    \"\"\"Тело комментария в `issue_comment` событии.\"\"\"\n    model_config = ConfigDict(extra=\"allow\")\n    id: int\n    body: str\n    user: UserPayload\nclass GitHubIssueCommentEvent(BaseModel):\n    \"\"\"`issue_comment` webhook (GitHub шлёт его и для обычных issues, и для PR).\n    Триггер reply-режима: только если `is_pull_request == True` И в теле\n    комментария есть `@<BOT_USERNAME>`. Сам фильтр живёт в `WebhookService`.",
+        "detail": "src.sunsec.contracts.events",
+        "documentation": {}
+    },
+    {
+        "label": "GitHubIssueCommentEvent",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.events",
+        "description": "src.sunsec.contracts.events",
+        "peekOfCode": "class GitHubIssueCommentEvent(BaseModel):\n    \"\"\"`issue_comment` webhook (GitHub шлёт его и для обычных issues, и для PR).\n    Триггер reply-режима: только если `is_pull_request == True` И в теле\n    комментария есть `@<BOT_USERNAME>`. Сам фильтр живёт в `WebhookService`.\n    \"\"\"\n    model_config = ConfigDict(extra=\"allow\")\n    action: Literal[\"created\", \"edited\", \"deleted\"]\n    issue: IssueRefPayload\n    comment: IssueCommentPayload\n    repository: RepositoryPayload",
+        "detail": "src.sunsec.contracts.events",
+        "documentation": {}
+    },
+    {
+        "label": "ReviewCommentPayload",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.events",
+        "description": "src.sunsec.contracts.events",
+        "peekOfCode": "class ReviewCommentPayload(BaseModel):\n    \"\"\"Тело комментария в `pull_request_review_comment` событии.\n    Поля threading'а — `in_reply_to_id` (на чей комментарий это ответ) и\n    `pull_request_review_id` (к какому review относится).\n    \"\"\"\n    model_config = ConfigDict(extra=\"allow\")\n    id: int\n    body: str\n    path: str\n    user: UserPayload",
+        "detail": "src.sunsec.contracts.events",
+        "documentation": {}
+    },
+    {
+        "label": "GitHubPullRequestReviewCommentEvent",
+        "kind": 6,
+        "importPath": "src.sunsec.contracts.events",
+        "description": "src.sunsec.contracts.events",
+        "peekOfCode": "class GitHubPullRequestReviewCommentEvent(BaseModel):\n    \"\"\"`pull_request_review_comment` webhook — inline-комментарий в PR diff.\"\"\"\n    model_config = ConfigDict(extra=\"allow\")\n    action: Literal[\"created\", \"edited\", \"deleted\"]\n    pull_request: PullRequestPayload\n    comment: ReviewCommentPayload\n    repository: RepositoryPayload\n    sender: UserPayload\n    @computed_field  # type: ignore[prop-decorator]\n    @property",
         "detail": "src.sunsec.contracts.events",
         "documentation": {}
     },
@@ -5988,6 +6628,60 @@
         "documentation": {}
     },
     {
+        "label": "ChatTurn",
+        "kind": 6,
+        "importPath": "src.sunsec.llm.reply_client",
+        "description": "src.sunsec.llm.reply_client",
+        "peekOfCode": "class ChatTurn(BaseModel):\n    \"\"\"Одно сообщение в треде диалога.\"\"\"\n    model_config = ConfigDict(extra=\"forbid\")\n    role: str  # \"user\" | \"assistant\" — system добавляет ReplyClient сам\n    content: str\nclass ReplyClient:\n    \"\"\"Доменный LLM-клиент для диалога в reply-режиме.\"\"\"\n    name: str = \"reply\"\n    def __init__(\n        self,",
+        "detail": "src.sunsec.llm.reply_client",
+        "documentation": {}
+    },
+    {
+        "label": "ReplyClient",
+        "kind": 6,
+        "importPath": "src.sunsec.llm.reply_client",
+        "description": "src.sunsec.llm.reply_client",
+        "peekOfCode": "class ReplyClient:\n    \"\"\"Доменный LLM-клиент для диалога в reply-режиме.\"\"\"\n    name: str = \"reply\"\n    def __init__(\n        self,\n        *,\n        api_key: str,\n        base_url: str,\n        model_id: str,\n        budget: Optional[BudgetCounter] = None,",
+        "detail": "src.sunsec.llm.reply_client",
+        "documentation": {}
+    },
+    {
+        "label": "log",
+        "kind": 5,
+        "importPath": "src.sunsec.llm.reply_client",
+        "description": "src.sunsec.llm.reply_client",
+        "peekOfCode": "log = logging.getLogger(__name__)\n_SAFE_OPENAI_ERROR_FIELDS = (\"status_code\", \"code\", \"message\", \"param\", \"type\")\n_RESERVED_LOGRECORD_FIELDS = {\"message\", \"asctime\", \"msg\", \"args\", \"name\", \"levelname\"}\ndef _safe_error_dict(exc: BaseException) -> dict[str, Any]:\n    out: dict[str, Any] = {\"error_class\": type(exc).__name__}\n    for field in _SAFE_OPENAI_ERROR_FIELDS:\n        val = getattr(exc, field, None)\n        if val is None:\n            continue\n        key = f\"error_{field}\" if field in _RESERVED_LOGRECORD_FIELDS else field",
+        "detail": "src.sunsec.llm.reply_client",
+        "documentation": {}
+    },
+    {
+        "label": "_SAFE_OPENAI_ERROR_FIELDS",
+        "kind": 5,
+        "importPath": "src.sunsec.llm.reply_client",
+        "description": "src.sunsec.llm.reply_client",
+        "peekOfCode": "_SAFE_OPENAI_ERROR_FIELDS = (\"status_code\", \"code\", \"message\", \"param\", \"type\")\n_RESERVED_LOGRECORD_FIELDS = {\"message\", \"asctime\", \"msg\", \"args\", \"name\", \"levelname\"}\ndef _safe_error_dict(exc: BaseException) -> dict[str, Any]:\n    out: dict[str, Any] = {\"error_class\": type(exc).__name__}\n    for field in _SAFE_OPENAI_ERROR_FIELDS:\n        val = getattr(exc, field, None)\n        if val is None:\n            continue\n        key = f\"error_{field}\" if field in _RESERVED_LOGRECORD_FIELDS else field\n        out[key] = val",
+        "detail": "src.sunsec.llm.reply_client",
+        "documentation": {}
+    },
+    {
+        "label": "_RESERVED_LOGRECORD_FIELDS",
+        "kind": 5,
+        "importPath": "src.sunsec.llm.reply_client",
+        "description": "src.sunsec.llm.reply_client",
+        "peekOfCode": "_RESERVED_LOGRECORD_FIELDS = {\"message\", \"asctime\", \"msg\", \"args\", \"name\", \"levelname\"}\ndef _safe_error_dict(exc: BaseException) -> dict[str, Any]:\n    out: dict[str, Any] = {\"error_class\": type(exc).__name__}\n    for field in _SAFE_OPENAI_ERROR_FIELDS:\n        val = getattr(exc, field, None)\n        if val is None:\n            continue\n        key = f\"error_{field}\" if field in _RESERVED_LOGRECORD_FIELDS else field\n        out[key] = val\n    return out",
+        "detail": "src.sunsec.llm.reply_client",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "src.sunsec.llm.reply_client",
+        "description": "src.sunsec.llm.reply_client",
+        "peekOfCode": "__all__ = [\"ReplyClient\", \"ChatTurn\"]",
+        "detail": "src.sunsec.llm.reply_client",
+        "documentation": {}
+    },
+    {
         "label": "redact_value",
         "kind": 2,
         "importPath": "src.sunsec.logging_ext.redaction",
@@ -6181,7 +6875,25 @@
         "kind": 5,
         "importPath": "src.sunsec.pipeline.orchestrator",
         "description": "src.sunsec.pipeline.orchestrator",
-        "peekOfCode": "log = logging.getLogger(__name__)\ndef _generate_check_id() -> str:\n    \"\"\"`chk_` + 5-байтный hex (system_design §11.3.1).\"\"\"\n    return f\"chk_{secrets.token_hex(5)}\"\ndef _generate_finding_id() -> str:\n    return f\"fnd_{secrets.token_hex(6)}\"\ndef _generate_comment_id() -> str:\n    return f\"cmt_{secrets.token_hex(6)}\"\ndef _severity_counts_from_findings(findings: list) -> dict[str, int]:\n    counts = {\"critical\": 0, \"high\": 0, \"medium\": 0, \"low\": 0, \"info\": 0}",
+        "peekOfCode": "log = logging.getLogger(__name__)\n# T-019: распознавание наших комментариев — единый префикс маркеров\n# `<!-- sunsec:bot:v1:... -->`. Используется в reply-режиме для\n# идемпотентности и self-detect parent-комментариев.\n_BOT_MARKER_TOKEN = \"sunsec:bot:v1:\"\n_BOT_MARKER_RE = re.compile(r\"<!--\\s*sunsec:bot:v1:[^>]*-->\", re.IGNORECASE)\ndef _strip_bot_markers(body: str) -> str:\n    \"\"\"Вырезает все HTML-маркеры бота из тела комментария.\"\"\"\n    return _BOT_MARKER_RE.sub(\"\", body or \"\").strip()\ndef _strip_mention(body: str, username: str) -> str:",
+        "detail": "src.sunsec.pipeline.orchestrator",
+        "documentation": {}
+    },
+    {
+        "label": "_BOT_MARKER_TOKEN",
+        "kind": 5,
+        "importPath": "src.sunsec.pipeline.orchestrator",
+        "description": "src.sunsec.pipeline.orchestrator",
+        "peekOfCode": "_BOT_MARKER_TOKEN = \"sunsec:bot:v1:\"\n_BOT_MARKER_RE = re.compile(r\"<!--\\s*sunsec:bot:v1:[^>]*-->\", re.IGNORECASE)\ndef _strip_bot_markers(body: str) -> str:\n    \"\"\"Вырезает все HTML-маркеры бота из тела комментария.\"\"\"\n    return _BOT_MARKER_RE.sub(\"\", body or \"\").strip()\ndef _strip_mention(body: str, username: str) -> str:\n    \"\"\"Удаляет `@username` (case-insensitive) из тела.\"\"\"\n    if not body or not username:\n        return body\n    return re.sub(rf\"@{re.escape(username)}\", \"\", body, flags=re.IGNORECASE)",
+        "detail": "src.sunsec.pipeline.orchestrator",
+        "documentation": {}
+    },
+    {
+        "label": "_BOT_MARKER_RE",
+        "kind": 5,
+        "importPath": "src.sunsec.pipeline.orchestrator",
+        "description": "src.sunsec.pipeline.orchestrator",
+        "peekOfCode": "_BOT_MARKER_RE = re.compile(r\"<!--\\s*sunsec:bot:v1:[^>]*-->\", re.IGNORECASE)\ndef _strip_bot_markers(body: str) -> str:\n    \"\"\"Вырезает все HTML-маркеры бота из тела комментария.\"\"\"\n    return _BOT_MARKER_RE.sub(\"\", body or \"\").strip()\ndef _strip_mention(body: str, username: str) -> str:\n    \"\"\"Удаляет `@username` (case-insensitive) из тела.\"\"\"\n    if not body or not username:\n        return body\n    return re.sub(rf\"@{re.escape(username)}\", \"\", body, flags=re.IGNORECASE)\ndef _generate_check_id() -> str:",
         "detail": "src.sunsec.pipeline.orchestrator",
         "documentation": {}
     },
@@ -6352,7 +7064,7 @@
         "kind": 5,
         "importPath": "src.sunsec.storage.schema",
         "description": "src.sunsec.storage.schema",
-        "peekOfCode": "__all__ = [\n    \"SCHEMA_VERSION\",\n    \"ALL_DDL_STATEMENTS\",\n    \"PRAGMA_STATEMENTS\",\n    \"CREATE_TABLE_CHECKS\",\n    \"CREATE_TABLE_FINDINGS\",\n    \"CREATE_TABLE_COMMENTS\",\n    \"CREATE_TABLE_REPO_CONFIGS\",\n    \"CREATE_INDEX_CHECKS_REPO_STARTED\",\n    \"CREATE_INDEX_FINDINGS_CHECK\",",
+        "peekOfCode": "__all__ = [\n    \"SCHEMA_VERSION\",\n    \"ALL_DDL_STATEMENTS\",\n    \"ADDITIVE_MIGRATIONS\",\n    \"PRAGMA_STATEMENTS\",\n    \"CREATE_TABLE_CHECKS\",\n    \"CREATE_TABLE_FINDINGS\",\n    \"CREATE_TABLE_COMMENTS\",\n    \"CREATE_TABLE_REPO_CONFIGS\",\n    \"CREATE_INDEX_CHECKS_REPO_STARTED\",",
         "detail": "src.sunsec.storage.schema",
         "documentation": {}
     },
@@ -6424,7 +7136,7 @@
         "kind": 2,
         "importPath": "src.sunsec.ui.console_router",
         "description": "src.sunsec.ui.console_router",
-        "peekOfCode": "def build_console_router(\n    *,\n    state: Any,\n    settings: Any,\n    llm_client: Any = None,\n    manual_analyze_handler: Optional[Callable[[dict], Awaitable[Any]]] = None,\n    repos_secrets_path: Optional[Path] = None,\n) -> Any:\n    \"\"\"Фабрика console-роутера. DI — все зависимости приходят снаружи.\n    Args:",
+        "peekOfCode": "def build_console_router(\n    *,\n    state: Any,\n    settings: Any,\n    llm_client: Any = None,\n    manual_analyze_handler: Optional[Callable[[dict], Awaitable[Any]]] = None,\n    repos_secrets_path: Optional[Path] = None,\n    github_adapter_factory: Optional[Callable[[str], Any]] = None,\n    tunnel_probe: Optional[Callable[[], Awaitable[Optional[str]]]] = None,\n) -> Any:",
         "detail": "src.sunsec.ui.console_router",
         "documentation": {}
     },
@@ -6784,7 +7496,16 @@
         "kind": 6,
         "importPath": "src.sunsec.webhook.service",
         "description": "src.sunsec.webhook.service",
-        "peekOfCode": "class EnqueueAnalysis:\n    \"\"\"Готово к запуску в background. 202.\"\"\"\n    event: GitHubPullRequestEvent\n    idempotency_key: str\n    delivery_id: Optional[str]\nWebhookOutcome = Union[InvalidSignature, BadRequest, Ignored, AlreadyProcessed, EnqueueAnalysis]\n# --- Сервис ----------------------------------------------------------------\nclass WebhookService:\n    \"\"\"Чистая бизнес-логика webhook-приёмки (без FastAPI).\"\"\"\n    def __init__(",
+        "peekOfCode": "class EnqueueAnalysis:\n    \"\"\"Готово к запуску в background. 202.\"\"\"\n    event: GitHubPullRequestEvent\n    idempotency_key: str\n    delivery_id: Optional[str]\n@dataclass(frozen=True)\nclass EnqueueReply:\n    \"\"\"Reply-режим (T-019): пользователь ответил на комментарий бота.\n    `kind`:\n      - `\"inline\"` — событие `pull_request_review_comment` (ответ на review-comment).",
+        "detail": "src.sunsec.webhook.service",
+        "documentation": {}
+    },
+    {
+        "label": "EnqueueReply",
+        "kind": 6,
+        "importPath": "src.sunsec.webhook.service",
+        "description": "src.sunsec.webhook.service",
+        "peekOfCode": "class EnqueueReply:\n    \"\"\"Reply-режим (T-019): пользователь ответил на комментарий бота.\n    `kind`:\n      - `\"inline\"` — событие `pull_request_review_comment` (ответ на review-comment).\n      - `\"issue\"`  — событие `issue_comment` (комментарий в PR conversation с @mention).\n    \"\"\"\n    payload: Union[GitHubIssueCommentEvent, GitHubPullRequestReviewCommentEvent]\n    kind: str  # \"inline\" | \"issue\"\n    idempotency_key: str\n    delivery_id: Optional[str]",
         "detail": "src.sunsec.webhook.service",
         "documentation": {}
     },
@@ -6798,11 +7519,20 @@
         "documentation": {}
     },
     {
+        "label": "_BOT_COMMENT_MARKER_PREFIX",
+        "kind": 5,
+        "importPath": "src.sunsec.webhook.service",
+        "description": "src.sunsec.webhook.service",
+        "peekOfCode": "_BOT_COMMENT_MARKER_PREFIX = \"sunsec:bot:v1:\"\nlog = logging.getLogger(__name__)\n# Whitelist actions, на которые мы реально запускаем анализ.\n# `ready_for_review` (черновик → готов) тоже триггерит, как и в system_design §3.1.\nACTION_WHITELIST: frozenset[str] = frozenset({\"opened\", \"synchronize\", \"reopened\", \"ready_for_review\"})\n# Reply-mode (T-019): какие comment-actions триггерят анализ. Только новые\n# комментарии — `edited`/`deleted` пропускаем, чтобы избежать петель.\nREPLY_ACTION_WHITELIST: frozenset[str] = frozenset({\"created\"})\n# Reply-mode: какие event_type'ы webhook-а считаем reply-кандидатами.\nREPLY_EVENT_TYPES: frozenset[str] = frozenset({\"issue_comment\", \"pull_request_review_comment\"})",
+        "detail": "src.sunsec.webhook.service",
+        "documentation": {}
+    },
+    {
         "label": "log",
         "kind": 5,
         "importPath": "src.sunsec.webhook.service",
         "description": "src.sunsec.webhook.service",
-        "peekOfCode": "log = logging.getLogger(__name__)\n# Whitelist actions, на которые мы реально запускаем анализ.\n# `ready_for_review` (черновик → готов) тоже триггерит, как и в system_design §3.1.\nACTION_WHITELIST: frozenset[str] = frozenset({\"opened\", \"synchronize\", \"reopened\", \"ready_for_review\"})\n# Заголовки GitHub Webhook (стандарт, см. docs.github.com/webhooks).\nHEADER_EVENT = \"x-github-event\"\nHEADER_SIGNATURE = \"x-hub-signature-256\"\nHEADER_DELIVERY = \"x-github-delivery\"\n# --- Исходы (sealed union) -------------------------------------------------\n@dataclass(frozen=True)",
+        "peekOfCode": "log = logging.getLogger(__name__)\n# Whitelist actions, на которые мы реально запускаем анализ.\n# `ready_for_review` (черновик → готов) тоже триггерит, как и в system_design §3.1.\nACTION_WHITELIST: frozenset[str] = frozenset({\"opened\", \"synchronize\", \"reopened\", \"ready_for_review\"})\n# Reply-mode (T-019): какие comment-actions триггерят анализ. Только новые\n# комментарии — `edited`/`deleted` пропускаем, чтобы избежать петель.\nREPLY_ACTION_WHITELIST: frozenset[str] = frozenset({\"created\"})\n# Reply-mode: какие event_type'ы webhook-а считаем reply-кандидатами.\nREPLY_EVENT_TYPES: frozenset[str] = frozenset({\"issue_comment\", \"pull_request_review_comment\"})\n# Заголовки GitHub Webhook (стандарт, см. docs.github.com/webhooks).",
         "detail": "src.sunsec.webhook.service",
         "documentation": {}
     },
@@ -6838,7 +7568,7 @@
         "kind": 5,
         "importPath": "src.sunsec.webhook.service",
         "description": "src.sunsec.webhook.service",
-        "peekOfCode": "WebhookOutcome = Union[InvalidSignature, BadRequest, Ignored, AlreadyProcessed, EnqueueAnalysis]\n# --- Сервис ----------------------------------------------------------------\nclass WebhookService:\n    \"\"\"Чистая бизнес-логика webhook-приёмки (без FastAPI).\"\"\"\n    def __init__(\n        self,\n        *,\n        vcs: VCSAdapter,\n        state: StateStore,\n        webhook_secret: str,",
+        "peekOfCode": "WebhookOutcome = Union[\n    InvalidSignature,\n    BadRequest,\n    Ignored,\n    AlreadyProcessed,\n    EnqueueAnalysis,\n    EnqueueReply,\n]\n# --- Сервис ----------------------------------------------------------------\nclass WebhookService:",
         "detail": "src.sunsec.webhook.service",
         "documentation": {}
     },
@@ -6847,7 +7577,7 @@
         "kind": 5,
         "importPath": "src.sunsec.webhook.service",
         "description": "src.sunsec.webhook.service",
-        "peekOfCode": "__all__ = [\n    \"WebhookService\",\n    \"WebhookOutcome\",\n    \"InvalidSignature\",\n    \"BadRequest\",\n    \"Ignored\",\n    \"AlreadyProcessed\",\n    \"EnqueueAnalysis\",\n    \"ACTION_WHITELIST\",\n    \"HEADER_EVENT\",",
+        "peekOfCode": "__all__ = [\n    \"WebhookService\",\n    \"WebhookOutcome\",\n    \"InvalidSignature\",\n    \"BadRequest\",\n    \"Ignored\",\n    \"AlreadyProcessed\",\n    \"EnqueueAnalysis\",\n    \"EnqueueReply\",\n    \"ACTION_WHITELIST\",",
         "detail": "src.sunsec.webhook.service",
         "documentation": {}
     },
@@ -8242,7 +8972,7 @@
         "kind": 6,
         "importPath": "tests.unit.test_llm_client",
         "description": "tests.unit.test_llm_client",
-        "peekOfCode": "class _FakeProvider:\n    \"\"\"Минимальный stub `LLMProvider` для тестов.\n    Не наследует Protocol, чтобы pytest-показал ясную diff при mismatch.\n    \"\"\"\n    name: str = \"fake\"\n    def __init__(\n        self,\n        *,\n        content: str = '{\"findings\": [], \"summary\": \"No security issues detected in diff.\"}',\n        usage: TokenUsage | None = None,",
+        "peekOfCode": "class _FakeProvider:\n    \"\"\"Минимальный stub `LLMProvider` для тестов.\n    Не наследует Protocol, чтобы pytest-показал ясную diff при mismatch.\n    \"\"\"\n    name: str = \"fake\"\n    def __init__(\n        self,\n        *,\n        content: str = '{\"findings\": [], \"summary\": \"В diff не обнаружено проблем безопасности.\"}',\n        usage: TokenUsage | None = None,",
         "detail": "tests.unit.test_llm_client",
         "documentation": {}
     },
@@ -8595,6 +9325,33 @@
         "description": "tests.unit.test_vcs_github",
         "peekOfCode": "def test_verify_signature_valid_and_invalid() -> None:\n    import hashlib\n    import hmac as _hmac\n    adapter = GitHubAdapter(token=\"t\")\n    body = b'{\"action\":\"opened\"}'\n    secret = \"topsecret\"\n    good = (\n        \"sha256=\" + _hmac.new(secret.encode(), body, hashlib.sha256).hexdigest()\n    )\n    bad = \"sha256=\" + \"0\" * 64",
         "detail": "tests.unit.test_vcs_github",
+        "documentation": {}
+    },
+    {
+        "label": "_StubVCS",
+        "kind": 6,
+        "importPath": "tests.unit.test_webhook_reply",
+        "description": "tests.unit.test_webhook_reply",
+        "peekOfCode": "class _StubVCS:\n    \"\"\"Минимальный VCS-адаптер, возвращающий заранее заданный parent-comment.\"\"\"\n    def __init__(self, parent_body: str | None = \"<!-- sunsec:bot:v1:finding:abcd -->\\nrev-replica\") -> None:\n        self._parent_body = parent_body\n        self.get_calls: list[tuple[str, int]] = []\n    def verify_signature(self, raw_body: bytes, signature: str, secret: str) -> bool:\n        expected = hmac.new(secret.encode(\"utf-8\"), raw_body, hashlib.sha256).hexdigest()\n        return signature == f\"sha256={expected}\"\n    async def get_review_comment(self, repo: str, comment_id: int) -> PostedComment:\n        self.get_calls.append((repo, int(comment_id)))",
+        "detail": "tests.unit.test_webhook_reply",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET",
+        "kind": 5,
+        "importPath": "tests.unit.test_webhook_reply",
+        "description": "tests.unit.test_webhook_reply",
+        "peekOfCode": "SECRET = \"test-webhook-secret-reply\"\nBOT_LOGIN = \"sunsec-bot\"\ndef _signature(body: bytes) -> str:\n    mac = hmac.new(SECRET.encode(\"utf-8\"), body, hashlib.sha256).hexdigest()\n    return f\"sha256={mac}\"\nclass _StubVCS:\n    \"\"\"Минимальный VCS-адаптер, возвращающий заранее заданный parent-comment.\"\"\"\n    def __init__(self, parent_body: str | None = \"<!-- sunsec:bot:v1:finding:abcd -->\\nrev-replica\") -> None:\n        self._parent_body = parent_body\n        self.get_calls: list[tuple[str, int]] = []",
+        "detail": "tests.unit.test_webhook_reply",
+        "documentation": {}
+    },
+    {
+        "label": "BOT_LOGIN",
+        "kind": 5,
+        "importPath": "tests.unit.test_webhook_reply",
+        "description": "tests.unit.test_webhook_reply",
+        "peekOfCode": "BOT_LOGIN = \"sunsec-bot\"\ndef _signature(body: bytes) -> str:\n    mac = hmac.new(SECRET.encode(\"utf-8\"), body, hashlib.sha256).hexdigest()\n    return f\"sha256={mac}\"\nclass _StubVCS:\n    \"\"\"Минимальный VCS-адаптер, возвращающий заранее заданный parent-comment.\"\"\"\n    def __init__(self, parent_body: str | None = \"<!-- sunsec:bot:v1:finding:abcd -->\\nrev-replica\") -> None:\n        self._parent_body = parent_body\n        self.get_calls: list[tuple[str, int]] = []\n    def verify_signature(self, raw_body: bytes, signature: str, secret: str) -> bool:",
+        "detail": "tests.unit.test_webhook_reply",
         "documentation": {}
     },
     {

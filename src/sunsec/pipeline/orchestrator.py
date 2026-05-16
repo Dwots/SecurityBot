@@ -22,12 +22,17 @@ BackgroundTasks, исключение там просто потеряется �
 from __future__ import annotations
 
 import logging
+import re
 import secrets
 import time
 from datetime import datetime
 from typing import Any, Optional
 
-from sunsec.contracts import GitHubPullRequestEvent
+from sunsec.contracts import (
+    GitHubIssueCommentEvent,
+    GitHubPullRequestEvent,
+    GitHubPullRequestReviewCommentEvent,
+)
 from sunsec.contracts.storage import (
     CheckRecord,
     CommentRecord,
@@ -38,6 +43,7 @@ from sunsec.llm.base import (
     LLMProviderUnavailable,
     LLMTimeout,
 )
+from sunsec.llm.reply_client import ChatTurn, ReplyClient
 from sunsec.state.base import StateStore
 from sunsec.vcs.base import (
     AuthError,
@@ -47,6 +53,26 @@ from sunsec.vcs.base import (
 )
 
 log = logging.getLogger(__name__)
+
+
+# T-019: распознавание наших комментариев — единый префикс маркеров
+# `<!-- sunsec:bot:v1:... -->`. Используется в reply-режиме для
+# идемпотентности и self-detect parent-комментариев.
+_BOT_MARKER_TOKEN = "sunsec:bot:v1:"
+
+_BOT_MARKER_RE = re.compile(r"<!--\s*sunsec:bot:v1:[^>]*-->", re.IGNORECASE)
+
+
+def _strip_bot_markers(body: str) -> str:
+    """Вырезает все HTML-маркеры бота из тела комментария."""
+    return _BOT_MARKER_RE.sub("", body or "").strip()
+
+
+def _strip_mention(body: str, username: str) -> str:
+    """Удаляет `@username` (case-insensitive) из тела."""
+    if not body or not username:
+        return body
+    return re.sub(rf"@{re.escape(username)}", "", body, flags=re.IGNORECASE)
 
 
 def _generate_check_id() -> str:
@@ -109,6 +135,9 @@ class PipelineOrchestrator:
         state: Optional[StateStore] = None,
         fp_filter: Any = None,
         fp_heuristics: Any = None,  # legacy alias — синоним fp_filter
+        reply_client: Optional[ReplyClient] = None,
+        reply_history_limit: int = 12,
+        bot_username: str = "sunsec-bot",
     ) -> None:
         self._vcs = vcs
         self._filter = diff_filter
@@ -118,6 +147,11 @@ class PipelineOrchestrator:
         # T-013: FP-фильтр (pre_llm_scan + postprocess). Поддерживаем оба имени
         # для совместимости с T-007 wiring.
         self._fp = fp_filter if fp_filter is not None else fp_heuristics
+        # T-019: reply-режим. Если `reply_client is None` → pipeline ничего
+        # не делает на reply-событиях (но webhook их уже отфильтровал бы).
+        self._reply_client = reply_client
+        self._reply_history_limit = max(1, int(reply_history_limit))
+        self._bot_username = (bot_username or "").strip().lower()
 
     async def _safe_storage_call(
         self, op_name: str, coro_factory, *, stage: str, repo: str, pr_number: int
@@ -710,3 +744,272 @@ class PipelineOrchestrator:
                 await self._state.mark_pr_failed(key)
         except Exception:  # noqa: BLE001
             log.exception("pipeline_state_finalize_failed")
+
+    # ------------------------------------------------------------------
+    # Reply mode (T-019)
+    # ------------------------------------------------------------------
+
+    async def process_reply(
+        self,
+        *,
+        payload: Any,
+        kind: str,
+        idempotency_key: Optional[str] = None,
+    ) -> None:
+        """Обработать reply-событие: собрать контекст → LLM → опубликовать.
+
+        Никогда не бросает наружу: webhook уже вернул 202, ошибка тут
+        останется в фоновой задаче. Логируем и завершаем `_finalize`.
+
+        Параметры:
+          - `payload`: `GitHubIssueCommentEvent` (kind=="issue") или
+            `GitHubPullRequestReviewCommentEvent` (kind=="inline").
+          - `kind`: канал ответа — `"issue"` или `"inline"`.
+          - `idempotency_key`: ключ, под которым webhook зарезервировал
+            обработку в state (`reply:{repo}#{pr}@{comment_id}`). На
+            success → `mark_pr_done`, иначе → `mark_pr_failed`.
+        """
+        key = idempotency_key or "reply:unknown"
+        if self._reply_client is None or self._vcs is None:
+            log.info(
+                "pipeline_reply_skipped_no_client",
+                extra={"kind": kind, "idempotency_key": key},
+            )
+            await self._finalize(key, success=False)
+            return
+
+        try:
+            if kind == "issue":
+                await self._process_issue_reply(payload, key=key)
+            elif kind == "inline":
+                await self._process_inline_reply(payload, key=key)
+            else:
+                log.warning(
+                    "pipeline_reply_unknown_kind",
+                    extra={"kind": kind, "idempotency_key": key},
+                )
+                await self._finalize(key, success=False)
+                return
+            await self._finalize(key, success=True)
+        except BudgetExceeded as exc:
+            log.warning(
+                "pipeline_reply_budget_exceeded",
+                extra={"kind": kind, "idempotency_key": key, "reason": str(exc)},
+            )
+            await self._finalize(key, success=False)
+        except (LLMTimeout, LLMProviderUnavailable) as exc:
+            log.warning(
+                "pipeline_reply_llm_unavailable",
+                extra={
+                    "kind": kind,
+                    "idempotency_key": key,
+                    "error_type": type(exc).__name__,
+                },
+            )
+            await self._finalize(key, success=False)
+        except Exception as exc:  # noqa: BLE001
+            log.exception(
+                "pipeline_reply_failed",
+                extra={
+                    "kind": kind,
+                    "idempotency_key": key,
+                    "error_type": type(exc).__name__,
+                },
+            )
+            await self._finalize(key, success=False)
+
+    async def _process_issue_reply(
+        self,
+        event: GitHubIssueCommentEvent,
+        *,
+        key: str,
+    ) -> None:
+        """Обработка @mention в PR conversation (`issue_comment.created`)."""
+        repo = event.repo
+        pr_number = event.pr_number
+        comment_id = int(event.comment.id)
+        marker = self._reply_marker(comment_id)
+
+        # Idempotency: если уже отвечали — пропускаем.
+        existing = await self._safe_list_issue_comments(repo, pr_number)
+        if any(marker in (c.body or "") for c in existing):
+            log.info(
+                "pipeline_reply_already_published",
+                extra={
+                    "repo": repo, "pr_number": pr_number,
+                    "comment_id": comment_id, "kind": "issue",
+                },
+            )
+            return
+
+        # Контекст: последний наш summary + текущий вопрос. Достаточно для
+        # MVP: разработчик в PR conversation обычно ссылается на сводку.
+        thread = self._build_issue_thread(event, existing)
+        text = await self._reply_client.reply(
+            thread,
+            repo=repo, pr_number=pr_number, comment_id=comment_id,
+        )
+        body = self._format_reply_body(text, marker)
+        await self._vcs.post_issue_comment(repo, pr_number, body)
+        log.info(
+            "pipeline_reply_published",
+            extra={
+                "repo": repo, "pr_number": pr_number,
+                "comment_id": comment_id, "kind": "issue",
+                "reply_length": len(text),
+            },
+        )
+
+    async def _process_inline_reply(
+        self,
+        event: GitHubPullRequestReviewCommentEvent,
+        *,
+        key: str,
+    ) -> None:
+        """Обработка ответа на наш inline-комментарий."""
+        repo = event.repo
+        pr_number = event.pr_number
+        comment_id = int(event.comment.id)
+        in_reply_to_id = int(event.comment.in_reply_to_id or 0)
+        marker = self._reply_marker(comment_id)
+
+        # Idempotency: проверяем review-comments на наличие маркера.
+        existing = await self._safe_list_review_comments(repo, pr_number)
+        if any(marker in (c.body or "") for c in existing):
+            log.info(
+                "pipeline_reply_already_published",
+                extra={
+                    "repo": repo, "pr_number": pr_number,
+                    "comment_id": comment_id, "kind": "inline",
+                },
+            )
+            return
+
+        thread = await self._build_inline_thread(event)
+        text = await self._reply_client.reply(
+            thread,
+            repo=repo, pr_number=pr_number, comment_id=comment_id,
+        )
+        body = self._format_reply_body(text, marker)
+        # Reply кладём в ту же ветку через GitHub `replies` endpoint.
+        # Используем in_reply_to_id (parent — НАШ комментарий), чтобы поток
+        # рендерился как продолжение thread'а в GitHub UI.
+        await self._vcs.reply_to_review_comment(
+            repo, pr_number, in_reply_to_id, body,
+        )
+        log.info(
+            "pipeline_reply_published",
+            extra={
+                "repo": repo, "pr_number": pr_number,
+                "comment_id": comment_id, "kind": "inline",
+                "in_reply_to_id": in_reply_to_id,
+                "reply_length": len(text),
+            },
+        )
+
+    # --- thread builders ---
+
+    def _build_issue_thread(
+        self,
+        event: GitHubIssueCommentEvent,
+        existing: list,
+    ) -> list[ChatTurn]:
+        """Issue thread: подмешиваем последний наш summary как assistant.
+
+        Алгоритм (минимальный для MVP):
+        1. Среди `existing` берём последний bot-комментарий с маркером
+           `sunsec:bot:v1:summary` — это наша сводка анализа PR. Если её
+           нет — fallback: любой последний bot-комментарий.
+        2. assistant-сообщение = body этого summary (без маркеров).
+        3. user-сообщение = текущий комментарий разработчика.
+        """
+        last_bot_body: Optional[str] = None
+        for c in reversed(existing):
+            body = c.body or ""
+            if "sunsec:bot:v1:summary" in body or _BOT_MARKER_TOKEN in body:
+                last_bot_body = body
+                break
+        turns: list[ChatTurn] = []
+        if last_bot_body:
+            cleaned = _strip_bot_markers(last_bot_body)
+            if cleaned:
+                turns.append(ChatTurn(role="assistant", content=cleaned[:4000]))
+        user_text = event.comment.body or ""
+        # Чистим mention из тела, чтобы не сбивать модель.
+        if self._bot_username:
+            user_text = _strip_mention(user_text, self._bot_username)
+        turns.append(ChatTurn(role="user", content=user_text.strip()))
+        return turns[-self._reply_history_limit:]
+
+    async def _build_inline_thread(
+        self,
+        event: GitHubPullRequestReviewCommentEvent,
+    ) -> list[ChatTurn]:
+        """Inline thread: parent (наш комментарий) + текущий ответ."""
+        turns: list[ChatTurn] = []
+        in_reply_to_id = event.comment.in_reply_to_id
+        if in_reply_to_id:
+            try:
+                parent = await self._vcs.get_review_comment(
+                    event.repo, int(in_reply_to_id)
+                )
+                parent_body = _strip_bot_markers(parent.body or "")
+                if parent_body:
+                    header = f"(Inline-замечание по файлу `{event.comment.path}`)"
+                    turns.append(
+                        ChatTurn(
+                            role="assistant",
+                            content=f"{header}\n\n{parent_body}"[:4000],
+                        )
+                    )
+            except Exception as exc:  # noqa: BLE001
+                log.warning(
+                    "pipeline_inline_parent_fetch_failed",
+                    extra={
+                        "repo": event.repo,
+                        "in_reply_to_id": int(in_reply_to_id),
+                        "error_type": type(exc).__name__,
+                    },
+                )
+        user_text = (event.comment.body or "").strip()
+        turns.append(ChatTurn(role="user", content=user_text))
+        return turns[-self._reply_history_limit:]
+
+    # --- helpers ---
+
+    async def _safe_list_issue_comments(self, repo: str, pr_number: int) -> list:
+        try:
+            return await self._vcs.list_issue_comments(repo, pr_number)
+        except Exception as exc:  # noqa: BLE001
+            log.warning(
+                "pipeline_list_issue_comments_failed",
+                extra={
+                    "repo": repo, "pr_number": pr_number,
+                    "error_type": type(exc).__name__,
+                },
+            )
+            return []
+
+    async def _safe_list_review_comments(self, repo: str, pr_number: int) -> list:
+        try:
+            return await self._vcs.list_review_comments(repo, pr_number)
+        except Exception as exc:  # noqa: BLE001
+            log.warning(
+                "pipeline_list_review_comments_failed",
+                extra={
+                    "repo": repo, "pr_number": pr_number,
+                    "error_type": type(exc).__name__,
+                },
+            )
+            return []
+
+    @staticmethod
+    def _reply_marker(comment_id: int) -> str:
+        return f"<!-- sunsec:bot:v1:reply:{int(comment_id)} -->"
+
+    @staticmethod
+    def _format_reply_body(text: str, marker: str) -> str:
+        body = (text or "").strip()
+        if marker in body:
+            return body
+        return f"{body}\n\n{marker}"

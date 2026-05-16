@@ -45,6 +45,7 @@ from sunsec.llm.base import (
 )
 from sunsec.llm.budget import BudgetCounter
 from sunsec.llm.prompt_builder import PromptBuilder
+from sunsec.llm.prompts import EMPTY_SUMMARY
 
 log = logging.getLogger(__name__)
 
@@ -102,7 +103,7 @@ class LLMClient:
             )
             return LLMResponseSchema(
                 findings=[],
-                summary="No security issues detected in diff.",
+                summary=EMPTY_SUMMARY,
             )
 
         payload = self._builder.build(filtered)
@@ -249,7 +250,7 @@ class LLMClient:
 
         summary = data.get("summary")
         if not isinstance(summary, str):
-            summary = "No security issues detected in diff." if not valid_findings else ""
+            summary = EMPTY_SUMMARY if not valid_findings else ""
         # Жёсткий cap на summary (даже если LLM проигнорировал) — Pydantic откажет.
         if len(summary) > 2000:
             summary = summary[:2000]

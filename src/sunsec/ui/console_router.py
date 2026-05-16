@@ -56,6 +56,9 @@ from sunsec.contracts.console import (
     SettingsOut,
     SeverityCountsOut,
     TimelineEntryOut,
+    TunnelOut,
+    WebhookInstallIn,
+    WebhookInstallOut,
 )
 from sunsec.contracts.storage import (
     CheckRecord,
@@ -120,6 +123,8 @@ def _record_to_repo_out(rec: RepoConfigRecord) -> RepoConfigOut:
         created_at=rec.created_at,
         updated_at=rec.updated_at,
         last_seen_at=rec.last_seen_at,
+        webhook_id=rec.webhook_id,
+        webhook_url=rec.webhook_url,
     )
 
 
@@ -325,6 +330,8 @@ def build_console_router(
     llm_client: Any = None,
     manual_analyze_handler: Optional[Callable[[dict], Awaitable[Any]]] = None,
     repos_secrets_path: Optional[Path] = None,
+    github_adapter_factory: Optional[Callable[[str], Any]] = None,
+    tunnel_probe: Optional[Callable[[], Awaitable[Optional[str]]]] = None,
 ) -> Any:
     """Фабрика console-роутера. DI — все зависимости приходят снаружи.
 
@@ -347,6 +354,65 @@ def build_console_router(
     router = APIRouter(prefix="/api/console", tags=["console"])
 
     budget = getattr(llm_client, "budget", None) if llm_client is not None else None
+
+    # --- Lazy imports / helpers for webhook auto-install --------------------
+    # GitHubAdapter — конструируется per-repo через токен из env-ref.
+    # Тестам удобно подменить `github_adapter_factory`; по умолчанию используем
+    # реальный `GitHubAdapter` с `settings.github_api_base`.
+    def _default_github_factory(token: str) -> Any:
+        from sunsec.vcs.github import GitHubAdapter
+
+        return GitHubAdapter(
+            token=token,
+            api_base=str(getattr(settings, "github_api_base", "https://api.github.com")),
+        )
+
+    gh_factory = github_adapter_factory or _default_github_factory
+
+    # Tunnel probe — дёргает ngrok admin API. Тесты подменяют на стаб,
+    # возвращающий заданный URL или None.
+    async def _default_tunnel_probe() -> Optional[str]:
+        import httpx  # локальный импорт — httpx уже в зависимостях
+
+        admin_url = str(getattr(settings, "ngrok_admin_url", "http://127.0.0.1:4040")).rstrip("/")
+        try:
+            async with httpx.AsyncClient(timeout=1.5) as client:
+                resp = await client.get(f"{admin_url}/api/tunnels")
+            if resp.status_code != 200:
+                return None
+            data = resp.json()
+        except Exception:  # noqa: BLE001 — ngrok может быть выключен, это норма
+            return None
+        tunnels = data.get("tunnels") if isinstance(data, dict) else None
+        if not isinstance(tunnels, list):
+            return None
+        # Предпочитаем https-туннель (для GitHub webhook secure).
+        https = next(
+            (t.get("public_url") for t in tunnels if isinstance(t, dict)
+             and isinstance(t.get("public_url"), str)
+             and t["public_url"].startswith("https://")),
+            None,
+        )
+        if https:
+            return https
+        # Fallback: первый туннель с public_url.
+        return next(
+            (t.get("public_url") for t in tunnels if isinstance(t, dict)
+             and isinstance(t.get("public_url"), str)),
+            None,
+        )
+
+    tunnel_probe_fn = tunnel_probe or _default_tunnel_probe
+
+    async def _resolve_public_url() -> tuple[Optional[str], Optional[str]]:
+        """(`public_url`, `source`) — где source ∈ {'config','ngrok',None}."""
+        configured = str(getattr(settings, "public_base_url", "") or "").strip()
+        if configured:
+            return configured.rstrip("/"), "config"
+        url = await tunnel_probe_fn()
+        if url:
+            return url.rstrip("/"), "ngrok"
+        return None, None
 
     # ------------------------------------------------------------------
     # 1. GET /api/console/budget
@@ -795,6 +861,247 @@ def build_console_router(
                 detail={"detail": "Repo not found", "code": "REPO_NOT_FOUND"},
             )
         log.info("console_repo_deleted", extra={"repo_id": repo_id})
+        return Response(status_code=204)
+
+    # ------------------------------------------------------------------
+    # 9b. GET /api/console/tunnel — detect ngrok / configured public URL
+    # ------------------------------------------------------------------
+    @router.get("/tunnel", response_model=TunnelOut)
+    async def get_tunnel() -> TunnelOut:
+        url, source = await _resolve_public_url()
+        if url:
+            return TunnelOut(running=True, public_url=url, source=source)
+        return TunnelOut(running=False, source=None)
+
+    # ------------------------------------------------------------------
+    # 9c. POST /api/console/repos/{repo_id}/webhook — install GitHub hook
+    # ------------------------------------------------------------------
+    @router.post(
+        "/repos/{repo_id}/webhook",
+        response_model=WebhookInstallOut,
+        status_code=201,
+    )
+    async def install_webhook(repo_id: str, payload: dict[str, Any]) -> WebhookInstallOut:
+        try:
+            data = WebhookInstallIn.model_validate(payload or {})
+        except ValidationError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=[
+                    {
+                        "loc": list(err.get("loc", ())),
+                        "msg": err.get("msg", ""),
+                        "type": err.get("type", ""),
+                    }
+                    for err in exc.errors()
+                ],
+            ) from None
+
+        rec = await state.get_repo(repo_id)
+        if rec is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail={"detail": "Repo not found", "code": "REPO_NOT_FOUND"},
+            )
+
+        # Resolve public URL: либо из payload, либо config, либо ngrok.
+        public_url: Optional[str] = None
+        url_source: Optional[str] = None
+        if data.public_url:
+            public_url = data.public_url.rstrip("/")
+            url_source = "request"
+        else:
+            public_url, url_source = await _resolve_public_url()
+        if not public_url:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={
+                    "detail": (
+                        "No public URL available. Start ngrok (`ngrok http 8000`), "
+                        "set PUBLIC_BASE_URL in .env, or pass publicUrl in the request body."
+                    ),
+                    "code": "TUNNEL_UNAVAILABLE",
+                },
+            )
+
+        webhook_target = f"{public_url}/webhook/github"
+
+        # Достаём plaintext-токен и secret из env-ref'ов.
+        token = (
+            os.environ.get(rec.vcs_token_ref) if rec.vcs_token_ref else None
+        )
+        secret = (
+            os.environ.get(rec.webhook_secret_ref) if rec.webhook_secret_ref else None
+        )
+        if not token:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={
+                    "detail": "Repo has no VCS token (env-ref missing). Edit repo and set Token first.",
+                    "code": "REPO_TOKEN_MISSING",
+                },
+            )
+        if not secret:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={
+                    "detail": "Repo has no webhook secret. Edit repo and set Webhook Secret first.",
+                    "code": "REPO_WEBHOOK_SECRET_MISSING",
+                },
+            )
+
+        # Если уже установлен — пытаемся удалить предыдущий, чтобы не плодить
+        # дубли на стороне GitHub (старый URL stale при смене ngrok).
+        adapter = gh_factory(token)
+        if rec.webhook_id:
+            try:
+                await adapter.delete_webhook(rec.full_name, int(rec.webhook_id))
+                log.info(
+                    "console_webhook_replaced_old",
+                    extra={
+                        "repo": rec.full_name,
+                        "old_webhook_id": rec.webhook_id,
+                    },
+                )
+            except Exception as exc:  # noqa: BLE001 — best-effort cleanup
+                log.warning(
+                    "console_webhook_old_delete_failed",
+                    extra={
+                        "repo": rec.full_name,
+                        "old_webhook_id": rec.webhook_id,
+                        "error_type": type(exc).__name__,
+                    },
+                )
+
+        # Создаём новый webhook на GitHub.
+        try:
+            hook = await adapter.create_webhook(rec.full_name, webhook_target, secret)
+        except Exception as exc:  # noqa: BLE001
+            # AuthError / VCSAdapterError / NotFoundError — превращаем в 4xx.
+            log.warning(
+                "console_webhook_install_failed",
+                extra={
+                    "repo": rec.full_name,
+                    "error_type": type(exc).__name__,
+                    "url_source": url_source,
+                },
+            )
+            # 404 от GitHub = repo не существует / нет доступа.
+            from sunsec.vcs.base import AuthError, NotFoundError
+
+            if isinstance(exc, NotFoundError):
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail={
+                        "detail": f"GitHub 404 for repo {rec.full_name}: not found or token lacks access",
+                        "code": "GITHUB_REPO_NOT_FOUND",
+                    },
+                ) from None
+            if isinstance(exc, AuthError):
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail={
+                        "detail": "GitHub rejected the token. Need admin:repo_hook (or repo) scope.",
+                        "code": "GITHUB_AUTH_ERROR",
+                    },
+                ) from None
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail={
+                    "detail": f"GitHub webhook install failed: {type(exc).__name__}",
+                    "code": "GITHUB_API_ERROR",
+                },
+            ) from None
+
+        hook_id = int(hook.get("id") or 0)
+        if not hook_id:
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail={
+                    "detail": "GitHub response missing hook id",
+                    "code": "GITHUB_API_BAD_RESPONSE",
+                },
+            )
+
+        await state.set_repo_webhook(
+            rec.id, webhook_id=hook_id, webhook_url=webhook_target
+        )
+        log.info(
+            "console_webhook_installed",
+            extra={
+                "repo": rec.full_name,
+                "webhook_id": hook_id,
+                "url_source": url_source,
+            },
+        )
+        return WebhookInstallOut(webhook_id=hook_id, webhook_url=webhook_target)
+
+    # ------------------------------------------------------------------
+    # 9d. DELETE /api/console/repos/{repo_id}/webhook — remove GitHub hook
+    # ------------------------------------------------------------------
+    @router.delete("/repos/{repo_id}/webhook", status_code=204)
+    async def remove_webhook(repo_id: str) -> Response:
+        rec = await state.get_repo(repo_id)
+        if rec is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail={"detail": "Repo not found", "code": "REPO_NOT_FOUND"},
+            )
+        if not rec.webhook_id:
+            # Идемпотентность: ничего не установлено — успех.
+            await state.clear_repo_webhook(rec.id)
+            return Response(status_code=204)
+
+        token = (
+            os.environ.get(rec.vcs_token_ref) if rec.vcs_token_ref else None
+        )
+        if not token:
+            # Без токена не можем дёрнуть GitHub. Чистим только локальную запись.
+            await state.clear_repo_webhook(rec.id)
+            log.warning(
+                "console_webhook_local_only_clear",
+                extra={
+                    "repo": rec.full_name,
+                    "reason": "missing_token",
+                },
+            )
+            return Response(status_code=204)
+
+        adapter = gh_factory(token)
+        try:
+            await adapter.delete_webhook(rec.full_name, int(rec.webhook_id))
+        except Exception as exc:  # noqa: BLE001
+            from sunsec.vcs.base import AuthError
+
+            if isinstance(exc, AuthError):
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail={
+                        "detail": "GitHub rejected the token while deleting webhook.",
+                        "code": "GITHUB_AUTH_ERROR",
+                    },
+                ) from None
+            log.warning(
+                "console_webhook_delete_failed",
+                extra={
+                    "repo": rec.full_name,
+                    "webhook_id": rec.webhook_id,
+                    "error_type": type(exc).__name__,
+                },
+            )
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail={
+                    "detail": f"GitHub webhook delete failed: {type(exc).__name__}",
+                    "code": "GITHUB_API_ERROR",
+                },
+            ) from None
+
+        await state.clear_repo_webhook(rec.id)
+        log.info(
+            "console_webhook_removed",
+            extra={"repo": rec.full_name, "webhook_id": rec.webhook_id},
+        )
         return Response(status_code=204)
 
     # ------------------------------------------------------------------

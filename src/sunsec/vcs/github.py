@@ -535,6 +535,100 @@ class GitHubAdapter(VCSAdapter):
     ) -> None:
         raise NotImplementedError("Реализация в T-018 (post-MVP)")
 
+    # --- Reply mode (T-019) -----------------------------------------------
+
+    async def reply_to_review_comment(
+        self,
+        repo: str,
+        pr_number: int,
+        in_reply_to_id: int,
+        body: str,
+    ) -> PostedComment:
+        """POST /repos/{repo}/pulls/{pr}/comments/{id}/replies — ответ в той
+        же ветке inline-обсуждения. GitHub сам ставит `in_reply_to_id` и
+        привязку к review."""
+        path = f"/repos/{repo}/pulls/{pr_number}/comments/{int(in_reply_to_id)}/replies"
+        data = await self._post_json(path, {"body": body})
+        return _to_posted_comment(data)
+
+    async def get_review_comment(
+        self,
+        repo: str,
+        comment_id: int,
+    ) -> PostedComment:
+        """GET /repos/{repo}/pulls/comments/{id} — один inline-комментарий."""
+        path = f"/repos/{repo}/pulls/comments/{int(comment_id)}"
+        external = self._external_client is not None
+        client = self._external_client or httpx.AsyncClient(
+            timeout=self._timeout, base_url=self._api_base
+        )
+        try:
+            data = await self._get_json(client, path)
+        finally:
+            if not external:
+                await client.aclose()
+        return _to_posted_comment(data)
+
+    # --- Webhook management (Console UI auto-install) ---------------------
+
+    async def create_webhook(
+        self,
+        repo: str,
+        webhook_url: str,
+        secret: str,
+        *,
+        events: tuple[str, ...] = (
+            "pull_request",
+            "issue_comment",
+            "pull_request_review_comment",
+        ),
+    ) -> dict[str, Any]:
+        """POST /repos/{owner}/{repo}/hooks — создаёт webhook на репо.
+
+        Возвращает декодированное тело ответа GitHub (содержит `id`, `url`,
+        `config`, `events`, ...). Для нас критичен `id` — сохраняем в БД,
+        чтобы потом уметь удалить тот же hook.
+
+        Требует у токена scope `admin:repo_hook` (или `repo` для приватных).
+        При недостатке прав — `AuthError`. На 422 (duplicate webhook URL) —
+        `VCSAdapterError`.
+        """
+        path = f"/repos/{repo}/hooks"
+        body: dict[str, Any] = {
+            "name": "web",
+            "active": True,
+            "events": list(events),
+            "config": {
+                "url": webhook_url,
+                "content_type": "json",
+                "secret": secret,
+                "insecure_ssl": "0",
+            },
+        }
+        return await self._post_json(path, body)
+
+    async def delete_webhook(self, repo: str, hook_id: int) -> bool:
+        """DELETE /repos/{owner}/{repo}/hooks/{hook_id}.
+
+        Возвращает `True`, если webhook удалён или уже отсутствовал (404).
+        Прочие ошибки (auth/server) пробрасываем.
+        """
+        path = f"/repos/{repo}/hooks/{int(hook_id)}"
+        external = self._external_client is not None
+        client = self._external_client or httpx.AsyncClient(
+            timeout=self._timeout, base_url=self._api_base
+        )
+        try:
+            try:
+                await self._request_with_retry(client, "DELETE", path)
+            except NotFoundError:
+                # Хук уже удалён на стороне GitHub — для нас это «успех».
+                return True
+        finally:
+            if not external:
+                await client.aclose()
+        return True
+
     # --- Внутренние helper'ы для POST / PATCH / paginated GET --------------
 
     async def _post_json(self, path: str, body: dict[str, Any]) -> dict[str, Any]:

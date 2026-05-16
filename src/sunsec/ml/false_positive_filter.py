@@ -453,8 +453,8 @@ class FalsePositiveFilter:
                     final_sev: Severity = "low" if (in_test_path or in_example_file) else sev
 
                     msg = (
-                        f"Hardcoded secret matches pattern '{pat_name}'. "
-                        f"Detected by deterministic pre-LLM scan."
+                        f"Захардкоженный секрет совпал с паттерном `{pat_name}`. "
+                        f"Обнаружен детерминированным pre-LLM сканированием."
                     )
                     out.append(
                         Finding.model_validate(
@@ -538,8 +538,8 @@ class FalsePositiveFilter:
                     "class": "hardcoded_secret",
                     "severity": sev,
                     "message": (
-                        f"High-entropy string literal (entropy={ent:.2f}) assigned to a "
-                        f"secret-like variable. Detected by deterministic entropy heuristic."
+                        f"Высокоэнтропийная строка (entropy={ent:.2f}) присвоена переменной "
+                        f"с именем, похожим на секрет. Обнаружено энтропийной эвристикой."
                     ),
                     "suggestion": None,
                     "confidence": 0.6,

@@ -722,7 +722,7 @@ def _render_inline_body(finding: Finding, fhash: str) -> str:
     class_label = _class_label(finding.class_)
     confidence_pct = int(round(finding.confidence * 100))
     parts = [
-        f"**[SUNSEC][{severity}] {class_label}** (confidence {confidence_pct}%)",
+        f"**[SUNSEC][{severity}] {class_label}** (уверенность {confidence_pct}%)",
         "",
         finding.message,
     ]
@@ -731,7 +731,7 @@ def _render_inline_body(finding: Finding, fhash: str) -> str:
         lang = _lang_from_path(finding.file)
         parts.extend([
             "",
-            "### Suggested fix",
+            "### Предлагаемое исправление",
             f"```{lang}",
             snippet,
             "```",
@@ -753,20 +753,31 @@ def _render_review_lead(
     if n_total == 0 and n_inline == 0:
         # Не должно вызываться (на n_inline=0 review мы не публикуем), но на
         # всякий случай возвращаем минимальный текст.
-        return "**SunSecurityBot:** see summary comment for details."
+        return "**SunSecurityBot:** подробности — в общем комментарии-сводке."
 
-    parts = [
-        f"**SunSecurityBot** posted {n_inline} inline finding"
-        f"{'s' if n_inline != 1 else ''}"
-        + (
-            f" (and {n_fallback} could not be anchored to a diff line"
-            f"{'s' if n_fallback != 1 else ''})"
-            if n_fallback
-            else ""
+    def _ru_plural(n: int, one: str, few: str, many: str) -> str:
+        n_abs = abs(int(n))
+        if n_abs % 10 == 1 and n_abs % 100 != 11:
+            return one
+        if 2 <= n_abs % 10 <= 4 and not (12 <= n_abs % 100 <= 14):
+            return few
+        return many
+
+    inline_word = _ru_plural(n_inline, "находку", "находки", "находок")
+    fallback_word = _ru_plural(n_fallback, "находку", "находки", "находок")
+
+    head = (
+        f"**SunSecurityBot** опубликовал {n_inline} inline-{inline_word}"
+    )
+    if n_fallback:
+        head += (
+            f" (ещё {n_fallback} {fallback_word} не удалось привязать к строке diff)"
         )
-        + ".",
+    head += "."
+    parts = [
+        head,
         "",
-        "See the summary comment in this PR for the full severity breakdown.",
+        "Полная сводка по severity — в общем комментарии-сводке этого PR.",
     ]
     return "\n".join(parts)
 
@@ -795,19 +806,22 @@ def _render_summary_body(
     severity_order = ("critical", "high", "medium", "low", "info")
 
     lines: list[str] = []
-    lines.append("## SunSecurityBot review")
+    lines.append("## Ревью SunSecurityBot")
     lines.append("")
 
     if n_total == 0:
         lines.append(
-            "No security findings detected in the changed code "
-            "(SQL injection / hardcoded secrets / XSS taxonomy)."
+            "В изменённом коде проблем безопасности не найдено "
+            "(таксономия: SQL-инъекции / хардкоженые секреты / XSS)."
         )
     else:
-        lines.append(
-            f"Found **{n_total}** finding{'s' if n_total != 1 else ''} "
-            f"in the changed code."
-        )
+        word = "находок"
+        # 1 находка, 2/3/4 находки, 5+ находок
+        if n_total % 10 == 1 and n_total % 100 != 11:
+            word = "находка"
+        elif 2 <= n_total % 10 <= 4 and not (12 <= n_total % 100 <= 14):
+            word = "находки"
+        lines.append(f"Найдено **{n_total}** {word} в изменённом коде.")
 
     if summary_text:
         # Доп. защита: LLMResponseSchema уже max_length=2000.
@@ -815,16 +829,17 @@ def _render_summary_body(
         lines.append("> " + summary_text[:2000].replace("\n", "\n> "))
 
     # 2) Severity-таблица — печатаем ВСЕ 5 строк (точные числа, в т.ч. нули).
+    # Severity-метки оставляем латиницей (бренд CVSS / GitHub Security UI).
     lines.append("")
-    lines.append("### Severity breakdown")
+    lines.append("### Распределение по severity")
     lines.append("")
-    lines.append("| Severity  | Count |")
-    lines.append("|-----------|-------|")
+    lines.append("| Severity  | Кол-во |")
+    lines.append("|-----------|--------|")
     for sev in severity_order:
         icon = _SEVERITY_ICON.get(sev, "")
         label = sev.capitalize()
         c = counts.get(sev, 0)
-        lines.append(f"| {icon} {label:<8} | {c}     |")
+        lines.append(f"| {icon} {label:<8} | {c}      |")
 
     # 3) Top-N findings (по severity, затем confidence).
     top = sorted(
@@ -833,7 +848,7 @@ def _render_summary_body(
     )[:_TOP_N_IN_SUMMARY]
     if top:
         lines.append("")
-        lines.append(f"### Top findings (showing {len(top)} of {n_total})")
+        lines.append(f"### Главные находки (показано {len(top)} из {n_total})")
         lines.append("")
         for f in top:
             icon = _SEVERITY_ICON.get(f.severity, "")
@@ -850,7 +865,7 @@ def _render_summary_body(
     if fallback_findings:
         lines.append("")
         lines.append(
-            f"### Findings without diff anchor ({n_fallback})"
+            f"### Находки без привязки к diff ({n_fallback})"
         )
         lines.append("")
         lines.append(
@@ -873,13 +888,13 @@ def _render_summary_body(
     lines.append("")
     short_sha = head_sha[:7] if head_sha else ""
     footer_parts = [
-        f"{n_total} total",
-        f"{n_inline} anchored inline",
-        f"{n_fallback} general",
+        f"всего {n_total}",
+        f"привязано inline: {n_inline}",
+        f"общих: {n_fallback}",
     ]
-    footer = "**Summary:** " + ", ".join(footer_parts) + "."
+    footer = "**Итого:** " + ", ".join(footer_parts) + "."
     if short_sha:
-        footer += f" Analyzed commit `{short_sha}`."
+        footer += f" Проанализирован коммит `{short_sha}`."
     lines.append(footer)
 
     lines.append("")

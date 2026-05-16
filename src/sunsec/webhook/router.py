@@ -27,6 +27,7 @@ from sunsec.webhook.service import (
     AlreadyProcessed,
     BadRequest,
     EnqueueAnalysis,
+    EnqueueReply,
     Ignored,
     InvalidSignature,
     WebhookService,
@@ -101,6 +102,24 @@ def build_router(
                     "repo": outcome.event.repo,
                     "pr_number": outcome.event.pr_number,
                     "head_sha": outcome.event.head_sha,
+                },
+            )
+
+        if isinstance(outcome, EnqueueReply):
+            # Reply-режим (T-019): диалог с пользователем в комментариях PR.
+            background_tasks.add_task(
+                pipeline.process_reply,
+                payload=outcome.payload,
+                kind=outcome.kind,
+                idempotency_key=outcome.idempotency_key,
+            )
+            return JSONResponse(
+                status_code=202,
+                content={
+                    "status": "reply_accepted",
+                    "kind": outcome.kind,
+                    "repo": outcome.payload.repo,
+                    "pr_number": outcome.payload.pr_number,
                 },
             )
 

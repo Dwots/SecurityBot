@@ -172,13 +172,18 @@ async def test_ignored_action_edited_is_skipped_with_200() -> None:
 
 @pytest.mark.asyncio
 async def test_ignored_event_type_returns_ignored() -> None:
-    """Заголовок X-GitHub-Event != 'pull_request' → Ignored 200."""
+    """Заголовок X-GitHub-Event не из whitelist → Ignored 200.
+
+    T-019: `issue_comment` теперь обрабатывается reply-веткой; для
+    проверки «непонятный event_type → Ignored» берём `push` (никогда
+    не наш канал).
+    """
     service = _build_service()
     body = json.dumps({"zen": "Practicality beats purity."}).encode("utf-8")
     headers = {
         "X-Hub-Signature-256": _signature(SECRET, body),
-        "X-GitHub-Event": "issue_comment",  # не PR-событие
-        "X-GitHub-Delivery": "issue-comment-delivery",
+        "X-GitHub-Event": "push",  # не PR-событие и не reply-событие
+        "X-GitHub-Delivery": "push-delivery",
     }
     outcome = await service.handle(raw_body=body, headers=headers)
     assert isinstance(outcome, Ignored)

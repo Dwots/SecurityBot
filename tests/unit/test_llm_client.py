@@ -103,7 +103,7 @@ class _FakeProvider:
     def __init__(
         self,
         *,
-        content: str = '{"findings": [], "summary": "No security issues detected in diff."}',
+        content: str = '{"findings": [], "summary": "В diff не обнаружено проблем безопасности."}',
         usage: TokenUsage | None = None,
         raise_exc: BaseException | None = None,
         cost_rub: float = 0.005,
@@ -311,7 +311,7 @@ async def test_polza_provider_retries_are_delegated_to_sdk(
     # Мокаем chat.completions.create на уровне fake-client.
     fake_message = MagicMock()
     fake_message.content = json.dumps(
-        {"findings": [], "summary": "No security issues detected in diff."}
+        {"findings": [], "summary": "В diff не обнаружено проблем безопасности."}
     )
     fake_choice = MagicMock()
     fake_choice.message = fake_message
@@ -455,7 +455,7 @@ async def test_llm_client_commits_actual_cost_to_budget(
 ) -> None:
     """После успешного вызова — `BudgetCounter.spent_rub` равен actual cost."""
     valid_json = json.dumps(
-        {"findings": [], "summary": "No security issues detected in diff."}
+        {"findings": [], "summary": "В diff не обнаружено проблем безопасности."}
     )
     provider = _FakeProvider(content=valid_json, cost_rub=0.0042)
     budget = BudgetCounter(limit_rub=10.0)
@@ -490,7 +490,7 @@ async def test_llm_client_skips_empty_diff_without_calling_provider() -> None:
     response = await client.analyze(empty)
 
     assert response.findings == []
-    assert response.summary == "No security issues detected in diff."
+    assert response.summary == "В diff не обнаружено проблем безопасности."
     assert provider.call_count == 0
 
 
@@ -516,6 +516,6 @@ def test_prompt_builder_emits_system_and_user_with_diff() -> None:
     assert "--- file: src/db/users.py ---" in payload.user
     assert "L42:" in payload.user
     assert "DELETE FROM t" in payload.user
-    # T-032 (RT-011) bump: prompt_version = "1.1.0" — added Server-side template
-    # XSS sub-section + open-weight optimization. Cache-key инвалидация by design.
-    assert builder.prompt_version == "1.1.0"
+    # T-019 (Russian lock) bump: prompt_version = "1.2.0" — hard-enforce Russian
+    # in human-facing fields + localized empty summary. Cache-key инвалидация by design.
+    assert builder.prompt_version == "1.2.0"

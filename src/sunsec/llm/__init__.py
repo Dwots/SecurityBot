@@ -29,7 +29,14 @@ from sunsec.llm.client import LLMClient
 from sunsec.llm.openrouter_provider import OpenRouterProvider
 from sunsec.llm.polza_provider import PolzaProvider
 from sunsec.llm.prompt_builder import PromptBuilder
-from sunsec.llm.prompts import PROMPT_VERSION, SYSTEM_PROMPT_V1
+from sunsec.llm.prompts import (
+    EMPTY_SUMMARY,
+    PROMPT_VERSION,
+    REPLY_PROMPT_VERSION,
+    REPLY_SYSTEM_PROMPT_V1,
+    SYSTEM_PROMPT_V1,
+)
+from sunsec.llm.reply_client import ChatTurn, ReplyClient
 
 log = logging.getLogger(__name__)
 
@@ -49,10 +56,16 @@ __all__ = [
     "OpenRouterProvider",
     "PolzaProvider",
     "PromptBuilder",
+    "ReplyClient",
+    "ChatTurn",
     "PROMPT_VERSION",
     "SYSTEM_PROMPT_V1",
+    "REPLY_PROMPT_VERSION",
+    "REPLY_SYSTEM_PROMPT_V1",
+    "EMPTY_SUMMARY",
     # factory
     "build_llm_client_from_settings",
+    "build_reply_client_from_settings",
 ]
 
 
@@ -130,3 +143,87 @@ def build_llm_client_from_settings(settings) -> LLMClient:
         },
     )
     return LLMClient(provider=provider, builder=builder, budget=budget)
+
+
+def build_reply_client_from_settings(
+    settings,
+    *,
+    budget: BudgetCounter | None = None,
+) -> ReplyClient | None:
+    """DI-фабрика для `ReplyClient` (T-019).
+
+    Если reply-режим выключен (`enable_reply_mode=false`) — возвращает `None`,
+    pipeline пропустит публикацию и не будет требовать клиент в DI.
+
+    Параметры (api_key/base_url/model_id) берутся у того же провайдера, что
+    активен для основного анализа (см. `build_llm_client_from_settings`).
+    `budget` опционален: если передан — используется тот же kill-switch,
+    что и у `LLMClient` (одна корзина рублей). Если None — клиент работает
+    без бюджета (НЕ рекомендуется для prod).
+    """
+    if not getattr(settings, "enable_reply_mode", True):
+        log.info("reply_client_disabled", extra={"reason": "enable_reply_mode=false"})
+        return None
+
+    provider_kind = str(
+        getattr(settings, "llm_provider", "polza") or "polza"
+    ).strip().lower()
+
+    if provider_kind == "openrouter":
+        api_key = str(getattr(settings, "openrouter_api_key", "") or "")
+        if not api_key:
+            log.warning(
+                "reply_client_skipped_no_key",
+                extra={"provider": "openrouter"},
+            )
+            return None
+        rc = ReplyClient(
+            api_key=api_key,
+            base_url=settings.openrouter_base_url,
+            model_id=settings.openrouter_model_id,
+            budget=budget,
+            timeout_seconds=settings.openrouter_timeout_seconds,
+            max_retries=settings.openrouter_max_retries,
+            temperature=0.3,
+            max_tokens=settings.reply_max_tokens,
+            input_rub_per_1k=settings.openrouter_input_rub_per_1k,
+            output_rub_per_1k=settings.openrouter_output_rub_per_1k,
+        )
+        log.info(
+            "reply_client_built",
+            extra={
+                "provider": "openrouter",
+                "model": settings.openrouter_model_id,
+                "max_tokens": settings.reply_max_tokens,
+                "budget_shared": budget is not None,
+            },
+        )
+        return rc
+
+    # polza (default)
+    api_key = str(getattr(settings, "polza_api_key", "") or "")
+    if not api_key:
+        log.warning("reply_client_skipped_no_key", extra={"provider": "polza"})
+        return None
+    rc = ReplyClient(
+        api_key=api_key,
+        base_url=settings.polza_base_url,
+        model_id=settings.polza_model_id,
+        budget=budget,
+        timeout_seconds=settings.polza_timeout_seconds,
+        max_retries=settings.polza_max_retries,
+        temperature=0.3,
+        max_tokens=settings.reply_max_tokens,
+        input_rub_per_1k=settings.polza_input_rub_per_1k,
+        output_rub_per_1k=settings.polza_output_rub_per_1k,
+    )
+    log.info(
+        "reply_client_built",
+        extra={
+            "provider": "polza",
+            "model": settings.polza_model_id,
+            "max_tokens": settings.reply_max_tokens,
+            "budget_shared": budget is not None,
+        },
+    )
+    return rc

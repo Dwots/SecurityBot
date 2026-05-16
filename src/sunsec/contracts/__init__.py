@@ -6,10 +6,16 @@
 """
 
 from sunsec.contracts.events import (
+    GitHubIssueCommentEvent,
     GitHubPullRequestEvent,
+    GitHubPullRequestReviewCommentEvent,
     GitRefPayload,
+    IssueCommentPayload,
+    IssuePullRequestRef,
+    IssueRefPayload,
     PullRequestPayload,
     RepositoryPayload,
+    ReviewCommentPayload,
     UserPayload,
 )
 from sunsec.contracts.diff import (
@@ -44,9 +50,15 @@ from sunsec.contracts.storage import (
 __all__ = [
     # events
     "GitHubPullRequestEvent",
+    "GitHubIssueCommentEvent",
+    "GitHubPullRequestReviewCommentEvent",
     "GitRefPayload",
+    "IssueCommentPayload",
+    "IssuePullRequestRef",
+    "IssueRefPayload",
     "PullRequestPayload",
     "RepositoryPayload",
+    "ReviewCommentPayload",
     "UserPayload",
     # diff
     "AddedLine",

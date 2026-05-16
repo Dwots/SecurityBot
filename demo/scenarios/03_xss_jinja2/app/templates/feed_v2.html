@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Лента постов</title>
+</head>
+<body>
+  <h1>Свежие посты</h1>
+
+  {% for post in posts %}
+    <article>
+      <h2>{{ post.title }}</h2>
+
+      {# Уязвимость #1: |safe отключает auto-escape для пользовательского body — stored XSS #}
+      <div class="content">{{ post.body | safe }}</div>
+
+      {# Уязвимость #2: autoescape false для блока с user.bio — stored XSS #}
+      {% autoescape false %}
+        <aside class="author-bio">
+          <strong>{{ post.author.name }}</strong>: {{ post.author.bio }}
+        </aside>
+      {% endautoescape %}
+
+      <small>опубликовано {{ post.created_at }}</small>
+    </article>
+  {% endfor %}
+
+  {# Уязвимость #3: безопасный фрагмент — не должен порождать находок #}
+  <footer>{{ "© 2026 demo.example" }}</footer>
+</body>
+</html>
